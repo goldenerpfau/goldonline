@@ -8,8 +8,6 @@
     "build:ssr": "next build && next export -o functions/next",
     "start": "next start",
     "lint": "next lint",
-    "serve": "firebase emulators:start",
-    "deploy": "firebase deploy"
   },
   "dependencies": {
     "@react-three/drei": "^9.122.0",
