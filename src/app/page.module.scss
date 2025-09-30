@@ -1,0 +1,784 @@
+/* === ESTRUTURA DO HEADER === */
+/* Space between logo and title */
+.header {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  right: 2rem;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoMenuContainer {
+  display: flex;
+  align-items: center;
+}
+
+/* === LOGO === */
+.logoWrapper {
+  position: relative;
+  width: 280px;
+  height: 120px;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+/* === MENU INTERATIVO === */
+.navMenu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-left: 6px;
+}
+
+.navMenu button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-family: 'Montserrat', Arial, sans-serif;
+  letter-spacing: 0.15rem;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease, width 0.3s ease;
+}
+
+.navMenu button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.navMenu button:hover {
+  color: #ddd;
+}
+
+.navMenu button:hover::after {
+  width: 100%;
+}
+
+/* === CONTEÚDO CENTRAL === */
+.main {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(12, 12, 24);
+  z-index: 2;
+  text-align: center;
+}
+
+/* === TÍTULO === */
+.contents h1 {
+  color: white;
+  letter-spacing: 1.6rem;
+  font-weight: 500;
+  padding: 1rem 0;
+  font-size: 2rem;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* === BOTÕES === */
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.buttons button {
+  padding: 1.5rem 2rem;
+  margin: 0 1rem;
+  background-color: transparent;
+  border: solid white 1px;
+  font-size: 12px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  transition: 0.25s background-color;
+}
+
+.buttons button:hover {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+/* === VÍDEO DE FUNDO === */
+.videoSection {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.videoSection video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+/* ========================================= */
+/* === AJUSTES PARA DISPOSITIVOS MÓVEIS === */
+/* ========================================= */
+@media (max-width: 768px) {
+  .header {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .logoWrapper {
+    width: 200px; /* Reduz o tamanho da logo */
+    height: auto;
+    margin-bottom: 0; /* Remove a margem extra */
+  }
+  
+  /* Esconde o menu de navegação em telas pequenas para evitar quebra */
+  /* (Normalmente seria substituído por um menu "hambúrguer") */
+  .navMenu {
+    display: none; 
+  }
+
+  .main {
+    padding: 0 1rem; /* Adiciona padding para o conteúdo não tocar nas bordas */
+    box-sizing: border-box;
+  }
+
+  .contents h1 {
+    font-size: 1.2rem; /* Reduz o tamanho da fonte do título */
+    letter-spacing: 0.8rem; /* Reduz o espaçamento entre letras */
+    padding-left: 0.8rem; /* Corrige o alinhamento causado pelo letter-spacing */
+  }
+  
+  .buttons button {
+    padding: 1.2rem 1.5rem; /* Reduz o preenchimento do botão */
+    font-size: 10px; /* Reduz a fonte do texto do botão */
+    letter-spacing: 0.3rem; /* Reduz o espaçamento do texto do botão */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//* === SEÇÃO SERVICES === */
+.servicesHalf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  min-height: 60vh; /* Usar min-height é mais flexível */
+  padding: 4rem 8rem;
+  background-color: rgb(12, 12, 24);
+  font-family: 'Montserrat', sans-serif;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease-out forwards;
+  will-change: opacity, transform;
+  box-sizing: border-box;
+}
+
+.textContainer {
+  width: 50%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.servicesHalf h2 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.2s ease-out forwards 0.3s;
+  margin: 0;
+  will-change: opacity, transform;
+}
+
+.servicesHalf p {
+  font-size: 1rem;
+  line-height: 1.8;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.2s ease-out forwards 0.5s;
+}
+
+.downloadSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.2s ease-out forwards 0.7s;
+}
+
+.downloadText {
+  font-size: 1rem;
+  color: #f8bf00;
+  text-align: center;
+}
+
+.divider {
+  width: 2px;
+  height: 30px;
+  background-color: rgb(255, 255, 255);
+}
+
+.checkButton {
+  padding: 0.8rem 2rem;
+  background: transparent;
+  color: rgb(255, 255, 255);
+  border: 1px solid #f8bf00;
+  border-radius: 6px;
+  text-transform: uppercase;
+  font-weight: 300;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.checkButton:hover {
+  background-color: rgba(248, 191, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.imageContainer {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.serviceImage {
+  max-width: 100%;
+  height: 470px;
+  opacity: 0;
+  transform: translateX(50px);
+  animation: fadeInRight 1.5s ease-out forwards 0.9s;
+  object-fit: contain; /* Alterado para 'contain' para evitar cortes na imagem */
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === FORMATO MOBILE (TELAS MENORES QUE 768px) === */
+@media (max-width: 768px) {
+  .servicesHalf {
+    flex-direction: column; /* Empilha os itens verticalmente */
+    height: auto; /* Altura automática para acomodar o conteúdo */
+    padding: 3rem 1.5rem; /* Reduz o preenchimento para telas menores */
+    gap: 3rem; /* Adiciona um espaço entre o texto e a imagem */
+  }
+
+  .textContainer,
+  .imageContainer {
+    width: 100%; /* Faz com que cada container ocupe a largura total */
+  }
+
+  .servicesHalf h2 {
+    font-size: 1.8rem; /* Reduz o tamanho da fonte do título */
+  }
+
+  .servicesHalf p {
+    font-size: 0.9rem; /* Reduz o tamanho da fonte do parágrafo */
+  }
+
+  .downloadSection {
+    flex-direction: column; /* Empilha a seção de download */
+    gap: 1.5rem; /* Adiciona espaço entre os itens de download */
+  }
+
+  .divider {
+    display: none; /* Esconde a linha divisória que não é mais necessária */
+  }
+
+  .serviceImage {
+    height: auto; /* Altura automática para manter a proporção da imagem */
+    max-height: 350px; /* Limita a altura máxima da imagem */
+    /* Animação simplificada para mobile */
+    animation: fadeInUp 1.2s ease-out forwards 0.5s;
+  }
+}
+
+
+
+
+
+
+
+/* === GLOBO DE FUNDO PARA SERVICES === */
+.servicesHalf canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  opacity: 0.1;
+  pointer-events: none;
+}
+.globeWrapper {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  margin-top: 2rem;
+  z-index: 1;
+}
+
+.servicesHalf canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+
+
+/* === NOVA SEÇÃO DO GLOBO === */
+.globeSection {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.projectTitlesWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.counterWrapper {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  color: white;
+  z-index: 3;
+}
+
+
+
+
+.cylinderSection {
+  width: 100%;
+  height: 100vh;
+  background-color: #000; // fundo preto para combinar
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* === SEÇÃO INVESTMENTS === */
+.investmentsSection {
+  width: 100%;
+  height: 100vh;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  margin-top: 0;
+  overflow: hidden;
+}
+
+
+.investmentsContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 780px;
+  padding: 0 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1.2s ease-out forwards;
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+.investmentBadge {
+  margin-top: 10rem; // increased margin to move further down
+  padding: 1.4rem 2.4rem;
+  
+  color: #155e0b;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  animation: fadeInUp 1.5s ease-out forwards 1s;
+  opacity: 0;
+  transform: translateY(10px);
+  box-shadow: inset 0 0 30px rgba(248, 191, 0, 0.03), 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.investmentsContent h2 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+  letter-spacing: 0.25rem;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 1.5s ease-out forwards 0.3s;
+}
+
+.btcPrice {
+  font-size: 1.8rem;
+  font-weight: 600;
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 1.5s ease-out forwards 0.5s;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.btcLabel {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.btcValue {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.updateInfo {
+  font-size: 0.95rem;
+  color: #bbbbbb;
+  margin: 0.5rem 0 1.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 1.5s ease-out forwards 0.6s;
+  font-style: italic;
+}
+
+.investmentText {
+  font-size: 1.05rem;
+  color: #e6e6e6;
+  max-width: 640px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 1.5s ease-out forwards 0.7s;
+  line-height: 1.6;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.tradingViewWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.5; // ajuste como quiser
+  pointer-events: none; // impede cliques no gráfico, mantém foco no conteúdo
+}
+
+.tradingViewIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  filter: grayscale(20%) brightness(0.6) contrast(1.2);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* === SEÇÃO PFAU INSTITUT === */
+.pfauInstitutSection {
+  width: 100vw;
+  min-height: 60vh;
+  background-color: #ffffff; // fundo branco
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.pfauInstitutContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 820px;
+  animation: fadeInUp 1.2s ease-out forwards;
+  opacity: 0;
+  transform: translateY(30px);
+  color: #000;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.pfauInstitutContent h2 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+  letter-spacing: 0.25rem;
+  margin-bottom: 1.5rem;
+  color: #000;
+  animation: fadeInUp 1.5s ease-out forwards 0.3s;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.pfauInstitutText {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.25rem;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 2;
+  margin-bottom: 1rem;
+  color: #000;
+  animation: fadeInUp 1.5s ease-out forwards 0.6s;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@media (max-width: 768px) {
+  .pfauInstitutContent h2 {
+    font-size: 2rem;
+  }
+
+  .pfauInstitutText {
+    font-size: 11px;
+    letter-spacing: 0.25rem;
+  }
+}
+.donateButton {
+  margin-top: 2rem;
+  padding: 1.5rem 2rem;
+  background-color: transparent;
+  border: 1px solid black;
+  font-size: 12px;
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.25rem;
+  transition: 0.3s ease-in-out;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.2rem 1.6rem;
+    font-size: 11px;
+    letter-spacing: 0.25rem;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.footer {
+  width: 100%;
+  padding: 3rem 1rem 2rem;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+
+  .footerContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footerLogo {
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .footerText {
+    font-size: 0.875rem;
+    color: #aaa;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.03rem;
+  }
+}
