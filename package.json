@@ -12,19 +12,18 @@
     "deploy": "firebase deploy"
   },
   "dependencies": {
-    "@react-three/drei": "^9.56.4",
-    "@react-three/fiber": "^8.13.6",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "firebase-admin": "^13.5.0",
-    "firebase-functions": "^4.5.0",
     "next": "^14.2.30",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.89.2",
-    "three": "^0.153.0"
+    "three": "^0.180.0"
   },
   "devDependencies": {
+    "@types/node": "24.6.0",
     "@types/react": "^18.2.47",
     "@types/three": "^0.178.1",
     "@vercel/nft": "^0.24.0",

@@ -1,47 +1,67 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Stars, useTexture } from '@react-three/drei';
-import * as THREE from 'three';
+import type { Mesh } from 'three';
 
-// Adiciona tipagem JSX para R3F
-import '@react-three/fiber';
-
+/**
+ * Componente que renderiza o globo giratório.
+ */
 function SpinningGlobe() {
-  const globeRef = useRef<THREE.Mesh>(null);
+  const globeRef = useRef<Mesh>(null!);
   const texture = useTexture('/globe_texture.jpg');
 
-  useFrame(() => {
-    if (globeRef.current) {
-      globeRef.current.rotation.y += 0.002;
-    }
+  useFrame((state, delta) => {
+    // Rotaciona o globo continuamente no eixo Y
+    globeRef.current.rotation.y += delta * 0.1;
   });
 
   return (
-    <mesh ref={globeRef}>
+    <mesh ref={globeRef} rotation={[0, 0, 0]}>
       <sphereGeometry args={[2, 64, 64]} />
-      <meshStandardMaterial map={texture} metalness={0.4} roughness={0.7} />
+      <meshStandardMaterial 
+        map={texture} 
+        metalness={0.4} 
+        roughness={0.7} 
+      />
     </mesh>
   );
 }
 
+/**
+ * Componente principal que configura a cena 3D.
+ */
 export default function Globe() {
-  const [mounted, setMounted] = useState(false);
-
+  const [isClient, setIsClient] = useState(false);
   useEffect(() => {
-    setMounted(true);
+    setIsClient(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!isClient) {
+    return null; // Renderiza nada no servidor para evitar erros de hidratação
+  }
 
   return (
-    <div style={{ width: '100%', height: '100vh', margin: 0, padding: 0 }}>
-      <Canvas camera={{ position: [0, 0, 6] }}>
-        <primitive object={new THREE.AmbientLight(0xffffff, 1)} />
-        <Stars radius={300} depth={50} count={1000} factor={4} saturation={0} fade />
-        <OrbitControls enableZoom={false} />
-        <SpinningGlobe />
+    <div style={{ width: '100%', height: '100vh', margin: 0, padding: 0, background: '#000' }}>
+      <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} intensity={1.5} />
+        
+        <Stars radius={300} depth={50} count={10000} factor={7} saturation={0} fade speed={2} />
+        
+        <OrbitControls 
+          enableZoom={false} 
+          enablePan={false}
+          autoRotate
+          autoRotateSpeed={0.4}
+          minPolarAngle={Math.PI / 3}
+          maxPolarAngle={Math.PI - Math.PI / 3}
+        />
+        
+        <Suspense fallback={null}>
+          <SpinningGlobe />
+        </Suspense>
       </Canvas>
     </div>
   );

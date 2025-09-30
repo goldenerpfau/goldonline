@@ -9,10 +9,21 @@ import Titles from './components/Projects/titles';
 import AnimatedCounter from './components/Projects/AnimatedCounter';
 import Parallax from './components/Projects/Parallax';
 
+// --- DEFINIÇÕES FORA DO COMPONENTE PARA MELHOR PERFORMANCE ---
+
+// Tipagem para os dados do projeto
+type Project = {
+  title: string;
+  description: string;
+  speed: number;
+};
+
+// Fontes
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '600', '700'] });
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '400', '500'] });
 
-const data = [
+// Dados dos projetos
+const projectData: Project[] = [
   { title: "Villages", description: "Next-Gen HMI without driving experience.", speed: 0.5 },
   { title: "Yatchs", description: "Next-Gen HMI without driving experience.", speed: 0.5 },
   { title: "Private Jets", description: "Future of UFC ecosystem.", speed: 0.5 },
@@ -23,13 +34,21 @@ const data = [
   { title: "Institute", description: "Fantasy Football in global context.", speed: 0.8 }
 ];
 
+// --- COMPONENTE PRINCIPAL ---
+
 export default function Home() {
   const [btcPrice, setBtcPrice] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchBTCPrice = async () => {
       try {
+        setError(null);
         const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+        if (!res.ok) {
+          throw new Error('Failed to fetch data from CoinGecko');
+        }
         const data = await res.json();
         setBtcPrice(
           data.bitcoin.usd.toLocaleString('en-US', {
@@ -37,8 +56,11 @@ export default function Home() {
             currency: 'USD',
           })
         );
-      } catch (error) {
-        console.error('Erro ao buscar o preço do BTC:', error);
+      } catch (err) {
+        setError('Failed to load price.');
+        console.error('Erro ao buscar o preço do BTC:', err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -47,14 +69,20 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  const getBtcDisplayValue = () => {
+    if (isLoading) return 'Loading...';
+    if (error) return error;
+    return btcPrice;
+  };
+
   return (
     <div className={styles.container}>
-      {/* HEADER */}
+      {/* SEÇÃO HEADER */}
       <header className={styles.header}>
         <div className={styles.logoMenuContainer}>{/* Logo aqui */}</div>
       </header>
 
-      {/* MAIN */}
+      {/* SEÇÃO MAIN (HERO) */}
       <main className={styles.main}>
         <div className={styles.contents}>
           <h1>Goldener Pfau</h1>
@@ -121,11 +149,10 @@ export default function Home() {
           >
             Donate Now
           </a>
-        </div> {/* <-- DIV FECHADA AQUI */}
-      </section> {/* <-- SECTION FECHADA AQUI */}
+        </div>
+      </section>
 
-
-      {/* VÍDEO DE FUNDO */}
+      {/* SEÇÃO VÍDEO DE FUNDO */}
       <section id="video" className={styles.videoSection}>
         <video src="/indoindo.mp4" autoPlay muted loop className={styles.video} />
       </section>
@@ -136,7 +163,7 @@ export default function Home() {
           <Globe />
         </div>
         <div className={styles.projectTitlesWrapper}>
-          <Titles data={data} setSelectedProject={() => { }} />
+          <Titles data={projectData} setSelectedProject={() => { }} />
         </div>
         <div className={styles.counterWrapper}>
           <AnimatedCounter />
@@ -166,7 +193,7 @@ export default function Home() {
           <h2>INVESTMENTS</h2>
           <p className={styles.btcPrice}>
             <span className={styles.btcLabel}>BTC/USD</span>
-            <span className={styles.btcValue}>{btcPrice ?? 'Loading...'}</span>
+            <span className={styles.btcValue}>{getBtcDisplayValue()}</span>
           </p>
           <p className={styles.updateInfo}>Live feed • updated every 30 seconds</p>
           <p className={styles.investmentText}>
@@ -182,20 +209,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* SEÇÃO FOOTER */}
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
-          <Image
-            src="/logopfau.png"
-            alt="Goldener Pfau Logo"
-            width={100}
-            height={100}
-            className={styles.footerLogo}
+          <button
+            className={styles.footerLogoButton}
             onClick={() => {
               document.getElementById('video')?.scrollIntoView({ behavior: 'smooth' });
             }}
-            style={{ cursor: 'pointer' }}
-          />
+            aria-label="Scroll to top"
+          >
+            <Image
+              src="/logopfau.png"
+              alt="Goldener Pfau Logo"
+              width={100}
+              height={100}
+              className={styles.footerLogo}
+            />
+          </button>
           <p className={styles.footerText}>© 2025 Goldener Pfau. All rights reserved.</p>
         </div>
       </footer>
