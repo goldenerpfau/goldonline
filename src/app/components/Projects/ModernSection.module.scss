@@ -1,0 +1,224 @@
+// Variáveis de Cores (usadas pelo componente)
+$color-dark-bg:       #0f1823; // Fundo do conteúdo (Escuro)
+$color-dark-text:     #ffffff; 
+$color-dark-accent:   #f8bf00; // Dourado (Padrão de destaque)
+$color-light-bg:      #0f1823; // Padronizado para o fundo escuro
+$color-light-text:    #ffffff; // Padronizado para o texto claro
+$color-light-accent:  #a58866; // Cor de destaque terrosa (Mantida para o botão Light)
+
+// --- ANIMAÇÕES ---
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+// --- CLASSE BASE DA SEÇÃO (LAYOUT 2/3 + CORREÇÃO DE FUNDO) ---
+.modernSection {
+    position:        relative;
+    width:           100vw;
+    min-height:      80vh; 
+    padding:         0; 
+    box-sizing:      border-box;
+    overflow:        hidden; 
+    display:         flex; 
+    align-items:     stretch; 
+    justify-content: space-between;
+    z-index:         3; 
+    flex-direction:  row; 
+    // Garante que não haja deslize
+    margin: 0;
+    background-attachment: scroll; 
+
+    // Animação de entrada
+    opacity:         0;
+    transform:       translateY(30px);
+    will-change:     opacity, transform;
+    transition:      opacity 0.5s ease-out, transform 0.5s ease-out;
+
+    &.isVisible {
+        animation: fadeInUp 1s ease-out forwards;
+    }
+}
+
+// --- PARTICLE BACKGROUND WRAPPER ---
+.particlesBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; 
+}
+
+
+// --- TEMAS (COLORS) ---
+
+// Tema Dark (SERVICES) - Layout Padrão: [TEXTO] [VÍDEO]
+.dark {
+    background-color: $color-dark-bg; 
+    color: $color-dark-text;
+
+    .title { color: $color-dark-accent; }
+    
+    .imageBackgroundSplit {
+        background-color: $color-light-bg; 
+        left: unset;
+        right: 0;
+    }
+}
+
+// Tema Light (PFAU INSTITUT) - Layout Revertido: [FOTO] [TEXTO]
+.light {
+    background-color: $color-light-bg; 
+    color: $color-light-text;
+    
+    // INVERSÃO CONDICIONAL: Coloca a Imagem à esquerda
+    flex-direction: row-reverse; 
+
+    .title { color: $color-light-text; }
+    
+    .imageBackgroundSplit {
+        background-color: $color-dark-bg; 
+        right: unset;
+        left: 0; 
+    }
+    
+    // CORREÇÃO FINAL DE PADDING: Usa o padding padrão para garantir 10rem de respiro longe da imagem.
+    .textContainer {
+        padding: 8rem 5rem 8rem 10rem; 
+    }
+}
+
+// --- ESTILOS DE CONTEÚDO (PROPORÇÃO 2/3) ---
+
+.textContainer {
+    position:        relative;
+    z-index:         5; 
+    width:           66.66%; 
+    
+    // PADDING PADRÃO: (10rem longe da imagem, 5rem perto da borda)
+    padding:         8rem 5rem 8rem 10rem; 
+
+    display:         flex;
+    flex-direction:  column;
+    justify-content: center;
+    // ALINHAMENTO FINAL: Centraliza o bloco de texto, títulos e botões
+    align-items:     center; 
+    text-align:      center; 
+}
+
+.imageContainer {
+    position:        relative;
+    z-index:         5;
+    width:           33.33%; 
+    display:         flex;
+    justify-content: center; 
+    align-items:     center;
+    overflow:        hidden;
+}
+
+// NOVO: DIV que cria a simulação de divisão de fundo
+.imageBackgroundSplit {
+    position:        absolute;
+    top:             0;
+    width:           100%; 
+    height:          100%;
+    z-index:         0; 
+}
+
+.abstractImageWrapper {
+    position:        relative;
+    z-index:         10; 
+    width:           520px; 
+    height:          520px; 
+    max-width:       100%;
+    transform:       translateX(0); 
+
+    // BORDA BÁSICA E UNIFICADA
+    border: 1px solid rgba($color-dark-text, 0.2);
+    
+    .dark & {
+        box-shadow: 0 0 5px rgba($color-dark-text, 0.15);
+    }
+    .light & {
+        box-shadow: 0 0 5px rgba($color-dark-text, 0.15);
+    }
+
+    // Estilo para o vídeo (para garantir que ele preencha a moldura)
+    .videoContent {
+        width:           100%;
+        height:          100%; 
+        object-fit:      cover;
+    }
+}
+
+.luxuryButton {
+    padding:         1rem 2.5rem;
+    border-radius:   6px;
+    text-transform:  uppercase;
+    font-weight:     500;
+    letter-spacing:  0.15rem;
+    cursor:          pointer;
+    transition:      all 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    font-size:       0.9rem;
+    
+    /* Estilo base para tema Dark (Services) */
+    .dark & {
+        color:           $color-dark-text;
+        border:          1px solid $color-dark-accent;
+        background:      transparent;
+        box-shadow:      0 0 5px rgba($color-dark-accent, 0.4);
+        
+        &:hover {
+            background-color: rgba($color-dark-accent, 0.15);
+            box-shadow:       0 0 15px rgba($color-dark-accent, 0.8), 0 0 5px rgba($color-dark-accent, 0.4);
+        }
+    }
+    
+    /* Estilo base para tema Light (Pfau Institut) - Usa o acento terroso no botão */
+    .light & {
+        color:           $color-dark-text; 
+        background-color: $color-light-accent;
+        border:          1px solid $color-light-accent;
+        box-shadow:      0 0 5px rgba($color-light-accent, 0.4);
+        
+        &:hover {
+            background-color: darken($color-light-accent, 10%);
+            box-shadow:       0 0 15px rgba($color-light-accent, 0.8), 0 0 5px rgba($color-light-accent, 0.4);
+        }
+    }
+}
+
+
+// --- RESPONSIVIDADE (MOBILE) ---
+@media (max-width: 1024px) {
+    .modernSection {
+        flex-direction: column; 
+        min-height:     auto; 
+        padding:        0; 
+        
+        .textContainer {
+            width:      100%;
+            padding:    4rem 1.5rem; 
+            text-align: center;
+            align-items: center;
+        }
+        .imageContainer {
+            width:          100%; 
+            padding:        4rem 1.5rem; 
+            justify-content: center;
+        }
+        
+        // Ajusta o tamanho da mídia para o mobile também (300px * 0.8 = 240px)
+        .abstractImageWrapper {
+            width:          240px; 
+            height:         240px; 
+            transform:      translateX(0); 
+        }
+    }
+}

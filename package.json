@@ -7,11 +7,13 @@
     "build": "next build",
     "build:ssr": "next build && next export -o functions/next",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint"
   },
   "dependencies": {
     "@react-three/drei": "^9.106.0",
     "@react-three/fiber": "^8.16.8",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.9.1",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "next": "^14.2.4",
