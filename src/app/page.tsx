@@ -129,7 +129,7 @@ export default function Home() {
                 buttonText="LEARN MORE ABOUT OUR IMPACT"
                 buttonLink="https://wa.me/48571517218?text=I%20would%20like%20to%20donate%20to%20Pfau%20Institut"
                 // IMAGEM DO MAPA (Usando o arquivo IMG_2204.jpg)
-                imageSrc="/IMG_2204.jpg" 
+                imageSrc="/2204.jpg" 
                 imageAlt="Mapa da África Subsaariana"
                 titleFontClass={cinzel.className}
                 bodyFontClass={montserrat.className}
