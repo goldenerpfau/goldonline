@@ -105,7 +105,7 @@ export default function Home() {
                 // MUDANÇA DE CONTEÚDO PARA O LAYOUT DE CELULAR
                 title="PERSONALIZED SERVICES"
                 subtitle="CURATED EXPERIENCES BEYOND EXPECTATIONS" 
-                description="The application is currently under development and will be launched soon, delivering a seamless and premium user experience."
+                description="The Goldener Pfau application is currently under development and will soon be launched, embodying the brand’s vision of exclusivity and refinement. Designed to integrate premium services across air and ground mobility, hospitality, real estate, and bespoke investments, the app will deliver a seamless, intuitive, and world-class digital experience. More than a platform, it will serve as a gateway to the Goldener Pfau universe — where discretion, elegance, and excellence converge to redefine the standards of luxury living."
                 // MUDANÇA DO BOTÃO: DISCOVER EXPERIENCES -> CONTACT
                 buttonText="CONTACT" 
                 buttonLink="https://wa.me/48571517218?text=Qualitat%20auf%20Goldbasis"
@@ -125,8 +125,8 @@ export default function Home() {
                 theme="light"
                 title="Pfau Institut"
                 subtitle="EMPOWERING COMMUNITIES. BUILDING FUTURES."
-                description="Our philanthropic institution is committed to restructuring the infrastructure of underserved regions, with an emphasis on ensuring access to basic sanitation. We also support non-governmental organizations that empower disadvantaged families through education. By providing necessary resources and opportunities, we strive to pave a path towards a brighter future."
-                buttonText="LEARN MORE ABOUT OUR IMPACT"
+                description="Our philanthropic institution is dedicated to reimagining the foundations of underserved regions, beginning with access to clean water and basic sanitation. Beyond infrastructure, we extend our commitment to the construction of safe housing, the development of schools and educational facilities, and the implementation of vaccination and healthcare programs. By also supporting non-governmental organizations that empower disadvantaged families through education and social development, we create pathways that promote dignity, well-being, and sustainable growth. Through this holistic approach, the Pfau Institut strives to illuminate a future where communities are strengthened not only by essential resources, but also by opportunities that transcend generations."
+                buttonText="DONATE NOW"
                 buttonLink="https://wa.me/48571517218?text=I%20would%20like%20to%20donate%20to%20Pfau%20Institut"
                 // IMAGEM DO MAPA (Usando o arquivo IMG_2204.jpg)
                 imageSrc="/2204.jpg" 
