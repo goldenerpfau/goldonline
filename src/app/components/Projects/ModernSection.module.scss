@@ -21,7 +21,66 @@ $color-dark-accent:   #f8bf00;
 
 
 // ==============================
-// 3) BASE / SEÇÃO (MOBILE FIRST)
+// 3) RESETS ANTI-CONTORNO (mídia/links)
+// ==============================
+.imageContainer,
+.abstractImageWrapper,
+.videoCurvedFrame {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.imageContainer * ,
+.abstractImageWrapper * ,
+.videoCurvedFrame * {
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.imageContainer a,
+.imageContainer a:focus,
+.imageContainer a:focus-visible,
+.abstractImageWrapper a,
+.abstractImageWrapper a:focus,
+.abstractImageWrapper a:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+img, video {
+  display: block;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -moz-outline: none !important;
+}
+
+img:focus,
+video:focus,
+img:focus-visible,
+video:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove qualquer pseudo-elemento que possa simular borda/halo */
+.abstractImageWrapper::before,
+.abstractImageWrapper::after,
+.videoCurvedFrame::before,
+.videoCurvedFrame::after {
+  content: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+
+
+// ==============================
+// 4) BASE / SEÇÃO (MOBILE FIRST)
 // ==============================
 .modernSection {
   position: relative;
@@ -35,7 +94,7 @@ $color-dark-accent:   #f8bf00;
   overflow: hidden;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: column; // mobile
   align-items: center;
   justify-content: center;
   gap: 16px;
@@ -63,28 +122,12 @@ $color-dark-accent:   #f8bf00;
   transform: translateZ(0);
 }
 
-/* Camadas auxiliares */
-.imageBackgroundSplit { position: absolute; inset: 0; z-index: 1; }
+/* Camadas auxiliares — REMOVIDO overlay para evitar “halo azul” */
+.imageBackgroundSplit { position: absolute; inset: 0; z-index: 1; background: none !important; }
 .particlesBackground  { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 
 /* Conteúdo */
 .textContainer, .imageContainer { position: relative; z-index: 5; }
-
-
-// ==============================
-// 4) TEMAS
-// ==============================
-.dark {
-  .imageBackgroundSplit {
-    background: linear-gradient(90deg, rgba(15,24,35,0.6) 0%, rgba(15,24,35,0.0) 60%);
-  }
-}
-.light {
-  .imageBackgroundSplit {
-    background: linear-gradient(270deg, rgba(15,24,35,0.6) 0%, rgba(15,24,35,0.0) 60%);
-  }
-  .textContainer { padding: 0; }
-}
 
 
 // ==============================
@@ -147,28 +190,25 @@ $color-dark-accent:   #f8bf00;
 
 
 // =====================================================================
-// 7) MÍDIA — IMAGEM e VÍDEO
+// 7) MÍDIA — IMAGEM e VÍDEO (sem borda/sombra)
 // =====================================================================
-
-/* IMAGEM — sem borda, sem sombra */
 .abstractImageWrapper {
   position: relative;
   width: min(90vw, 360px);
   aspect-ratio: 1 / 1;
   display: flex; align-items: center; justify-content: center;
   border-radius: 14px; overflow: hidden;
-  border: none;
-  box-shadow: none;
+  border: none !important;
+  box-shadow: none !important;
 
   .media { width: 100%; height: 100%; object-fit: cover; display: block; }
 }
 
 .abstractImageWrapper:has(video) {
-  border: none;
-  box-shadow: none;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-/* VÍDEO — sem borda, sem sombra */
 .videoCurvedFrame {
   --radius: 14px;
   position: relative;
@@ -177,10 +217,10 @@ $color-dark-accent:   #f8bf00;
   border-radius: var(--radius);
   overflow: hidden;
 
-  border: none;
-  box-shadow: none;
+  border: none !important;
+  box-shadow: none !important;
 
-  &::after { content: none; }
+  &::after { content: none !important; }
 }
 
 .videoCurvedFrame > video,
@@ -189,12 +229,12 @@ $color-dark-accent:   #f8bf00;
   width: 100%; height: 100%;
   display: block; object-fit: cover;
   border-radius: inherit;
-  outline: none;
+  outline: none !important;
 }
 
 .videoCurvedFrameDark {
-  border: none;
-  box-shadow: none;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 
@@ -213,16 +253,16 @@ $color-dark-accent:   #f8bf00;
   font-weight: 600;
   letter-spacing: 0.12rem;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: background-color 0.25s ease;
   font-size: 0.95rem;
   display: inline-flex; align-items: center; justify-content: center;
   gap: 0.5rem;
   min-height: 48px;
 
-  border: none;
+  border: none !important;
   background: transparent;
   color: $color-dark-text;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 .luxuryButton:hover, .secondaryButton:hover {
