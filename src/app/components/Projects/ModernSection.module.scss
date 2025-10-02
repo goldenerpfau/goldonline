@@ -77,8 +77,7 @@ $color-light-accent:  #f8bf00;
 // 4) TEMAS
 // ==============================
 .dark {
-  background-color: $color-dark-bg;
-  color: $color-dark-text;
+$color-dark-bg: #0f1823; // exemplo do que já usamos
 
   .imageBackgroundSplit {
     background: linear-gradient(90deg, rgba(15,24,35,0.6) 0%, rgba(15,24,35,0.0) 60%);
