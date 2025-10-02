@@ -1,11 +1,11 @@
 // ==============================
 // 1) VARIÁVEIS DE CORES
 // ==============================
-$color-dark-bg:       #0f1823;
+$color-dark-bg:       rgb(12, 12, 19); // fundo igual ao hero
 $color-dark-text:     #ffffff;
 $color-dark-accent:   #f8bf00; // dourado
 
-$color-light-bg:      #0f1823;
+$color-light-bg:      rgb(12, 12, 19); // mantém o mesmo fundo
 $color-light-text:    #ffffff;
 $color-light-accent:  #f8bf00;
 
@@ -51,9 +51,9 @@ $color-light-accent:  #f8bf00;
   &.isVisible { animation: fadeInUp 1s ease-out forwards; }
   isolation: isolate;
 
-  /* >>> FUNDO IGUAL AO HERO E TEXTO CLARO <<< */
-  background-color: $color-dark-bg;       // era rgb(12,12,19)
-  color: $color-light-text;               // garante contraste
+  /* >>> FUNDO EXATO DO HERO E TEXTO CLARO <<< */
+  background-color: rgb(12, 12, 19);
+  color: $color-light-text;
 }
 
 /* Vídeo de fundo (camada 0) — SEM BORDA */
@@ -129,7 +129,7 @@ $color-light-accent:  #f8bf00;
   letter-spacing: 0.01em;
   font-weight: 700;
   font-size: clamp(1.35rem, 6vw, 2.2rem);
-  color: $color-dark-accent; // mantém o dourado
+  color: $color-dark-accent; // dourado
 }
 
 .subtitle {
@@ -138,21 +138,21 @@ $color-light-accent:  #f8bf00;
   line-height: 1.35;
   letter-spacing: 0.01em;
   font-weight: 500;
-  opacity: 0.98;                 // ligeiramente mais forte
+  opacity: 0.98; // mais legível
   font-size: clamp(1rem, 4.2vw, 1.2rem);
-  color: $color-light-text;      // texto claro
+  color: $color-light-text; // branco
 }
 
 .description {
   max-width: 72ch;
   margin: 0 auto;
-  opacity: 0.96;                 // mais legível no fundo escuro
+  opacity: 0.96;
   line-height: 1.6;
   font-size: clamp(0.95rem, 3.8vw, 1.1rem);
   text-align: center;
   text-wrap: pretty;
   hyphens: auto;
-  color: $color-light-text;      // garante contraste
+  color: $color-light-text; // garante contraste
 }
 
 
@@ -160,7 +160,7 @@ $color-light-accent:  #f8bf00;
 // 7) MÍDIA — IMAGEM e VÍDEO
 // =====================================================================
 
-/* IMAGEM — Borda simples sem brilho */
+/* IMAGEM — Borda simples sem glow */
 .abstractImageWrapper {
   position: relative;
   width: min(90vw, 360px);
@@ -168,19 +168,19 @@ $color-light-accent:  #f8bf00;
   display: flex; align-items: center; justify-content: center;
   border-radius: 14px; overflow: hidden;
 
-  /* >>> remove glow e gradientes; aplica borda simples <<< */
+  /* borda simples (sem sombra / glow) */
   border: 1px solid rgba($color-dark-accent, 0.55);
   box-shadow: none;
 
   .media { width: 100%; height: 100%; object-fit: cover; display: block; }
 }
 
-/* Mantém a borda mesmo com vídeo dentro */
+/* Mantém a borda mesmo com vídeo dentro (sem overlay) */
 .abstractImageWrapper:has(video) {
   box-shadow: none;
 }
 
-/* VÍDEO — Moldura simples (sem glow e sem gradientes) */
+/* VÍDEO — Moldura simples (sem glow/gradientes) */
 .videoCurvedFrame {
   --radius: 14px;
   position: relative;
@@ -189,7 +189,7 @@ $color-light-accent:  #f8bf00;
   border-radius: var(--radius);
   overflow: hidden;
 
-  /* >>> borda simples <<< */
+  /* borda simples */
   border: 1px solid rgba($color-dark-accent, 0.55);
 
   /* remove qualquer overlay anterior */
@@ -206,7 +206,7 @@ $color-light-accent:  #f8bf00;
   outline: none;
 }
 
-/* versão "dark" deixa igual — sem glow */
+/* versão "dark" — igual, sem glow */
 .videoCurvedFrameDark {
   border: 1px solid rgba($color-dark-accent, 0.55);
 }
@@ -225,10 +225,11 @@ $color-light-accent:  #f8bf00;
   font-weight: 600; letter-spacing: 0.12rem; cursor: pointer;
   transition: all 0.25s ease; text-decoration: none;
   font-size: 0.95rem; display: inline-flex; align-items: center; justify-content: center;
-  gap: 0.5rem; min-height: 48px; border: 1px solid rgba($color-dark-accent, 0.4);
+  gap: 0.5rem; min-height: 48px;
+  border: 1px solid rgba($color-dark-accent, 0.4);
   background: transparent;
   color: $color-light-text;
-  box-shadow: none; /* remove brilho */
+  box-shadow: none; /* sem brilho */
 }
 .luxuryButton:hover, .secondaryButton:hover {
   background-color: rgba($color-dark-accent, 0.12);
