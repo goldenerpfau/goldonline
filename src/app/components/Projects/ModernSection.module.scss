@@ -1,7 +1,7 @@
 // ==============================
 // 1) VARIÁVEIS DE CORES
 // ==============================
-$color-dark-bg:       rgb(12, 12, 19); // fundo igual ao hero
+$color-dark-bg:       rgb(12, 12, 19);
 $color-dark-text:     #ffffff;
 $color-dark-accent:   #f8bf00;
 
@@ -21,66 +21,7 @@ $color-dark-accent:   #f8bf00;
 
 
 // ==============================
-// 3) RESETS ANTI-CONTORNO (mídia/links)
-// ==============================
-.imageContainer,
-.abstractImageWrapper,
-.videoCurvedFrame {
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-.imageContainer * ,
-.abstractImageWrapper * ,
-.videoCurvedFrame * {
-  border: 0 !important;
-  box-shadow: none !important;
-  outline: none !important;
-  -webkit-tap-highlight-color: transparent !important;
-}
-
-.imageContainer a,
-.imageContainer a:focus,
-.imageContainer a:focus-visible,
-.abstractImageWrapper a,
-.abstractImageWrapper a:focus,
-.abstractImageWrapper a:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-img, video {
-  display: block;
-  border: 0 !important;
-  box-shadow: none !important;
-  outline: none !important;
-  -webkit-tap-highlight-color: transparent !important;
-  -moz-outline: none !important;
-}
-
-img:focus,
-video:focus,
-img:focus-visible,
-video:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Remove qualquer pseudo-elemento que possa simular borda/halo */
-.abstractImageWrapper::before,
-.abstractImageWrapper::after,
-.videoCurvedFrame::before,
-.videoCurvedFrame::after {
-  content: none !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  background: none !important;
-}
-
-
-// ==============================
-// 4) BASE / SEÇÃO (MOBILE FIRST)
+// 3) BASE / SEÇÃO (MOBILE FIRST)
 // ==============================
 .modernSection {
   position: relative;
@@ -122,8 +63,8 @@ video:focus-visible {
   transform: translateZ(0);
 }
 
-/* Camadas auxiliares — REMOVIDO overlay para evitar “halo azul” */
-.imageBackgroundSplit { position: absolute; inset: 0; z-index: 1; background: none !important; }
+/* Camadas auxiliares — sem overlay/gradiente */
+.imageBackgroundSplit { position: absolute; inset: 0; z-index: 1; background: none; }
 .particlesBackground  { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 
 /* Conteúdo */
@@ -131,7 +72,7 @@ video:focus-visible {
 
 
 // ==============================
-// 5) LAYOUT INTERNO
+// 4) LAYOUT INTERNO
 // ==============================
 .textContainer {
   width: 100%;
@@ -157,7 +98,7 @@ video:focus-visible {
 
 
 // ==============================
-// 6) TIPOGRAFIA
+// 5) TIPOGRAFIA
 // ==============================
 .title {
   margin: 0;
@@ -190,56 +131,72 @@ video:focus-visible {
 
 
 // =====================================================================
-// 7) MÍDIA — IMAGEM e VÍDEO (sem borda/sombra)
+// 6) MÍDIA — IMAGEM e VÍDEO (sem borda/sombra, com "matte")
 // =====================================================================
-.abstractImageWrapper {
+
+/* Matte = fundo sutil + padding para não ficar “solto”.
+   Sem borda, sem sombra, sem pseudo-elementos. */
+.abstractImageWrapper,
+.videoCurvedFrame {
   position: relative;
+  border-radius: 18px;
+  padding: 10px;                       /* cria o “moldurado” sem borda */
+  background: rgba(255, 255, 255, 0.06);/* matte neutro, sem halo azul */
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+/* Tamanhos/geom. originais separados */
+.abstractImageWrapper {
   width: min(90vw, 360px);
   aspect-ratio: 1 / 1;
   display: flex; align-items: center; justify-content: center;
-  border-radius: 14px; overflow: hidden;
-  border: none !important;
-  box-shadow: none !important;
-
-  .media { width: 100%; height: 100%; object-fit: cover; display: block; }
-}
-
-.abstractImageWrapper:has(video) {
-  border: none !important;
-  box-shadow: none !important;
+  overflow: hidden;
 }
 
 .videoCurvedFrame {
-  --radius: 14px;
-  position: relative;
   width: min(92vw, 360px);
   aspect-ratio: 16 / 9;
-  border-radius: var(--radius);
   overflow: hidden;
-
-  border: none !important;
-  box-shadow: none !important;
-
-  &::after { content: none !important; }
 }
 
+/* Mídia interna preenche e herda arredondamento */
+.abstractImageWrapper .media,
 .videoCurvedFrame > video,
 .videoCurvedFrame .media {
-  position: relative; z-index: 1;
-  width: 100%; height: 100%;
-  display: block; object-fit: cover;
-  border-radius: inherit;
-  outline: none !important;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 12px;  /* leve diferença do contêiner p/ efeito matte */
+  border: none;
+  box-shadow: none;
+  outline: none;
 }
 
-.videoCurvedFrameDark {
-  border: none !important;
-  box-shadow: none !important;
+/* Estados de foco/hover sem anel */
+.abstractImageWrapper:focus,
+.abstractImageWrapper:focus-visible,
+.videoCurvedFrame:focus,
+.videoCurvedFrame:focus-visible,
+.abstractImageWrapper .media:focus,
+.abstractImageWrapper .media:focus-visible,
+.videoCurvedFrame > video:focus,
+.videoCurvedFrame > video:focus-visible {
+  outline: none;
+  box-shadow: none;
 }
+
+/* Remove overlays herdados */
+.abstractImageWrapper::before,
+.abstractImageWrapper::after,
+.videoCurvedFrame::before,
+.videoCurvedFrame::after { content: none; }
 
 
 // ==============================
-// 8) BOTÕES — sem borda/sombra
+// 7) BOTÕES — sem borda/sombra
 // ==============================
 .actions {
   margin-top: 12px;
@@ -259,19 +216,19 @@ video:focus-visible {
   gap: 0.5rem;
   min-height: 48px;
 
-  border: none !important;
+  border: none;
   background: transparent;
   color: $color-dark-text;
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 .luxuryButton:hover, .secondaryButton:hover {
-  background-color: rgba(255,255,255,0.08);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 
 // ==============================
-// 9) RESPONSIVIDADE
+// 8) RESPONSIVIDADE
 // ==============================
 @media (max-width: 430px) {
   .title{ font-size: clamp(1.28rem, 6.2vw, 2rem); }
