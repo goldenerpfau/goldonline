@@ -50,6 +50,7 @@ $color-light-accent:  #f8bf00;
 
   &.isVisible { animation: fadeInUp 1s ease-out forwards; }
   isolation: isolate;
+  background-color: rgb(12, 12, 19);
 }
 
 /* Vídeo de fundo (camada 0) — SEM BORDA */
