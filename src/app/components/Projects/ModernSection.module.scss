@@ -85,8 +85,8 @@ $color-dark-bg: #0f1823; // exemplo do que já usamos
 }
 
 .light {
-  background-color: $color-light-bg;
-  color: $color-light-text;
+  $color-dark-bg: #0f1823; // exemplo do que já usamos
+
 
   .imageBackgroundSplit {
     background: linear-gradient(270deg, rgba(15,24,35,0.6) 0%, rgba(15,24,35,0.0) 60%);
