@@ -50,7 +50,10 @@ $color-light-accent:  #f8bf00;
 
   &.isVisible { animation: fadeInUp 1s ease-out forwards; }
   isolation: isolate;
-  background-color: rgb(12, 12, 19);
+
+  /* >>> FUNDO IGUAL AO HERO E TEXTO CLARO <<< */
+  background-color: $color-dark-bg;       // era rgb(12,12,19)
+  color: $color-light-text;               // garante contraste
 }
 
 /* Vídeo de fundo (camada 0) — SEM BORDA */
@@ -77,21 +80,15 @@ $color-light-accent:  #f8bf00;
 // 4) TEMAS
 // ==============================
 .dark {
-$color-dark-bg: #0f1823; // exemplo do que já usamos
-
   .imageBackgroundSplit {
     background: linear-gradient(90deg, rgba(15,24,35,0.6) 0%, rgba(15,24,35,0.0) 60%);
   }
 }
 
 .light {
-  $color-dark-bg: #0f1823; // exemplo do que já usamos
-
-
   .imageBackgroundSplit {
     background: linear-gradient(270deg, rgba(15,24,35,0.6) 0%, rgba(15,24,35,0.0) 60%);
   }
-
   .textContainer { padding: 0; }
 }
 
@@ -132,7 +129,7 @@ $color-dark-bg: #0f1823; // exemplo do que já usamos
   letter-spacing: 0.01em;
   font-weight: 700;
   font-size: clamp(1.35rem, 6vw, 2.2rem);
-  color: $color-dark-accent;
+  color: $color-dark-accent; // mantém o dourado
 }
 
 .subtitle {
@@ -141,91 +138,62 @@ $color-dark-bg: #0f1823; // exemplo do que já usamos
   line-height: 1.35;
   letter-spacing: 0.01em;
   font-weight: 500;
-  opacity: 0.95;
+  opacity: 0.98;                 // ligeiramente mais forte
   font-size: clamp(1rem, 4.2vw, 1.2rem);
-  color: $color-light-text;
+  color: $color-light-text;      // texto claro
 }
 
 .description {
   max-width: 72ch;
   margin: 0 auto;
-  opacity: 0.92;
+  opacity: 0.96;                 // mais legível no fundo escuro
   line-height: 1.6;
   font-size: clamp(0.95rem, 3.8vw, 1.1rem);
   text-align: center;
   text-wrap: pretty;
   hyphens: auto;
+  color: $color-light-text;      // garante contraste
 }
-.light .description { opacity: 0.94; }
 
 
 // =====================================================================
 // 7) MÍDIA — IMAGEM e VÍDEO
 // =====================================================================
 
-/* IMAGEM com moldura dourada (per-side) */
+/* IMAGEM — Borda simples sem brilho */
 .abstractImageWrapper {
   position: relative;
   width: min(90vw, 360px);
   aspect-ratio: 1 / 1;
   display: flex; align-items: center; justify-content: center;
   border-radius: 14px; overflow: hidden;
-  box-shadow: 0 0 12px rgba($color-dark-accent, 0.25);
 
-  /* lados individuais */
-  --pfau-b-top:    2px;
-  --pfau-b-right:  2px;
-  --pfau-b-bottom: 2px;
-  --pfau-b-left:   2px;
-  --pfau-b-color:  rgba(#f8bf00, 0.65);
-
-  &::after {
-    content: "";
-    position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-    background:
-      linear-gradient(var(--pfau-b-color), var(--pfau-b-color)) top left    / 100% var(--pfau-b-top)    no-repeat,
-      linear-gradient(var(--pfau-b-color), var(--pfau-b-color)) bottom left / 100% var(--pfau-b-bottom) no-repeat,
-      linear-gradient(var(--pfau-b-color), var(--pfau-b-color)) top left    / var(--pfau-b-left)  100% no-repeat,
-      linear-gradient(var(--pfau-b-color), var(--pfau-b-color)) top right   / var(--pfau-b-right) 100% no-repeat;
-  }
+  /* >>> remove glow e gradientes; aplica borda simples <<< */
+  border: 1px solid rgba($color-dark-accent, 0.55);
+  box-shadow: none;
 
   .media { width: 100%; height: 100%; object-fit: cover; display: block; }
 }
 
-/* Se usar vídeo dentro deste wrapper de imagem, desliga a moldura */
-.abstractImageWrapper:has(video) { box-shadow: none; &::after { background: none; } }
+/* Mantém a borda mesmo com vídeo dentro */
+.abstractImageWrapper:has(video) {
+  box-shadow: none;
+}
 
-/* VÍDEO com borda curvada, LADOS INDIVIDUAIS — sempre visível */
+/* VÍDEO — Moldura simples (sem glow e sem gradientes) */
 .videoCurvedFrame {
-  /* geometria */
   --radius: 14px;
-
-  /* BORDAS INDIVIDUAIS (edite à vontade por instância) */
-  --v-b-top:    2px;
-  --v-b-right:  2px;
-  --v-b-bottom: 2px;
-  --v-b-left:   2px;
-  --v-b-color:  rgba(11,22,35,0.95); // escura padrão
-
   position: relative;
-  width: min(92vw, 360px); // cabe no iPhone 14
+  width: min(92vw, 360px);
   aspect-ratio: 16 / 9;
   border-radius: var(--radius);
   overflow: hidden;
 
-  /* borda por cima (não some nunca) */
-  &::after {
-    content: "";
-    position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-    z-index: 2; /* acima do vídeo */
+  /* >>> borda simples <<< */
+  border: 1px solid rgba($color-dark-accent, 0.55);
 
-    /* 4 gradientes = 4 lados (top, bottom, left, right) */
-    background:
-      linear-gradient(var(--v-b-color), var(--v-b-color)) top    left / 100% var(--v-b-top)    no-repeat,
-      linear-gradient(var(--v-b-color), var(--v-b-color)) bottom left / 100% var(--v-b-bottom) no-repeat,
-      linear-gradient(var(--v-b-color), var(--v-b-color)) top    left / var(--v-b-left)  100% no-repeat,
-      linear-gradient(var(--v-b-color), var(--v-b-color)) top    right/ var(--v-b-right) 100% no-repeat;
-  }
+  /* remove qualquer overlay anterior */
+  &::after { content: none; }
 }
 
 /* vídeo interno */
@@ -238,15 +206,14 @@ $color-dark-bg: #0f1823; // exemplo do que já usamos
   outline: none;
 }
 
-/* versão DARK específica para iosteste.mp4 (se quiser forçar) */
+/* versão "dark" deixa igual — sem glow */
 .videoCurvedFrameDark {
-  --v-b-color: rgba(11,22,35,0.98);
-  --v-b-top: 2px; --v-b-right: 2px; --v-b-bottom: 2px; --v-b-left: 2px;
+  border: 1px solid rgba($color-dark-accent, 0.55);
 }
 
 
 // ==============================
-// 8) BOTÕES (MOBILE)
+// 8) BOTÕES (MOBILE) — sem glow
 // ==============================
 .actions {
   margin-top: 12px;
@@ -256,17 +223,16 @@ $color-dark-bg: #0f1823; // exemplo do que já usamos
 .luxuryButton, .secondaryButton {
   padding: 0.9rem 1.3rem; border-radius: 10px; text-transform: uppercase;
   font-weight: 600; letter-spacing: 0.12rem; cursor: pointer;
-  transition: all 0.3s ease, box-shadow 0.3s ease; text-decoration: none;
+  transition: all 0.25s ease; text-decoration: none;
   font-size: 0.95rem; display: inline-flex; align-items: center; justify-content: center;
-  gap: 0.5rem; min-height: 48px; border: none;
+  gap: 0.5rem; min-height: 48px; border: 1px solid rgba($color-dark-accent, 0.4);
+  background: transparent;
+  color: $color-light-text;
+  box-shadow: none; /* remove brilho */
 }
-.dark .luxuryButton, .dark .secondaryButton {
-  color: $color-dark-text; background: transparent; box-shadow: 0 0 5px rgba($color-dark-accent, 0.4);
-  &:hover { background-color: rgba($color-dark-accent, 0.15); box-shadow: 0 0 15px rgba($color-dark-accent, 0.8), 0 0 5px rgba($color-dark-accent, 0.4); }
-}
-.light .luxuryButton, .light .secondaryButton {
-  color: $color-dark-text; background: transparent; box-shadow: 0 0 5px rgba($color-dark-accent, 0.4);
-  &:hover { background-color: rgba($color-dark-accent, 0.15); box-shadow: 0 0 15px rgba($color-dark-accent, 0.8), 0 0 5px rgba($color-dark-accent, 0.4); }
+.luxuryButton:hover, .secondaryButton:hover {
+  background-color: rgba($color-dark-accent, 0.12);
+  border-color: rgba($color-dark-accent, 0.6);
 }
 
 
