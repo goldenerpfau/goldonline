@@ -139,7 +139,7 @@ $color-dark-accent:   #f8bf00;
 .abstractImageWrapper,
 .videoCurvedFrame {
   position: relative;
-  border-radius: 18px;
+  border-radius: 1px;
   padding: 10px;                       /* cria o “moldurado” sem borda */
   background: rgba(255, 255, 255, 0.06);/* matte neutro, sem halo azul */
   border: none;
