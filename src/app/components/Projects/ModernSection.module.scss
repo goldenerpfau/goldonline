@@ -50,8 +50,7 @@ $color-dark-accent:   #f8bf00;
   background-color: rgb(12, 12, 19);
   color: $color-dark-text;
 
-  /* fundo totalmente parado */
-  background-attachment: fixed;
+  /* >>> Fundo parado SEM parallax (removido attachment: fixed) */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -59,6 +58,7 @@ $color-dark-accent:   #f8bf00;
 
 /* Vídeo de fundo */
 .bgVideo {
+  /* >>> Agora absoluto (não rola diferente do conteúdo) */
   position: absolute;
   inset: 0;
   width: 100%;
@@ -66,10 +66,6 @@ $color-dark-accent:   #f8bf00;
   object-fit: cover;
   z-index: 0;
 
-  /* >>> fundo parado <<< */
-  position: fixed;
-  top: 0;
-  left: 0;
   transform: none !important;
   backface-visibility: hidden;
 }
@@ -175,7 +171,9 @@ $color-dark-accent:   #f8bf00;
   height: 100%;
   display: block;
   object-fit: cover;
-  border-radius: 14px; /* cantos arredondados */
+
+  /* Só cantos arredondados na mídia */
+  border-radius: 14px;
   border: none !important;
   box-shadow: none !important;
   outline: none !important;
