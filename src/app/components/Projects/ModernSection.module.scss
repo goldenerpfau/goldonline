@@ -134,20 +134,19 @@ $color-dark-accent:   #f8bf00;
 // 6) MÍDIA — IMAGEM e VÍDEO (sem borda/sombra, com "matte")
 // =====================================================================
 
-/* Matte = fundo sutil + padding para não ficar “solto”.
-   Sem borda, sem sombra, sem pseudo-elementos. */
+/* Matte = fundo sutil + padding para não ficar “solto” */
 .abstractImageWrapper,
 .videoCurvedFrame {
   position: relative;
-  border-radius: 1px;
-  padding: 10px;                       /* cria o “moldurado” sem borda */
-  background: rgba(255, 255, 255, 0.06);/* matte neutro, sem halo azul */
+  border-radius: 18px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.25); /* matte escuro unificado */
   border: none;
   box-shadow: none;
   outline: none;
 }
 
-/* Tamanhos/geom. originais separados */
+/* Tamanhos/geom. separados */
 .abstractImageWrapper {
   width: min(90vw, 360px);
   aspect-ratio: 1 / 1;
@@ -169,10 +168,11 @@ $color-dark-accent:   #f8bf00;
   height: 100%;
   display: block;
   object-fit: cover;
-  border-radius: 12px;  /* leve diferença do contêiner p/ efeito matte */
-  border: none;
-  box-shadow: none;
-  outline: none;
+  border-radius: 12px;  /* arredondamento interno */
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background: transparent !important;
 }
 
 /* Estados de foco/hover sem anel */
