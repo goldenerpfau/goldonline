@@ -49,6 +49,12 @@ $color-dark-accent:   #f8bf00;
 
   background-color: rgb(12, 12, 19);
   color: $color-dark-text;
+
+  /* fundo totalmente parado */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* Vídeo de fundo */
@@ -59,8 +65,13 @@ $color-dark-accent:   #f8bf00;
   height: 100%;
   object-fit: cover;
   z-index: 0;
+
+  /* >>> fundo parado <<< */
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: none !important;
   backface-visibility: hidden;
-  transform: translateZ(0);
 }
 
 /* Camadas auxiliares — sem overlay/gradiente */
@@ -131,22 +142,19 @@ $color-dark-accent:   #f8bf00;
 
 
 // =====================================================================
-// 6) MÍDIA — IMAGEM e VÍDEO (sem borda/sombra, com "matte")
+// 6) MÍDIA — IMAGEM e VÍDEO (apenas mídia, sem borda)
 // =====================================================================
-
-/* Matte = fundo sutil + padding para não ficar “solto” */
 .abstractImageWrapper,
 .videoCurvedFrame {
   position: relative;
-  border-radius: 18px;
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.25); /* matte escuro unificado */
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
   border: none;
   box-shadow: none;
   outline: none;
 }
 
-/* Tamanhos/geom. separados */
 .abstractImageWrapper {
   width: min(90vw, 360px);
   aspect-ratio: 1 / 1;
@@ -160,7 +168,6 @@ $color-dark-accent:   #f8bf00;
   overflow: hidden;
 }
 
-/* Mídia interna preenche e herda arredondamento */
 .abstractImageWrapper .media,
 .videoCurvedFrame > video,
 .videoCurvedFrame .media {
@@ -168,24 +175,11 @@ $color-dark-accent:   #f8bf00;
   height: 100%;
   display: block;
   object-fit: cover;
-  border-radius: 12px;  /* arredondamento interno */
+  border-radius: 14px; /* cantos arredondados */
   border: none !important;
   box-shadow: none !important;
   outline: none !important;
   background: transparent !important;
-}
-
-/* Estados de foco/hover sem anel */
-.abstractImageWrapper:focus,
-.abstractImageWrapper:focus-visible,
-.videoCurvedFrame:focus,
-.videoCurvedFrame:focus-visible,
-.abstractImageWrapper .media:focus,
-.abstractImageWrapper .media:focus-visible,
-.videoCurvedFrame > video:focus,
-.videoCurvedFrame > video:focus-visible {
-  outline: none;
-  box-shadow: none;
 }
 
 /* Remove overlays herdados */
