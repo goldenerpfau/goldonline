@@ -1,5 +1,3 @@
-// ModernSection.tsx
-
 'use client';
 
 import React, { useEffect, useRef } from 'react';
@@ -15,12 +13,11 @@ interface ModernSectionProps {
   description: string;
   buttonText: string;
   buttonLink: string;
-  // NOVO: segundo botão com o MESMO estilo
   secondaryButtonText?: string;
   secondaryButtonLink?: string;
   imageSrc: string;
   imageAlt: string;
-  children?: React.ReactNode; // mantido para compatibilidade (opcional)
+  children?: React.ReactNode;
   titleFontClass: string;
   bodyFontClass: string;
 }
@@ -43,10 +40,6 @@ const ModernSection = ({
 }: ModernSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // 'cover' p/ mapas/fotos amplas (tema light); 'contain' p/ mock/app (tema dark)
-  const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
-
-  // IntersectionObserver — mantém, mas não dependemos dele para visibilidade
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
@@ -55,69 +48,73 @@ const ModernSection = ({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Adiciona tanto a classe global quanto (se existir) a classe do módulo
             entry.target.classList.add('isVisible');
-            // @ts-ignore - alguns setups exportam styles.isVisible, outros não
-            if ((styles as any).isVisible) entry.target.classList.add((styles as any).isVisible);
+            if ((styles as any).isVisible)
+              entry.target.classList.add((styles as any).isVisible);
             observer.unobserve(entry.target);
           }
         });
       },
-      { root: null, rootMargin: '0px', threshold: 0.2 }
+      { threshold: 0.2 }
     );
 
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
 
-  // --- MÍDIA (vídeo no dark / imagem no light) ---
-  const mediaContent =
-    theme === 'dark' ? (
-<video src="/iosteste.mp4" // seu arquivo dentro da pasta public className={styles.videoContent} autoPlay loop muted playsInline preload="metadata" aria-label="Demonstração do App iOS Goldener Pfau" />
+  const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-    ) : (
-      <Image
-        src={imageSrc}
-        alt={imageAlt}
-        fill
-        quality={100}
-        sizes="(max-width: 800px) 100vw, 50vw"
-        priority={false}
-        style={{ objectFit: imageObjectFit }}
-      />
-    );
+  const mediaContent =
+    theme === 'dark'
+      ? null // vídeo agora é global, não fica mais dentro do wrapper
+      : (
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          fill
+          quality={100}
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          priority={false}
+          style={{ objectFit: imageObjectFit }}
+        />
+      );
 
   return (
     <section
       id={id}
       ref={sectionRef}
-      // FORÇA visível por padrão: adiciona 'isVisible' desde o início
       className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible`}
     >
-      {/* Partículas no fundo — se suspeitar que é isso que está quebrando, comente este bloco temporariamente */}
+      {/* ✅ VÍDEO DE FUNDO INDEPENDENTE */}
+      {theme === 'dark' && (
+        <video
+          src="/iosteste.mp4"
+          className={styles.bgVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          aria-label="Demonstração do App iOS Goldener Pfau"
+        />
+      )}
+
+      {/* Partículas */}
       <div className={styles.particlesBackground}>
-        {theme === 'light' ? (
-          <ParticlesComponent
-            id={`particles-${id}`}
-            particleColor="#FFFFFF"
-            linkColor="#f8bf00" // links dourados no tema light
-          />
-        ) : (
-          <ParticlesComponent
-            id={`particles-${id}`}
-            particleColor="#FFFFFF"
-            linkColor="#FFFFFF"
-          />
-        )}
+        <ParticlesComponent
+          id={`particles-${id}`}
+          particleColor="#FFFFFF"
+          linkColor={theme === 'light' ? '#f8bf00' : '#FFFFFF'}
+        />
       </div>
 
-      {/* Texto */}
+      {/* Conteúdo */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
         <p className={styles.description}>{description}</p>
 
-        <div className={styles.buttonGroup}>
+        <div className={styles.actions}>
           <a
             href={buttonLink}
             target="_blank"
@@ -127,7 +124,6 @@ const ModernSection = ({
             {buttonText}
           </a>
 
-          {/* SEGUNDO BOTÃO — mesmo estilo */}
           {secondaryButtonText && secondaryButtonLink && (
             <a
               href={secondaryButtonLink}
@@ -139,7 +135,6 @@ const ModernSection = ({
             </a>
           )}
 
-          {/* Slot opcional (mantido para compatibilidade); se quiser que tudo no slot herde o mesmo estilo: */}
           {children &&
             React.Children.map(children, (child) =>
               React.isValidElement(child)
@@ -151,7 +146,6 @@ const ModernSection = ({
         </div>
       </div>
 
-      {/* Mídia com divisão de fundo */}
       <div className={styles.imageContainer}>
         <div className={styles.imageBackgroundSplit} />
         <div className={styles.abstractImageWrapper}>{mediaContent}</div>
