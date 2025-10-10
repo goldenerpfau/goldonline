@@ -43,41 +43,23 @@ const ModernSection = ({
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('isVisible');
-            if ((styles as any).isVisible)
-              entry.target.classList.add((styles as any).isVisible);
-            observer.unobserve(entry.target);
-          }
-        });
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          node.classList.add('isVisible');
+          // @ts-ignore
+          if ((styles as any).isVisible) node.classList.add((styles as any).isVisible);
+          io.disconnect();
+        }
       },
       { threshold: 0.2 }
     );
-
-    observer.observe(node);
-    return () => observer.disconnect();
+    io.observe(node);
+    return () => io.disconnect();
   }, []);
 
+  // Em tema light, mantemos a imagem no wrapper.
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
-
-  const mediaContent =
-    theme === 'dark'
-      ? null // vídeo agora é global, não fica mais dentro do wrapper
-      : (
-        <Image
-          src={imageSrc}
-          alt={imageAlt}
-          fill
-          quality={100}
-          sizes="(max-width: 1024px) 100vw, 50vw"
-          priority={false}
-          style={{ objectFit: imageObjectFit }}
-        />
-      );
 
   return (
     <section
@@ -85,20 +67,6 @@ const ModernSection = ({
       ref={sectionRef}
       className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible`}
     >
-      {/* ✅ VÍDEO DE FUNDO INDEPENDENTE */}
-      {theme === 'dark' && (
-        <video
-          src="/iosteste.mp4"
-          className={styles.bgVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          aria-label="Demonstração do App iOS Goldener Pfau"
-        />
-      )}
-
       {/* Partículas */}
       <div className={styles.particlesBackground}>
         <ParticlesComponent
@@ -108,7 +76,7 @@ const ModernSection = ({
         />
       </div>
 
-      {/* Conteúdo */}
+      {/* ===== COLUNA ESQUERDA: TEXTO ===== */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
@@ -135,20 +103,34 @@ const ModernSection = ({
             </a>
           )}
 
-          {children &&
-            React.Children.map(children, (child) =>
-              React.isValidElement(child)
-                ? React.cloneElement(child, {
-                    className: `${styles.luxuryButton} ${child.props?.className ?? ''}`.trim(),
-                  })
-                : child
-            )}
+          {children}
         </div>
       </div>
 
-      <div className={styles.imageContainer}>
-        <div className={styles.imageBackgroundSplit} />
-        <div className={styles.abstractImageWrapper}>{mediaContent}</div>
+      {/* ===== COLUNA DIREITA: VÍDEO 1200x800 ===== */}
+      <div className={styles.mediaRight}>
+        {theme === 'dark' ? (
+          <video
+            src="/iosteste.mp4"
+            className={styles.sideVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            aria-label="Goldener Pfau App demo"
+          />
+        ) : (
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            quality={100}
+            sizes="(max-width: 1024px) 100vw, 48vw"
+            priority={false}
+            style={{ objectFit: imageObjectFit }}
+          />
+        )}
       </div>
     </section>
   );
