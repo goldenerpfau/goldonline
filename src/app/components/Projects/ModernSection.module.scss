@@ -78,7 +78,7 @@ $color-dark-accent:   #f8bf00;
 ============================== */
 .mediaRight {
   order: 1; /* mobile: vídeo primeiro */
-  width: 100%;
+  width: 70%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,7 +86,7 @@ $color-dark-accent:   #f8bf00;
 
 .sideVideo {
   /* Mantém 1200×800 (3:2) sem invadir viewport */
-  width: clamp(300px, 92vw, 1200px);
+  width: clamp(200px, 92vw, 1200px);
   aspect-ratio: 3 / 2;         /* 1200x800 */
   height: auto;
   object-fit: cover;
