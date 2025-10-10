@@ -47,25 +47,33 @@ $color-dark-accent:   #f8bf00;
   &.isVisible { animation: fadeInUp 1s ease-out forwards; }
   isolation: isolate;
 
-  background-color: rgb(12, 12, 19);
+  background-color: $color-dark-bg;
   color: $color-dark-text;
 
-  /* >>> Fundo parado SEM parallax (removido attachment: fixed) */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
-/* VIDEOOOOOO
+
+/* ============ VÍDEO DE FUNDO ============ */
+/* (antes estava comentado e não aplicava) */
 .bgVideo {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  /* Tamanho alvo desktop */
   width: 1000px;
   height: 780px;
+
+  /* Centralização e corte limpo */
+  transform: translate(-50%, -50%);
   object-fit: cover;
   z-index: 0;
-
-  transform: none !important;
   backface-visibility: hidden;
+  pointer-events: none; // não bloqueia cliques no conteúdo
+
+  /* Mantém proporção em navegadores modernos */
+  aspect-ratio: 1000 / 780;
 }
 
 /* Camadas auxiliares — sem overlay/gradiente */
@@ -169,8 +177,6 @@ $color-dark-accent:   #f8bf00;
   height: 100%;
   display: block;
   object-fit: cover;
-
-  /* Só cantos arredondados na mídia */
   border-radius: 14px;
   border: none !important;
   box-shadow: none !important;
@@ -178,7 +184,6 @@ $color-dark-accent:   #f8bf00;
   background: transparent !important;
 }
 
-/* Remove overlays herdados */
 .abstractImageWrapper::before,
 .abstractImageWrapper::after,
 .videoCurvedFrame::before,
@@ -224,14 +229,24 @@ $color-dark-accent:   #f8bf00;
   .title{ font-size: clamp(1.28rem, 6.2vw, 2rem); }
   .subtitle{ font-size: clamp(0.98rem, 4.4vw, 1.15rem); }
   .description{ font-size: clamp(0.94rem, 3.9vw, 1.08rem); }
-  .abstractImageWrapper{ width: min(90vw, 360px); }
-  .videoCurvedFrame{ width: min(92vw, 360px); }
+
+  /* Garante que o vídeo não “estoure” em telas muito pequenas */
+  .bgVideo {
+    width: 92vw;
+    height: auto;
+    transform: translate(-50%, -50%);
+  }
 }
 
 @media (min-width: 431px) and (max-width: 1023px) {
   .modernSection { gap: 20px; }
   .abstractImageWrapper { width: clamp(280px, 60vw, 520px); }
   .videoCurvedFrame     { width: clamp(320px, 70vw, 720px); }
+
+  .bgVideo {
+    width: min(92vw, 1000px);
+    height: auto;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -249,4 +264,16 @@ $color-dark-accent:   #f8bf00;
 
   .abstractImageWrapper { width: clamp(300px, 36vw, 600px); }
   .videoCurvedFrame     { width: clamp(420px, 36vw, 720px); }
+
+  /* Desktop mantém 1000x780 exatos */
+  .bgVideo {
+    width: 1000px;
+    height: 780px;
+  }
+}
+
+/* Acessibilidade: reduz animações e pausa vídeo em usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .modernSection { transition: none; }
+  .bgVideo { display: none; }
 }
