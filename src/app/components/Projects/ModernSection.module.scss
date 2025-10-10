@@ -56,41 +56,37 @@ $color-dark-accent:   #f8bf00;
 }
 
 /* ============ VÍDEO DE FUNDO ============ */
-/* (antes estava comentado e não aplicava) */
-/* VÍDEO COLADO NA ESQUERDA DA TELA */
+/* ===========================
+   VÍDEO FULLSCREEN INDEPENDENTE
+   =========================== */
 .bgVideo {
   position: absolute;
-  top: 50%;
-  left: max(0px, env(safe-area-inset-left)); // encosta na borda/área segura
-  transform: translateY(-50%);               // centraliza verticalmente
-
-  /* Mantém 1000×780 no desktop; encolhe em telas menores */
-  width: clamp(520px, 42vw, 1000px);
-  aspect-ratio: 1000 / 780;
-  height: auto;
-  object-fit: cover;
-
-  /* Garante que não passe da altura visível da seção */
-  max-height: calc(100svh - (max(16px, env(safe-area-inset-top)) + max(16px, env(safe-area-inset-bottom))));
+  inset: 0;                      // ocupa toda a área da seção
+  width: 100%;
+  height: 100%;
+  object-fit: cover;             // preenche mantendo proporção
   z-index: 0;
   pointer-events: none;
   backface-visibility: hidden;
+  opacity: 1;
+  transform: none !important;
 }
 
-/* Se quiser REALMENTE colado na borda física (ignorando padding), use junto: */
-.bgVideo--edge { left: 0 !important; }
-
-
-/* Camadas auxiliares — sem overlay/gradiente */
-.imageBackgroundSplit { position: absolute; inset: 0; z-index: 1; background: none; }
-.particlesBackground  { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
-
-/* Conteúdo */
-.textContainer, .imageContainer { position: relative; z-index: 5; }
-
-@media (min-width: 1024px) {
-  .bgVideo { width: 1000px; } // trava o alvo
+/* garante proporção mais cinematográfica */
+@media (min-aspect-ratio: 16/9) {
+  .bgVideo {
+    width: 100%;
+    height: auto;
+  }
 }
+
+@media (max-aspect-ratio: 16/9) {
+  .bgVideo {
+    width: auto;
+    height: 100%;
+  }
+}
+
 
 
 
