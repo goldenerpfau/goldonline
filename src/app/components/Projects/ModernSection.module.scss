@@ -116,15 +116,18 @@ $color-dark-accent: #f8bf00;
 }
 
 .sideVideo {
-  width: clamp(200px, 90vw, 900px); /* 25% menor que 1200 */
+  width: clamp(180px, 72vw, 720px); /* -20% de 900px = 720px */
   aspect-ratio: 3 / 2;
+  height: auto;
   object-fit: cover;
+  transform: scale(0.8); /* reduz escala em 20% sem quebrar layout */
+  transform-origin: center;
   border-radius: 14px;
   box-shadow: 0 0 30px rgba(0,0,0,.4);
   pointer-events: none;
   backface-visibility: hidden;
-  height: auto;
 }
+
 
 // ==============================
 // 6) DESKTOP
