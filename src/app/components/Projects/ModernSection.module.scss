@@ -47,47 +47,33 @@ $color-dark-accent:   #f8bf00;
   &.isVisible { animation: fadeInUp 1s ease-out forwards; }
   isolation: isolate;
 
-  background-color: $color-dark-bg;
+  background-color: rgb(12, 12, 19);
   color: $color-dark-text;
 
+  /* >>> Fundo parado SEM parallax (removido attachment: fixed) */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
-
-/* ============ VÍDEO DE FUNDO ============ */
-/* ===========================
-   VÍDEO FULLSCREEN INDEPENDENTE
-   =========================== */
+/* VIDEOOOOOO
 .bgVideo {
   position: absolute;
-  inset: 0;                      // ocupa toda a área da seção
-  width: 100%;
-  height: 100%;
-  object-fit: cover;             // preenche mantendo proporção
+  inset: 0;
+  width: 1000px;
+  height: 780px;
+  object-fit: cover;
   z-index: 0;
-  pointer-events: none;
-  backface-visibility: hidden;
-  opacity: 1;
+
   transform: none !important;
+  backface-visibility: hidden;
 }
 
-/* garante proporção mais cinematográfica */
-@media (min-aspect-ratio: 16/9) {
-  .bgVideo {
-    width: 100%;
-    height: auto;
-  }
-}
+/* Camadas auxiliares — sem overlay/gradiente */
+.imageBackgroundSplit { position: absolute; inset: 0; z-index: 1; background: none; }
+.particlesBackground  { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 
-@media (max-aspect-ratio: 16/9) {
-  .bgVideo {
-    width: auto;
-    height: 100%;
-  }
-}
-
-
+/* Conteúdo */
+.textContainer, .imageContainer { position: relative; z-index: 5; }
 
 
 // ==============================
@@ -183,6 +169,8 @@ $color-dark-accent:   #f8bf00;
   height: 100%;
   display: block;
   object-fit: cover;
+
+  /* Só cantos arredondados na mídia */
   border-radius: 14px;
   border: none !important;
   box-shadow: none !important;
@@ -190,6 +178,7 @@ $color-dark-accent:   #f8bf00;
   background: transparent !important;
 }
 
+/* Remove overlays herdados */
 .abstractImageWrapper::before,
 .abstractImageWrapper::after,
 .videoCurvedFrame::before,
@@ -235,24 +224,14 @@ $color-dark-accent:   #f8bf00;
   .title{ font-size: clamp(1.28rem, 6.2vw, 2rem); }
   .subtitle{ font-size: clamp(0.98rem, 4.4vw, 1.15rem); }
   .description{ font-size: clamp(0.94rem, 3.9vw, 1.08rem); }
-
-  /* Garante que o vídeo não “estoure” em telas muito pequenas */
-  .bgVideo {
-    width: 92vw;
-    height: auto;
-    transform: translate(-50%, -50%);
-  }
+  .abstractImageWrapper{ width: min(90vw, 360px); }
+  .videoCurvedFrame{ width: min(92vw, 360px); }
 }
 
 @media (min-width: 431px) and (max-width: 1023px) {
   .modernSection { gap: 20px; }
   .abstractImageWrapper { width: clamp(280px, 60vw, 520px); }
   .videoCurvedFrame     { width: clamp(320px, 70vw, 720px); }
-
-  .bgVideo {
-    width: min(92vw, 1000px);
-    height: auto;
-  }
 }
 
 @media (min-width: 1024px) {
@@ -270,16 +249,4 @@ $color-dark-accent:   #f8bf00;
 
   .abstractImageWrapper { width: clamp(300px, 36vw, 600px); }
   .videoCurvedFrame     { width: clamp(420px, 36vw, 720px); }
-
-  /* Desktop mantém 1000x780 exatos */
-  .bgVideo {
-    width: 1000px;
-    height: 780px;
-  }
-}
-
-/* Acessibilidade: reduz animações e pausa vídeo em usuários que preferem menos movimento */
-@media (prefers-reduced-motion: reduce) {
-  .modernSection { transition: none; }
-  .bgVideo { display: none; }
 }
