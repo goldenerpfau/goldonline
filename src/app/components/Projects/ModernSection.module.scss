@@ -21,7 +21,7 @@ $color-dark-accent:   #f8bf00;
 
 
 // ==============================
-// 3) BASE / SEÇÃO (MOBILE FIRST)
+// 3) BASE / SEÇÃO
 // ==============================
 .modernSection {
   position: relative;
@@ -35,7 +35,7 @@ $color-dark-accent:   #f8bf00;
   overflow: hidden;
 
   display: flex;
-  flex-direction: column; // mobile
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 16px;
@@ -47,32 +47,42 @@ $color-dark-accent:   #f8bf00;
   &.isVisible { animation: fadeInUp 1s ease-out forwards; }
   isolation: isolate;
 
-  background-color: rgb(12, 12, 19);
+  background-color: $color-dark-bg;
   color: $color-dark-text;
-
-  /* >>> Fundo parado SEM parallax (removido attachment: fixed) */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
-/* VIDEOOOOOO
+
+/* ===========================
+   VÍDEO FULLSCREEN INDEPENDENTE
+   =========================== */
 .bgVideo {
   position: absolute;
   inset: 0;
-  width: 1000px;
-  height: 780px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  z-index: 0;
-
-  transform: none !important;
+  z-index: 1;
+  pointer-events: none;
   backface-visibility: hidden;
+  opacity: 1;
+  transform: none !important;
 }
 
-/* Camadas auxiliares — sem overlay/gradiente */
-.imageBackgroundSplit { position: absolute; inset: 0; z-index: 1; background: none; }
-.particlesBackground  { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+/* Mantém proporção correta em diferentes telas */
+@media (min-aspect-ratio: 16/9) {
+  .bgVideo { width: 100%; height: auto; }
+}
+@media (max-aspect-ratio: 16/9) {
+  .bgVideo { width: auto; height: 100%; }
+}
 
-/* Conteúdo */
+/* Partículas acima do vídeo */
+.imageBackgroundSplit { position: absolute; inset: 0; z-index: 2; background: none; }
+.particlesBackground  { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+
+/* Conteúdo sempre no topo */
 .textContainer, .imageContainer { position: relative; z-index: 5; }
 
 
@@ -136,7 +146,7 @@ $color-dark-accent:   #f8bf00;
 
 
 // =====================================================================
-// 6) MÍDIA — IMAGEM e VÍDEO (apenas mídia, sem borda)
+// 6) MÍDIA — IMAGEM e VÍDEO INTERNO
 // =====================================================================
 .abstractImageWrapper,
 .videoCurvedFrame {
@@ -169,8 +179,6 @@ $color-dark-accent:   #f8bf00;
   height: 100%;
   display: block;
   object-fit: cover;
-
-  /* Só cantos arredondados na mídia */
   border-radius: 14px;
   border: none !important;
   box-shadow: none !important;
@@ -178,7 +186,6 @@ $color-dark-accent:   #f8bf00;
   background: transparent !important;
 }
 
-/* Remove overlays herdados */
 .abstractImageWrapper::before,
 .abstractImageWrapper::after,
 .videoCurvedFrame::before,
@@ -186,7 +193,7 @@ $color-dark-accent:   #f8bf00;
 
 
 // ==============================
-// 7) BOTÕES — sem borda/sombra
+// 7) BOTÕES
 // ==============================
 .actions {
   margin-top: 12px;
@@ -205,7 +212,6 @@ $color-dark-accent:   #f8bf00;
   display: inline-flex; align-items: center; justify-content: center;
   gap: 0.5rem;
   min-height: 48px;
-
   border: none;
   background: transparent;
   color: $color-dark-text;
@@ -224,14 +230,6 @@ $color-dark-accent:   #f8bf00;
   .title{ font-size: clamp(1.28rem, 6.2vw, 2rem); }
   .subtitle{ font-size: clamp(0.98rem, 4.4vw, 1.15rem); }
   .description{ font-size: clamp(0.94rem, 3.9vw, 1.08rem); }
-  .abstractImageWrapper{ width: min(90vw, 360px); }
-  .videoCurvedFrame{ width: min(92vw, 360px); }
-}
-
-@media (min-width: 431px) and (max-width: 1023px) {
-  .modernSection { gap: 20px; }
-  .abstractImageWrapper { width: clamp(280px, 60vw, 520px); }
-  .videoCurvedFrame     { width: clamp(320px, 70vw, 720px); }
 }
 
 @media (min-width: 1024px) {
@@ -239,14 +237,17 @@ $color-dark-accent:   #f8bf00;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    min-height: 80vh;
+    min-height: 86vh;
     padding: 0 5vw;
     gap: 24px;
   }
 
   .imageContainer { order: 1; width: 40%; justify-content: flex-start; }
   .textContainer  { order: 2; width: 60%; max-width: 980px; padding: 6rem 3.5rem; }
+}
 
-  .abstractImageWrapper { width: clamp(300px, 36vw, 600px); }
-  .videoCurvedFrame     { width: clamp(420px, 36vw, 720px); }
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  .modernSection { transition: none; }
+  .bgVideo { display: none; }
 }
