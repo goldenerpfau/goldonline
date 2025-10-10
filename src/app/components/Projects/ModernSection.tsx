@@ -58,7 +58,6 @@ const ModernSection = ({
     return () => io.disconnect();
   }, []);
 
-  // Em tema light, mantemos a imagem no wrapper.
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
   return (
@@ -67,7 +66,6 @@ const ModernSection = ({
       ref={sectionRef}
       className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible`}
     >
-      {/* Partículas */}
       <div className={styles.particlesBackground}>
         <ParticlesComponent
           id={`particles-${id}`}
@@ -76,7 +74,7 @@ const ModernSection = ({
         />
       </div>
 
-      {/* ===== COLUNA ESQUERDA: TEXTO ===== */}
+      {/* TEXTO À ESQUERDA */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
@@ -107,7 +105,7 @@ const ModernSection = ({
         </div>
       </div>
 
-      {/* ===== COLUNA DIREITA: VÍDEO 1200x800 ===== */}
+      {/* VÍDEO À DIREITA */}
       <div className={styles.mediaRight}>
         {theme === 'dark' ? (
           <video
