@@ -1,3 +1,5 @@
+// ModernSection.tsx
+
 'use client';
 
 import React, { useEffect, useRef } from 'react';
@@ -13,11 +15,12 @@ interface ModernSectionProps {
   description: string;
   buttonText: string;
   buttonLink: string;
+  // NOVO: segundo botão com o MESMO estilo
   secondaryButtonText?: string;
   secondaryButtonLink?: string;
   imageSrc: string;
   imageAlt: string;
-  children?: React.ReactNode;
+  children?: React.ReactNode; // mantido para compatibilidade (opcional)
   titleFontClass: string;
   bodyFontClass: string;
 }
@@ -40,47 +43,89 @@ const ModernSection = ({
 }: ModernSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
 
+  // 'cover' p/ mapas/fotos amplas (tema light); 'contain' p/ mock/app (tema dark)
+  const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
+
+  // IntersectionObserver — mantém, mas não dependemos dele para visibilidade
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          node.classList.add('isVisible');
-          // @ts-ignore
-          if ((styles as any).isVisible) node.classList.add((styles as any).isVisible);
-          io.disconnect();
-        }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Adiciona tanto a classe global quanto (se existir) a classe do módulo
+            entry.target.classList.add('isVisible');
+            // @ts-ignore - alguns setups exportam styles.isVisible, outros não
+            if ((styles as any).isVisible) entry.target.classList.add((styles as any).isVisible);
+            observer.unobserve(entry.target);
+          }
+        });
       },
-      { threshold: 0.2 }
+      { root: null, rootMargin: '0px', threshold: 0.2 }
     );
-    io.observe(node);
-    return () => io.disconnect();
+
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
-  const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
+  // --- MÍDIA (vídeo no dark / imagem no light) ---
+  const mediaContent =
+    theme === 'dark' ? (
+      <video
+    src="/iosteste.mp4" // seu arquivo dentro da pasta public
+    className={styles.videoContent}
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="Demonstração do App iOS Goldener Pfau"
+      />
+    ) : (
+      <Image
+        src={imageSrc}
+        alt={imageAlt}
+        fill
+        quality={100}
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        priority={false}
+        style={{ objectFit: imageObjectFit }}
+      />
+    );
 
   return (
     <section
       id={id}
       ref={sectionRef}
+      // FORÇA visível por padrão: adiciona 'isVisible' desde o início
       className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible`}
     >
+      {/* Partículas no fundo — se suspeitar que é isso que está quebrando, comente este bloco temporariamente */}
       <div className={styles.particlesBackground}>
-        <ParticlesComponent
-          id={`particles-${id}`}
-          particleColor="#FFFFFF"
-          linkColor={theme === 'light' ? '#f8bf00' : '#FFFFFF'}
-        />
+        {theme === 'light' ? (
+          <ParticlesComponent
+            id={`particles-${id}`}
+            particleColor="#FFFFFF"
+            linkColor="#f8bf00" // links dourados no tema light
+          />
+        ) : (
+          <ParticlesComponent
+            id={`particles-${id}`}
+            particleColor="#FFFFFF"
+            linkColor="#FFFFFF"
+          />
+        )}
       </div>
 
-      {/* TEXTO À ESQUERDA */}
+      {/* Texto */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
         <p className={styles.description}>{description}</p>
 
-        <div className={styles.actions}>
+        <div className={styles.buttonGroup}>
           <a
             href={buttonLink}
             target="_blank"
@@ -90,6 +135,7 @@ const ModernSection = ({
             {buttonText}
           </a>
 
+          {/* SEGUNDO BOTÃO — mesmo estilo */}
           {secondaryButtonText && secondaryButtonLink && (
             <a
               href={secondaryButtonLink}
@@ -101,34 +147,22 @@ const ModernSection = ({
             </a>
           )}
 
-          {children}
+          {/* Slot opcional (mantido para compatibilidade); se quiser que tudo no slot herde o mesmo estilo: */}
+          {children &&
+            React.Children.map(children, (child) =>
+              React.isValidElement(child)
+                ? React.cloneElement(child, {
+                    className: `${styles.luxuryButton} ${child.props?.className ?? ''}`.trim(),
+                  })
+                : child
+            )}
         </div>
       </div>
 
-      {/* VÍDEO À DIREITA */}
-      <div className={styles.mediaRight}>
-        {theme === 'dark' ? (
-          <video
-            src="/iosteste.mp4"
-            className={styles.sideVideo}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            aria-label="Goldener Pfau App demo"
-          />
-        ) : (
-          <Image
-            src={imageSrc}
-            alt={imageAlt}
-            fill
-            quality={100}
-            sizes="(max-width: 1024px) 100vw, 48vw"
-            priority={false}
-            style={{ objectFit: imageObjectFit }}
-          />
-        )}
+      {/* Mídia com divisão de fundo */}
+      <div className={styles.imageContainer}>
+        <div className={styles.imageBackgroundSplit} />
+        <div className={styles.abstractImageWrapper}>{mediaContent}</div>
       </div>
     </section>
   );
