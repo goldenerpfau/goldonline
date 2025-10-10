@@ -73,16 +73,17 @@ const ModernSection = ({
   // --- MÍDIA (vídeo no dark / imagem no light) ---
   const mediaContent =
     theme === 'dark' ? (
-      <video
-    src="/iosteste.mp4" // seu arquivo dentro da pasta public
-    className={styles.videoContent}
-    autoPlay
-    loop
-    muted
-    playsInline
-    preload="metadata"
-    aria-label="Demonstração do App iOS Goldener Pfau"
-      />
+<video
+  src="/iosteste.mp4"
+  className={styles.bgVideo}   // antes era videoContent
+  autoPlay
+  loop
+  muted
+  playsInline
+  preload="metadata"
+  aria-label="Demonstração do App iOS Goldener Pfau"
+/>
+
     ) : (
       <Image
         src={imageSrc}
