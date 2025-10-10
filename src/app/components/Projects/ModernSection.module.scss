@@ -55,14 +55,12 @@ $color-dark-accent:   #f8bf00;
   background-repeat: no-repeat;
   background-size: cover;
 }
-
-/* Vídeo de fundo */
+/* VIDEOOOOOO
 .bgVideo {
-  /* >>> Agora absoluto (não rola diferente do conteúdo) */
   position: absolute;
   inset: 0;
-  width: 70%;
-  height: 70%;
+  width: 1000px;
+  height: 780px;
   object-fit: cover;
   z-index: 0;
 
