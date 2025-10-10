@@ -73,16 +73,7 @@ const ModernSection = ({
   // --- MÍDIA (vídeo no dark / imagem no light) ---
   const mediaContent =
     theme === 'dark' ? (
-<video
-  src="/iosteste.mp4"
-  className={styles.bgVideo}   // antes era videoContent
-  autoPlay
-  loop
-  muted
-  playsInline
-  preload="metadata"
-  aria-label="Demonstração do App iOS Goldener Pfau"
-/>
+<video src="/iosteste.mp4" // seu arquivo dentro da pasta public className={styles.videoContent} autoPlay loop muted playsInline preload="metadata" aria-label="Demonstração do App iOS Goldener Pfau" />
 
     ) : (
       <Image
@@ -90,7 +81,7 @@ const ModernSection = ({
         alt={imageAlt}
         fill
         quality={100}
-        sizes="(max-width: 1024px) 100vw, 50vw"
+        sizes="(max-width: 800px) 100vw, 50vw"
         priority={false}
         style={{ objectFit: imageObjectFit }}
       />
