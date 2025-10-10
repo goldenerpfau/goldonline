@@ -14,7 +14,8 @@ $color-dark-accent:   #f8bf00;
 }
 
 // ==============================
-/* 3) SEÇÃO BASE */
+// 3) SEÇÃO BASE
+// ==============================
 .modernSection {
   position: relative;
   isolation: isolate;
@@ -26,14 +27,19 @@ $color-dark-accent:   #f8bf00;
   box-sizing: border-box;
   overflow: hidden;
 
-  display: flex;
-  flex-direction: column; /* mobile */
+  display: flex;            /* mobile */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 20px;
 
   background: $color-dark-bg;
   color: $color-dark-text;
+
+  /* garante que QUALQUER background-image cubra a seção inteira */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   opacity: 0;
   transform: translateY(30px);
@@ -45,18 +51,20 @@ $color-dark-accent:   #f8bf00;
 .particlesBackground { position:absolute; inset:0; z-index:1; pointer-events:none; }
 .textContainer, .mediaRight { position:relative; z-index:5; }
 
-/* ==============================
-   4) TIPOGRAFIA/CONTEÚDO (ESQUERDA)
-============================== */
+// ==============================
+// 4) TIPOGRAFIA / CONTEÚDO
+// ==============================
 .textContainer {
   width: 100%;
   max-width: 820px;
-  text-align: center;
+  text-align: center;      /* mobile central */
   display: flex;
   flex-direction: column;
+  align-items: center;     /* centraliza botões também */
   gap: 12px;
   order: 2; /* mobile: vem depois do vídeo */
 }
+
 .title { margin:0; line-height:1.15; font-weight:700; color:$color-dark-accent; font-size:clamp(1.35rem,6vw,2.2rem); }
 .subtitle { margin:0; line-height:1.35; font-weight:500; opacity:.98; font-size:clamp(1rem,4.2vw,1.2rem); }
 .description { margin:0 auto; max-width:72ch; opacity:.96; line-height:1.6; font-size:clamp(.95rem,3.8vw,1.1rem); }
@@ -73,31 +81,32 @@ $color-dark-accent:   #f8bf00;
 }
 .luxuryButton:hover { background: rgba(255,255,255,.08); }
 
-/* ==============================
-   5) VÍDEO (DIREITA) 1200×800
-============================== */
+// ==============================
+// 5) VÍDEO (DIREITA) — agora -25%
+// ==============================
 .mediaRight {
   order: 1; /* mobile: vídeo primeiro */
-  width: 70%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .sideVideo {
-  /* Mantém 1200×800 (3:2) sem invadir viewport */
-  width: clamp(200px, 92vw, 1200px);
-  aspect-ratio: 3 / 2;         /* 1200x800 */
+  /* 1200x800 → -25% => 900x600 (3:2) */
+  width: clamp(220px, 92vw, 900px);
+  aspect-ratio: 3 / 2;
   height: auto;
   object-fit: cover;
   pointer-events: none;
   backface-visibility: hidden;
   border-radius: 14px;
+  box-shadow: 0 0 32px rgba(0,0,0,.35);
 }
 
-/* ==============================
-   6) DESKTOP: duas colunas
-============================== */
+// ==============================
+// 6) DESKTOP: duas colunas
+// ==============================
 @media (min-width: 1024px) {
   .modernSection {
     flex-direction: row;         /* lado a lado */
@@ -108,21 +117,47 @@ $color-dark-accent:   #f8bf00;
   }
   .textContainer {
     order: 1;                    /* texto à esquerda */
-    text-align: left;
-    width: min(46vw, 680px);
+    width: min(48vw, 720px);
+    text-align: left;            /* padrão desktop */
+    align-items: flex-start;
   }
   .mediaRight {
     order: 2;                    /* vídeo à direita */
-    width: min(48vw, 1200px);
+    width: min(48vw, 900px);
     justify-content: flex-end;
   }
   .sideVideo {
-    width: min(48vw, 1200px);    /* trava no máximo 1200 */
-    max-height: min(80svh, 800px); /* trava 800 no alto sem estourar */
+    width: min(36vw, 900px);     /* -25% de 1200 → 900 */
+    max-height: min(60svh, 600px);
   }
 }
 
-/* Acessibilidade */
+// ==============================
+// 7) PFau Institut — CENTRALIZADO e BG full
+//     Use id="pfau-institut" na seção correspondente
+// ==============================
+#pfau-institut.modernSection {
+  min-height: 100svh;           /* hero cheio */
+  padding: 8vh 6vw;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  /* a imagem de fundo já cobre pela regra base (cover) */
+}
+
+#pfau-institut .textContainer {
+  width: min(90vw, 900px);
+  max-width: 900px;
+  text-align: center;
+  align-items: center;
+}
+
+#pfau-institut .actions { justify-content: center; }
+
+// ==============================
+// 8) Acessibilidade
+// ==============================
 @media (prefers-reduced-motion: reduce) {
   .modernSection { transition: none; }
 }
