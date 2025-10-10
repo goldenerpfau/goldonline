@@ -57,24 +57,29 @@ $color-dark-accent:   #f8bf00;
 
 /* ============ VÍDEO DE FUNDO ============ */
 /* (antes estava comentado e não aplicava) */
+/* VÍDEO COLADO NA ESQUERDA DA TELA */
 .bgVideo {
   position: absolute;
   top: 50%;
-  left: 50%;
-  /* Tamanho alvo desktop */
-  width: 1000px;
-  height: 780px;
+  left: max(0px, env(safe-area-inset-left)); // encosta na borda/área segura
+  transform: translateY(-50%);               // centraliza verticalmente
 
-  /* Centralização e corte limpo */
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-  z-index: 0;
-  backface-visibility: hidden;
-  pointer-events: none; // não bloqueia cliques no conteúdo
-
-  /* Mantém proporção em navegadores modernos */
+  /* Mantém 1000×780 no desktop; encolhe em telas menores */
+  width: clamp(520px, 42vw, 1000px);
   aspect-ratio: 1000 / 780;
+  height: auto;
+  object-fit: cover;
+
+  /* Garante que não passe da altura visível da seção */
+  max-height: calc(100svh - (max(16px, env(safe-area-inset-top)) + max(16px, env(safe-area-inset-bottom))));
+  z-index: 0;
+  pointer-events: none;
+  backface-visibility: hidden;
 }
+
+/* Se quiser REALMENTE colado na borda física (ignorando padding), use junto: */
+.bgVideo--edge { left: 0 !important; }
+
 
 /* Camadas auxiliares — sem overlay/gradiente */
 .imageBackgroundSplit { position: absolute; inset: 0; z-index: 1; background: none; }
