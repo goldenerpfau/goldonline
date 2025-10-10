@@ -88,6 +88,11 @@ $color-dark-accent:   #f8bf00;
 /* Conteúdo */
 .textContainer, .imageContainer { position: relative; z-index: 5; }
 
+@media (min-width: 1024px) {
+  .bgVideo { width: 1000px; } // trava o alvo
+}
+
+
 
 // ==============================
 // 4) LAYOUT INTERNO
