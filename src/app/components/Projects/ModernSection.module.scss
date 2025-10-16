@@ -25,14 +25,15 @@ $color-dark-accent: #f8bf00;
   box-sizing: border-box;
   margin: 0;
   padding: 6vh 5vw;
+
   background: $color-dark-bg;
   color: $color-dark-text;
   background-position: center;
-  background-size: cover;
+  background-size: cover;   /* garante fundo full */
   background-repeat: no-repeat;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: column;   /* mobile */
   align-items: center;
   justify-content: center;
   gap: 24px;
@@ -43,19 +44,20 @@ $color-dark-accent: #f8bf00;
   &.isVisible { animation: fadeInUp 1s ease-out forwards; }
 }
 
+/* camadas/efeitos (mantidos) */
 .particlesBackground { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.textContainer, .mediaRight { position: relative; z-index: 5; }
+.textContainer, .imageContainer { position: relative; z-index: 5; }
 
-// ==============================
-// 4) CONTEÚDO PADRÃO
-// ==============================
+/* ============================== */
+/* 4) CONTEÚDO (TÍTULOS/TEXTO)   */
+/* ============================== */
 .textContainer {
   max-width: 820px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  align-items: flex-start;
+  align-items: flex-start;  /* desktop muda abaixo */
   text-align: left;
 }
 
@@ -83,11 +85,14 @@ $color-dark-accent: #f8bf00;
   font-size: clamp(1rem, 3.5vw, 1.15rem);
 }
 
-.actions {
+/* Botões — mantenho .actions e .buttonGroup para compatibilidade */
+.actions,
+.buttonGroup {
   margin-top: 16px;
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
+  justify-content: flex-start; /* desktop muda por seção quando necessário */
 }
 
 .luxuryButton {
@@ -105,33 +110,44 @@ $color-dark-accent: #f8bf00;
 }
 .luxuryButton:hover { background: rgba(255,255,255,.08); }
 
-// ==============================
-// 5) VÍDEO DIREITA (reduzido -25%)
-// ==============================
-.mediaRight {
+/* ============================== */
+/* 5) MÍDIA (vídeo/imagem à direita) */
+/* ============================== */
+.imageContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;     /* mobile central */
+  order: 1;                    /* mobile vem antes do texto */
+}
+
+.imageBackgroundSplit { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+
+/* Wrapper do iPhone (onde o <video class="videoContent" /> está) */
+.abstractImageWrapper {
+  position: relative;
+  width: 78vw;                 /* mobile */
+  max-width: 540px;            /* cap no mobile */
+  aspect-ratio: 9 / 19.5;      /* formato smartphone */
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+/* O próprio vídeo */
+.videoContent {
   width: 100%;
-}
-
-.sideVideo {
-  width: clamp(120px, 72vw, 520px); /* -20% de 900px = 720px */
-  aspect-ratio: 3 / 2;
-  height: auto;
+  height: 100%;
   object-fit: cover;
-  transform: scale(0.6); /* reduz escala em 20% sem quebrar layout */
-  transform-origin: center;
-  border-radius: 14px;
-  box-shadow: 0 0 30px rgba(0,0,0,.4);
-  pointer-events: none;
+  border-radius: 18px;
   backface-visibility: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,.35);
 }
 
-
-// ==============================
-// 6) DESKTOP
-// ==============================
+/* ============================== */
+/* 6) DESKTOP (duas colunas)      */
+/* ============================== */
 @media (min-width: 1024px) {
   .modernSection {
     flex-direction: row;
@@ -144,71 +160,60 @@ $color-dark-accent: #f8bf00;
     width: 50%;
     align-items: flex-start;
     text-align: left;
+    order: 1;
   }
 
-  .mediaRight {
+  .imageContainer {
     width: 50%;
-    justify-content: flex-end;
+    justify-content: flex-end;  /* mídia à direita */
+    order: 2;
   }
 
-  .sideVideo {
-    width: 35%; /* reduz 25% */
-    max-width: 400px;
-    max-height: 200px;
+  /* Base anterior ~900px; -20% => máx. 720px */
+  .abstractImageWrapper {
+    width: clamp(360px, 36vw, 720px);
+    max-height: 80svh;
   }
+
+  .videoContent { border-radius: 22px; }
 }
 
-// ==============================
-// 7) PFAU INSTITUT — CENTRALIZADO
-// ==============================
+/* ============================== */
+/* 7) PFAU INSTITUT — centralizado e BG full */
+/*     (use id="pfau-institut" na seção)     */
+/* ============================== */
 #pfau-institut.modernSection {
   min-height: 100svh;
+  padding: 10vh 6vw;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 10vh 6vw;
   gap: 24px;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  /* o BG já está como cover pela regra base */
 }
 
 #pfau-institut .textContainer {
+  width: min(90vw, 900px);
   align-items: center;
   text-align: center;
-  width: min(90vw, 900px);
 }
+#pfau-institut .actions,
+#pfau-institut .buttonGroup { justify-content: center; }
 
-#pfau-institut .actions { justify-content: center; }
-
-// ==============================
-// 8) MOBILE
-// ==============================
+/* ============================== */
+/* 8) MOBILE REFINEMENTS          */
+/* ============================== */
 @media (max-width: 1023px) {
-  .modernSection {
-    flex-direction: column;
-    gap: 28px;
-  }
-
-  .textContainer {
-    align-items: center;
-    text-align: center;
-  }
-
-  .mediaRight {
-    justify-content: center;
-  }
-
-  .sideVideo {
-    width: 92vw;
-    height: auto;
-  }
+  .modernSection { flex-direction: column; gap: 28px; }
+  .textContainer { align-items: center; text-align: center; order: 2; }
+  .imageContainer { order: 1; }
+  .abstractImageWrapper { width: 78vw; max-width: 540px; }
 }
 
-// ==============================
-// 9) ACESSIBILIDADE
-// ==============================
+/* ============================== */
+/* 9) ACESSIBILIDADE              */
+/* ============================== */
 @media (prefers-reduced-motion: reduce) {
   .modernSection { transition: none; }
 }
