@@ -116,7 +116,7 @@ $color-dark-accent: #f8bf00;
 }
 
 .sideVideo {
-  width: clamp(180px, 72vw, 720px); /* -20% de 900px = 720px */
+  width: clamp(120px, 72vw, 520px); /* -20% de 900px = 720px */
   aspect-ratio: 3 / 2;
   height: auto;
   object-fit: cover;
