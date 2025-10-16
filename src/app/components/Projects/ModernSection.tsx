@@ -1,5 +1,3 @@
-// ModernSection.tsx
-
 'use client';
 
 import React, { useEffect, useRef } from 'react';
@@ -15,12 +13,11 @@ interface ModernSectionProps {
   description: string;
   buttonText: string;
   buttonLink: string;
-  // NOVO: segundo botão com o MESMO estilo
   secondaryButtonText?: string;
   secondaryButtonLink?: string;
   imageSrc: string;
   imageAlt: string;
-  children?: React.ReactNode; // mantido para compatibilidade (opcional)
+  children?: React.ReactNode;
   titleFontClass: string;
   bodyFontClass: string;
 }
@@ -46,7 +43,7 @@ const ModernSection = ({
   // 'cover' p/ mapas/fotos amplas (tema light); 'contain' p/ mock/app (tema dark)
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-  // IntersectionObserver — mantém, mas não dependemos dele para visibilidade
+  // IntersectionObserver — mantém o fade-in
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
@@ -55,9 +52,8 @@ const ModernSection = ({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Adiciona tanto a classe global quanto (se existir) a classe do módulo
             entry.target.classList.add('isVisible');
-            // @ts-ignore - alguns setups exportam styles.isVisible, outros não
+            // @ts-ignore — alguns setups exportam styles.isVisible
             if ((styles as any).isVisible) entry.target.classList.add((styles as any).isVisible);
             observer.unobserve(entry.target);
           }
@@ -74,14 +70,14 @@ const ModernSection = ({
   const mediaContent =
     theme === 'dark' ? (
       <video
-    src="/iosteste.mp4" // seu arquivo dentro da pasta public
-    className={styles.videoContent}
-    autoPlay
-    loop
-    muted
-    playsInline
-    preload="metadata"
-    aria-label="Demonstração do App iOS Goldener Pfau"
+        src="/iosteste.mp4" // arquivo dentro de /public
+        className={styles.videoContent}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        aria-label="Demonstração do App iOS Goldener Pfau"
       />
     ) : (
       <Image
@@ -99,16 +95,15 @@ const ModernSection = ({
     <section
       id={id}
       ref={sectionRef}
-      // FORÇA visível por padrão: adiciona 'isVisible' desde o início
       className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible`}
     >
-      {/* Partículas no fundo — se suspeitar que é isso que está quebrando, comente este bloco temporariamente */}
+      {/* Partículas no fundo */}
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
           <ParticlesComponent
             id={`particles-${id}`}
             particleColor="#FFFFFF"
-            linkColor="#f8bf00" // links dourados no tema light
+            linkColor="#f8bf00"
           />
         ) : (
           <ParticlesComponent
@@ -135,7 +130,7 @@ const ModernSection = ({
             {buttonText}
           </a>
 
-          {/* SEGUNDO BOTÃO — mesmo estilo */}
+          {/* Segundo botão opcional */}
           {secondaryButtonText && secondaryButtonLink && (
             <a
               href={secondaryButtonLink}
@@ -147,7 +142,7 @@ const ModernSection = ({
             </a>
           )}
 
-          {/* Slot opcional (mantido para compatibilidade); se quiser que tudo no slot herde o mesmo estilo: */}
+          {/* Slot opcional mantendo o estilo */}
           {children &&
             React.Children.map(children, (child) =>
               React.isValidElement(child)
@@ -159,7 +154,7 @@ const ModernSection = ({
         </div>
       </div>
 
-      {/* Mídia com divisão de fundo */}
+      {/* Mídia à direita (vídeo ou imagem) */}
       <div className={styles.imageContainer}>
         <div className={styles.imageBackgroundSplit} />
         <div className={styles.abstractImageWrapper}>{mediaContent}</div>
