@@ -40,10 +40,9 @@ const ModernSection = ({
 }: ModernSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // 'cover' p/ mapas/fotos amplas (tema light); 'contain' p/ mock/app (tema dark)
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-  // IntersectionObserver — mantém o fade-in
+  // Fade-in on view
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
@@ -53,7 +52,7 @@ const ModernSection = ({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('isVisible');
-            // @ts-ignore — alguns setups exportam styles.isVisible
+            // @ts-ignore
             if ((styles as any).isVisible) entry.target.classList.add((styles as any).isVisible);
             observer.unobserve(entry.target);
           }
@@ -70,7 +69,7 @@ const ModernSection = ({
   const mediaContent =
     theme === 'dark' ? (
       <video
-        src="/iosteste.mp4" // arquivo dentro de /public
+        src="/iosteste.mp4"
         className={styles.videoContent}
         autoPlay
         loop
@@ -130,7 +129,6 @@ const ModernSection = ({
             {buttonText}
           </a>
 
-          {/* Segundo botão opcional */}
           {secondaryButtonText && secondaryButtonLink && (
             <a
               href={secondaryButtonLink}
@@ -142,7 +140,6 @@ const ModernSection = ({
             </a>
           )}
 
-          {/* Slot opcional mantendo o estilo */}
           {children &&
             React.Children.map(children, (child) =>
               React.isValidElement(child)
