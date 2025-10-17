@@ -40,31 +40,28 @@ const ModernSection = ({
 }: ModernSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // 'cover' para light; 'contain' para dark
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
+  // Fade-in (mantido). A variante pfauCentered neutraliza o gap via CSS.
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('isVisible');
-            // @ts-ignore
-            if ((styles as any).isVisible) entry.target.classList.add((styles as any).isVisible);
-            observer.unobserve(entry.target);
-          }
-        });
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          node.classList.add('isVisible');
+          // @ts-ignore
+          if ((styles as any).isVisible) node.classList.add((styles as any).isVisible);
+          io.disconnect();
+        }
       },
-      { root: null, rootMargin: '0px', threshold: 0.2 }
+      { threshold: 0.2 }
     );
-
-    observer.observe(node);
-    return () => observer.disconnect();
+    io.observe(node);
+    return () => io.disconnect();
   }, []);
 
+  // Mídia (vídeo no dark / imagem no light)
   const mediaContent =
     theme === 'dark' ? (
       <video
@@ -84,32 +81,43 @@ const ModernSection = ({
         width={1200}
         height={800}
         quality={100}
-        sizes="(max-width: 1024px) 100vw, 50vw"
         priority={false}
         style={{ objectFit: imageObjectFit, borderRadius: '18px' }}
       />
     );
 
+  // Classes dinâmicas:
+  // - services segue com "centered"
+  // - pfau-institut ganha "pfauCentered" (força centralização real)
+  const isServices = /services/i.test(id);
+  const isPfau = /pfau/i.test(id);
+
+  const classNames = [
+    styles.modernSection,
+    styles[theme],
+    bodyFontClass,
+    'isVisible',
+    isServices ? styles.centered : '',
+    isPfau ? styles.pfauCentered : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <section
-      id={id}
-      ref={sectionRef}
-      className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible`}
-    >
+    <section id={id} ref={sectionRef} className={classNames}>
+      {/* Partículas */}
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
-          <ParticlesComponent
-            id={`particles-${id}`}
-            particleColor="#FFFFFF"
-            linkColor="#f8bf00"
-          />
+          <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#f8bf00" />
         ) : (
-          <ParticlesComponent
-            id={`particles-${id}`}
-            particleColor="#FFFFFF"
-            linkColor="#FFFFFF"
-          />
+          <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#FFFFFF" />
         )}
+      </div>
+
+      {/* Mídia (fica à esquerda no desktop padrão; em Pfau mantém à direita via .pfauCentered) */}
+      <div className={styles.imageContainer}>
+        <div className={styles.imageBackgroundSplit} />
+        <div className={styles.abstractImageWrapper}>{mediaContent}</div>
       </div>
 
       {/* Texto */}
@@ -148,12 +156,6 @@ const ModernSection = ({
                 : child
             )}
         </div>
-      </div>
-
-      {/* Mídia */}
-      <div className={styles.imageContainer}>
-        <div className={styles.imageBackgroundSplit} />
-        <div className={styles.abstractImageWrapper}>{mediaContent}</div>
       </div>
     </section>
   );
