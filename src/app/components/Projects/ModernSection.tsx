@@ -42,13 +42,13 @@ const ModernSection = ({
 
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-  // Fade-in (mantido). A variante pfauCentered neutraliza o gap via CSS.
+  // Efeito de entrada — o Pfau ignora (CSS neutraliza)
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
     const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
+      ([entry]) => {
+        if (entry.isIntersecting) {
           node.classList.add('isVisible');
           // @ts-ignore
           if ((styles as any).isVisible) node.classList.add((styles as any).isVisible);
@@ -61,7 +61,6 @@ const ModernSection = ({
     return () => io.disconnect();
   }, []);
 
-  // Mídia (vídeo no dark / imagem no light)
   const mediaContent =
     theme === 'dark' ? (
       <video
@@ -86,9 +85,6 @@ const ModernSection = ({
       />
     );
 
-  // Classes dinâmicas:
-  // - services segue com "centered"
-  // - pfau-institut ganha "pfauCentered" (força centralização real)
   const isServices = /services/i.test(id);
   const isPfau = /pfau/i.test(id);
 
@@ -105,7 +101,6 @@ const ModernSection = ({
 
   return (
     <section id={id} ref={sectionRef} className={classNames}>
-      {/* Partículas */}
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
           <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#f8bf00" />
@@ -114,7 +109,7 @@ const ModernSection = ({
         )}
       </div>
 
-      {/* Mídia (fica à esquerda no desktop padrão; em Pfau mantém à direita via .pfauCentered) */}
+      {/* Mídia */}
       <div className={styles.imageContainer}>
         <div className={styles.imageBackgroundSplit} />
         <div className={styles.abstractImageWrapper}>{mediaContent}</div>
