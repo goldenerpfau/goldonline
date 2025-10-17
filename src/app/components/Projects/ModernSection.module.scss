@@ -6,7 +6,7 @@ $color-dark-text: #ffffff;
 $color-dark-accent: #f8bf00;
 
 // ==============================
-// 2) ANIMAÇÕES
+// 2) ANIMAÇÃO
 // ==============================
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
@@ -28,13 +28,11 @@ $color-dark-accent: #f8bf00;
 
   background: $color-dark-bg;
   color: $color-dark-text;
-
-  /* Fundo full para quem usa background-image na seção */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 
-  display: flex;                /* mobile default */
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -46,12 +44,11 @@ $color-dark-accent: #f8bf00;
   &.isVisible { animation: fadeInUp 1s ease-out forwards; }
 }
 
-/* Camadas/efeitos (mantidos) */
-.particlesBackground { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.textContainer, .imageContainer { position: relative; z-index: 5; }
+.particlesBackground { position:absolute; inset:0; z-index:1; pointer-events:none; }
+.textContainer, .imageContainer { position:relative; z-index:5; }
 
 // ==============================
-// 4) CONTEÚDO (TÍTULOS/TEXTO)
+// 4) TEXTO E BOTÕES
 // ==============================
 .textContainer {
   max-width: 820px;
@@ -59,42 +56,21 @@ $color-dark-accent: #f8bf00;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  align-items: flex-start;   /* desktop; no mobile ajustamos abaixo */
+  align-items: flex-start;
   text-align: left;
 }
 
-.title {
-  margin: 0;
-  line-height: 1.15;
-  font-weight: 700;
-  color: $color-dark-accent;
-  font-size: clamp(1.5rem, 5vw, 2.5rem);
-}
+.title { margin:0; font-weight:700; line-height:1.15; color:$color-dark-accent; font-size:clamp(1.5rem,5vw,2.5rem); }
+.subtitle { margin:0; opacity:.95; font-weight:500; line-height:1.35; font-size:clamp(1.1rem,4vw,1.4rem); }
+.description { margin:0; opacity:.9; max-width:70ch; line-height:1.6; font-size:clamp(1rem,3.5vw,1.15rem); }
 
-.subtitle {
-  margin: 0;
-  line-height: 1.35;
-  font-weight: 500;
-  opacity: .95;
-  font-size: clamp(1.1rem, 4vw, 1.4rem);
-}
-
-.description {
-  margin: 0;
-  max-width: 70ch;
-  opacity: .92;
-  line-height: 1.6;
-  font-size: clamp(1rem, 3.5vw, 1.15rem);
-}
-
-/* Botões — mantém .actions e .buttonGroup */
 .actions,
 .buttonGroup {
   margin-top: 16px;
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
-  justify-content: flex-start; /* em desktop; no Pfau centralizamos */
+  justify-content: flex-start;
 }
 
 .luxuryButton {
@@ -107,49 +83,45 @@ $color-dark-accent: #f8bf00;
   background: transparent;
   border: 1px solid rgba(255,255,255,.25);
   color: $color-dark-text;
-  transition: all .3s ease;
   cursor: pointer;
+  transition: all .3s ease;
 }
 .luxuryButton:hover { background: rgba(255,255,255,.08); }
 
 // ==============================
-// 5) MÍDIA (vídeo/imagem à direita)
+// 5) MÍDIA (vídeo/imagem)
 // ==============================
 .imageContainer {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;        /* mobile central */
-  order: 1;                       /* mobile primeiro (ajustável) */
+  justify-content: center;
+  order: 1;
 }
 
-.imageBackgroundSplit { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-
-/* Wrapper do iPhone */
 .abstractImageWrapper {
   position: relative;
-  width: 78vw;                    /* mobile base */
-  max-width: 540px;               /* teto no mobile */
+  width: 78vw;
+  max-width: 540px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
-/* VÍDEO — sem corte */
 .videoContent {
   width: 100%;
-  height: auto;                   /* deixa altura fluir pelo ratio do vídeo */
-  object-fit: contain;            /* evita crop */
+  height: auto;
+  object-fit: contain;
   border-radius: 18px;
   backface-visibility: hidden;
   box-shadow: 0 10px 40px rgba(0,0,0,.35);
-  background: rgba(0,0,0,.25);    /* borda/área visível ao redor quando contain */
+  background: rgba(0,0,0,.25);
 }
 
-/* ==============================
-// 6) DESKTOP (duas colunas)
-// ==============================*/
+// ==============================
+// 6) DESKTOP
+// ==============================
 @media (min-width: 1024px) {
   .modernSection {
     flex-direction: row;
@@ -157,33 +129,16 @@ $color-dark-accent: #f8bf00;
     align-items: center;
     gap: 48px;
   }
+  .textContainer { width: 50%; order:1; text-align:left; align-items:flex-start; }
+  .imageContainer { width: 50%; order:2; justify-content:flex-end; }
 
-  .textContainer {
-    width: 50%;
-    align-items: flex-start;
-    text-align: left;
-    order: 1;
-  }
-
-  .imageContainer {
-    width: 50%;
-    justify-content: flex-end;    /* mídia à direita */
-    order: 2;
-  }
-
-  /* ~20% menor que antes: máx. 720px */
-  .abstractImageWrapper {
-    width: clamp(360px, 36vw, 720px);
-    max-height: 80svh;
-  }
-
+  .abstractImageWrapper { width: clamp(360px, 36vw, 720px); max-height: 80svh; }
   .videoContent { border-radius: 22px; }
 }
 
-/* ==============================
-// 7) PFAU INSTITUT — central + moldura dourada
-// (use id="pfau-institut" na seção)
-// ==============================*/
+// ==============================
+// 7) PFAU INSTITUT (centralizado + borda dourada)
+// ==============================
 #pfau-institut.modernSection {
   min-height: 100svh;
   padding: 10vh 6vw;
@@ -193,14 +148,17 @@ $color-dark-accent: #f8bf00;
   text-align: center;
   gap: 24px;
 
-  /* moldura dourada sutil sobre o BG */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
   &::before {
     content: "";
     position: absolute;
-    inset: 24px;
-    border: 2px solid rgba(248, 191, 0, 0.65); /* dourado */
-    border-radius: 16px;
-    z-index: 2;               /* acima do BG, abaixo do conteúdo */
+    inset: 28px;
+    border: 2px solid rgba(248,191,0,0.7);
+    border-radius: 18px;
+    z-index: 2;
     pointer-events: none;
   }
 }
@@ -214,19 +172,19 @@ $color-dark-accent: #f8bf00;
 #pfau-institut .actions,
 #pfau-institut .buttonGroup { justify-content: center; }
 
-/* ==============================
-// 8) MOBILE REFINEMENTS
-// ==============================*/
+// ==============================
+// 8) MOBILE
+// ==============================
 @media (max-width: 1023px) {
   .modernSection { flex-direction: column; gap: 28px; }
-  .textContainer { align-items: center; text-align: center; order: 2; }
-  .imageContainer { order: 1; }
+  .textContainer { order: 2; align-items: center; text-align: center; }
+  .imageContainer { order: 1; justify-content: center; }
   .abstractImageWrapper { width: 78vw; max-width: 540px; }
 }
 
-/* ==============================
+// ==============================
 // 9) ACESSIBILIDADE
-// ==============================*/
+// ==============================
 @media (prefers-reduced-motion: reduce) {
   .modernSection { transition: none; }
 }
