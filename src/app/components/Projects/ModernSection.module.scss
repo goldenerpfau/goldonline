@@ -29,11 +29,12 @@ $color-dark-accent: #f8bf00;
   background: $color-dark-bg;
   color: $color-dark-text;
 
+  /* qualquer background-image deve cobrir */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 
-  display: flex;                /* mobile */
+  display: flex;                 /* mobile */
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -45,7 +46,7 @@ $color-dark-accent: #f8bf00;
   &.isVisible { animation: fadeInUp 1s ease-out forwards; }
 }
 
-/* camadas/efeitos */
+/* camadas */
 .particlesBackground { position:absolute; inset:0; z-index:1; pointer-events:none; }
 .textContainer, .imageContainer { position:relative; z-index:5; }
 
@@ -58,11 +59,15 @@ $color-dark-accent: #f8bf00;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  align-items: flex-start;
+  align-items: flex-start;   /* desktop padrão */
   text-align: left;
 }
 
-.title { margin:0; font-weight:700; line-height:1.15; color:$color-dark-accent; font-size:clamp(1.5rem,5vw,2.5rem); }
+.title {
+  margin:0; font-weight:700; line-height:1.15;
+  color:$color-dark-accent;
+  font-size:clamp(1.5rem,5vw,2.5rem);
+}
 .subtitle { margin:0; opacity:.95; font-weight:500; line-height:1.35; font-size:clamp(1.1rem,4vw,1.4rem); }
 .description { margin:0; opacity:.9; max-width:70ch; line-height:1.6; font-size:clamp(1rem,3.5vw,1.15rem); }
 
@@ -97,13 +102,13 @@ $color-dark-accent: #f8bf00;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  order: 1;
+  justify-content: center;        /* mobile central */
+  order: 1;                       /* mobile primeiro */
 }
 
 .abstractImageWrapper {
   position: relative;
-  width: 78vw;             /* mobile */
+  width: 78vw;                    /* mobile */
   max-width: 540px;
   display: flex;
   align-items: center;
@@ -114,7 +119,7 @@ $color-dark-accent: #f8bf00;
 .videoContent {
   width: 100%;
   height: auto;
-  object-fit: contain;      /* sem crop */
+  object-fit: contain;            /* sem crop do vídeo */
   border-radius: 18px;
   backface-visibility: hidden;
   box-shadow: 0 10px 40px rgba(0,0,0,.35);
@@ -145,13 +150,13 @@ $color-dark-accent: #f8bf00;
     justify-content: flex-start;
   }
 
-  /* vídeo ~20% menor (máx. 720px) */
+  /* tamanho do mock/iphone ~ 20% menor (máx. 720px) */
   .abstractImageWrapper { width: clamp(360px, 36vw, 720px); max-height: 80svh; }
   .videoContent { border-radius: 22px; }
 }
 
 /* ============================== */
-/* 7) VARIANTE CENTRALIZADA (Services) */
+/* 7) VARIANTE CENTRALIZADA (SERVICES) */
 /* ============================== */
 .centered .textContainer {
   align-items: center !important;
@@ -166,58 +171,48 @@ $color-dark-accent: #f8bf00;
 }
 
 /* ============================== */
-/* 8) PFAU INSTITUT — fundo FIXO + conteúdo central */
+/* 8) PFAU INSTITUT — CENTRAL + sem efeito de scroll */
 /* ============================== */
-[id="pfau-institut"].modernSection {
-  /* fundo da seção vem do TSX via inline style */
-  min-height: 100svh;
-  padding: 12vh 6vw;
-  flex-direction: column;           /* conteúdo EMPILHADO e central */
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  gap: 24px;
+section#pfau-institut.modernSection {
+  /* remove fade/translate que cria gap */
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
 
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;     /* fundo fixo no desktop */
-
-  /* moldura dourada */
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 28px;
-    border: 2px solid rgba(248,191,0,0.7);
-    border-radius: 18px;
-    z-index: 2;
-    pointer-events: none;
+  /* layout desktop: texto + imagem lado a lado e centrados */
+  @media (min-width: 1024px) {
+    flex-direction: row !important;            /* texto à esquerda, imagem à direita */
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 60px !important;
   }
 }
 
-[id="pfau-institut"] .textContainer {
-  width: min(90vw, 900px);
+/* Centralização total de título, subtítulo, descrição e botões */
+section#pfau-institut .textContainer {
   align-items: center !important;
   text-align: center !important;
   justify-content: center !important;
-  margin: 0 auto !important;
-  z-index: 5;
+  width: 100% !important;
+  max-width: 900px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
-[id="pfau-institut"] .actions,
-[id="pfau-institut"] .buttonGroup {
+section#pfau-institut .actions,
+section#pfau-institut .buttonGroup {
   justify-content: center !important;
   align-items: center !important;
-  margin-top: 24px !important;
   gap: 16px !important;
+  margin-top: 24px !important;
 }
 
-/* Esconde a mídia lateral dentro do Pfau (usaremos BG da seção) */
-[id="pfau-institut"] .imageContainer { display: none !important; }
-
-/* iOS fallback: desativa attachment fixed (Safari mobile não suporta bem) */
-@supports (-webkit-touch-callout: none) {
-  [id="pfau-institut"].modernSection { background-attachment: scroll; }
+/* Garante ordem correta no desktop (texto à esquerda, imagem à direita) */
+@media (min-width: 1024px) {
+  section#pfau-institut .textContainer { order: 1 !important; }
+  section#pfau-institut .imageContainer { order: 2 !important; justify-content: flex-end !important; }
 }
+
+/* iOS: se houver glitch com fixed/scroll-reveal, já neutralizamos acima. */
 
 /* ==============================
 // 9) MOBILE
@@ -227,6 +222,11 @@ $color-dark-accent: #f8bf00;
   .textContainer { order: 2; align-items: center; text-align: center; }
   .imageContainer { order: 1; justify-content: center; }
   .abstractImageWrapper { width: 78vw; max-width: 540px; }
+
+  /* Pfau continua central no mobile */
+  section#pfau-institut .textContainer { align-items: center !important; text-align: center !important; }
+  section#pfau-institut .actions,
+  section#pfau-institut .buttonGroup { justify-content: center !important; }
 }
 
 /* ==============================
