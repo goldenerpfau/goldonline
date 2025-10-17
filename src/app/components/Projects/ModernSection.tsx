@@ -40,6 +40,7 @@ const ModernSection = ({
 }: ModernSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
 
+  // 'cover' para light; 'contain' para dark
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
   useEffect(() => {
@@ -57,14 +58,13 @@ const ModernSection = ({
           }
         });
       },
-      { threshold: 0.2 }
+      { root: null, rootMargin: '0px', threshold: 0.2 }
     );
 
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
 
-  // Mídia (vídeo no dark / imagem no light)
   const mediaContent =
     theme === 'dark' ? (
       <video
@@ -84,46 +84,35 @@ const ModernSection = ({
         width={1200}
         height={800}
         quality={100}
-        style={{ objectFit: imageObjectFit, borderRadius: '18px' }}
+        sizes="(max-width: 1024px) 100vw, 50vw"
         priority={false}
+        style={{ objectFit: imageObjectFit, borderRadius: '18px' }}
       />
     );
 
-  // === ATIVAÇÃO AUTOMÁTICA DAS VARIANTES ===
-  // Centraliza quando id contiver "services" ou "pfau" (case-insensitive)
-  const shouldCenter = /services|pfau/i.test(id);
-  // Remove efeito de scroll (gap) quando for pfau
-  const noReveal = /pfau/i.test(id);
-
-  const classNames = [
-    styles.modernSection,
-    styles[theme],
-    bodyFontClass,
-    'isVisible',
-    shouldCenter ? styles.centerAll : '',
-    noReveal ? styles.noReveal : '',
-  ]
-    .filter(Boolean)
-    .join(' ');
-
   return (
-    <section id={id} ref={sectionRef} className={classNames}>
-      {/* Partículas */}
+    <section
+      id={id}
+      ref={sectionRef}
+      className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible`}
+    >
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
-          <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#f8bf00" />
+          <ParticlesComponent
+            id={`particles-${id}`}
+            particleColor="#FFFFFF"
+            linkColor="#f8bf00"
+          />
         ) : (
-          <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#FFFFFF" />
+          <ParticlesComponent
+            id={`particles-${id}`}
+            particleColor="#FFFFFF"
+            linkColor="#FFFFFF"
+          />
         )}
       </div>
 
-      {/* Mídia (fica à esquerda no desktop) */}
-      <div className={styles.imageContainer}>
-        <div className={styles.imageBackgroundSplit} />
-        <div className={styles.abstractImageWrapper}>{mediaContent}</div>
-      </div>
-
-      {/* Texto (centralizado quando .centerAll) */}
+      {/* Texto */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
@@ -159,6 +148,12 @@ const ModernSection = ({
                 : child
             )}
         </div>
+      </div>
+
+      {/* Mídia */}
+      <div className={styles.imageContainer}>
+        <div className={styles.imageBackgroundSplit} />
+        <div className={styles.abstractImageWrapper}>{mediaContent}</div>
       </div>
     </section>
   );
