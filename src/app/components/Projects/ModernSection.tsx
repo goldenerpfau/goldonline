@@ -88,13 +88,15 @@ const ModernSection = ({
       />
     );
 
+  // aplica classe de centralização somente no "services"
+  const centeredClass = id === 'services' ? styles.centered : '';
+
   return (
     <section
       id={id}
       ref={sectionRef}
-      className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible`}
+      className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible ${centeredClass}`}
     >
-      {/* Partículas */}
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
           <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#f8bf00" />
@@ -109,7 +111,7 @@ const ModernSection = ({
         <div className={styles.abstractImageWrapper}>{mediaContent}</div>
       </div>
 
-      {/* Texto à DIREITA (desktop) */}
+      {/* Texto à DIREITA (desktop) ou central (quando .centered) */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
