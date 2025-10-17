@@ -15,7 +15,7 @@ interface ModernSectionProps {
   buttonLink: string;
   secondaryButtonText?: string;
   secondaryButtonLink?: string;
-  imageSrc: string;
+  imageSrc: string;   // para Pfau, vira background da seção
   imageAlt: string;
   children?: React.ReactNode;
   titleFontClass: string;
@@ -40,30 +40,37 @@ const ModernSection = ({
 }: ModernSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
 
+  // cover p/ mapas/fotos (light); contain p/ mock/app (dark)
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
+  // Fade-in
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('isVisible');
-            // @ts-ignore
-            if ((styles as any).isVisible) entry.target.classList.add((styles as any).isVisible);
-            observer.unobserve(entry.target);
-          }
-        });
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          node.classList.add('isVisible');
+          // @ts-ignore
+          if ((styles as any).isVisible) node.classList.add((styles as any).isVisible);
+          obs.disconnect();
+        }
       },
       { threshold: 0.2 }
     );
-
-    observer.observe(node);
-    return () => observer.disconnect();
+    obs.observe(node);
+    return () => obs.disconnect();
   }, []);
 
+  // === PFau Institut: usa BACKGROUND na seção (fixo) e NÃO renderiza mídia lateral
+  const isPfau = id === 'pfau-institut' && theme === 'light';
+  const sectionStyle = isPfau
+    ? {
+        backgroundImage: `url(${imageSrc})`,
+      }
+    : undefined;
+
+  // Mídia padrão (apenas se NÃO for Pfau)
   const mediaContent =
     theme === 'dark' ? (
       <video
@@ -88,15 +95,17 @@ const ModernSection = ({
       />
     );
 
-  // aplica classe de centralização somente no "services"
+  // Services centralizado via classe .centered
   const centeredClass = id === 'services' ? styles.centered : '';
 
   return (
     <section
       id={id}
       ref={sectionRef}
+      style={sectionStyle}
       className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible ${centeredClass}`}
     >
+      {/* Partículas */}
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
           <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#f8bf00" />
@@ -105,13 +114,15 @@ const ModernSection = ({
         )}
       </div>
 
-      {/* Mídia à ESQUERDA (desktop) */}
-      <div className={styles.imageContainer}>
-        <div className={styles.imageBackgroundSplit} />
-        <div className={styles.abstractImageWrapper}>{mediaContent}</div>
-      </div>
+      {/* Mídia lateral: só aparece quando NÃO é Pfau (Pfau usa background) */}
+      {!isPfau && (
+        <div className={styles.imageContainer}>
+          <div className={styles.imageBackgroundSplit} />
+          <div className={styles.abstractImageWrapper}>{mediaContent}</div>
+        </div>
+      )}
 
-      {/* Texto à DIREITA (desktop) ou central (quando .centered) */}
+      {/* Texto / Botões */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
