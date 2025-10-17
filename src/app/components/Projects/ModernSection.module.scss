@@ -156,9 +156,9 @@ $color-dark-accent: #f8bf00;
 }
 
 /* ============================== */
-/* 7) VARIANTE CENTRALIZADA (SERVICES e PFAU) */
+/* 7) VARIANTE UNIVERSAL DE CENTRALIZAÇÃO */
 /* ============================== */
-.centered .textContainer {
+.centerAll .textContainer {
   align-items: center !important;
   text-align: center !important;
   justify-content: center !important;
@@ -166,29 +166,30 @@ $color-dark-accent: #f8bf00;
   width: 100% !important;
   max-width: 900px !important;
 }
-.centered .actions,
-.centered .buttonGroup {
+.centerAll .actions,
+.centerAll .buttonGroup {
   justify-content: center !important;
   align-items: center !important;
   gap: 16px !important;
   margin-top: 24px !important;
 }
-/* mantém mídia à esquerda e tudo balanceado no desktop */
+
+/* mantém mídia à esquerda e tudo balanceado no desktop quando .centerAll */
 @media (min-width: 1024px) {
-  .centered.modernSection {
+  .centerAll.modernSection {
     flex-direction: row-reverse !important; /* mídia à esquerda, texto à direita */
     justify-content: center !important;
     gap: 60px !important;
   }
-  .centered .textContainer { order: 2 !important; }
-  .centered .imageContainer { order: 1 !important; justify-content: flex-start !important; }
+  .centerAll .textContainer { order: 2 !important; }
+  .centerAll .imageContainer { order: 1 !important; justify-content: flex-start !important; }
 }
 
 /* ============================== */
-/* 8) PFau Institut — remover “gap” do scroll-reveal */
+/* 8) VARIANTE: sem efeito de scroll (remove gap) */
 /* ============================== */
-section#pfau-institut.modernSection {
-  opacity: 1 !important;          /* aparece já visível */
+.noReveal {
+  opacity: 1 !important;
   transform: none !important;
   animation: none !important;
 }
@@ -202,10 +203,9 @@ section#pfau-institut.modernSection {
   .imageContainer { order: 1; justify-content: center; }
   .abstractImageWrapper { width: 78vw; max-width: 540px; }
 
-  /* quando usar .centered no mobile, reforça */
-  .centered .textContainer { align-items: center !important; text-align: center !important; }
-  .centered .actions,
-  .centered .buttonGroup { justify-content: center !important; }
+  .centerAll .textContainer { align-items: center !important; text-align: center !important; }
+  .centerAll .actions,
+  .centerAll .buttonGroup { justify-content: center !important; }
 }
 
 /* ==============================
