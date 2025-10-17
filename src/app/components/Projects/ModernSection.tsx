@@ -15,7 +15,7 @@ interface ModernSectionProps {
   buttonLink: string;
   secondaryButtonText?: string;
   secondaryButtonLink?: string;
-  imageSrc: string;   // para Pfau, vira background da seção
+  imageSrc: string;
   imageAlt: string;
   children?: React.ReactNode;
   titleFontClass: string;
@@ -40,37 +40,32 @@ const ModernSection = ({
 }: ModernSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // cover p/ mapas/fotos (light); contain p/ mock/app (dark)
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-  // Fade-in
+  // Fade-in (mantido), mas Pfau é neutralizado via CSS
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          node.classList.add('isVisible');
-          // @ts-ignore
-          if ((styles as any).isVisible) node.classList.add((styles as any).isVisible);
-          obs.disconnect();
-        }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('isVisible');
+            // @ts-ignore
+            if ((styles as any).isVisible) entry.target.classList.add((styles as any).isVisible);
+            observer.unobserve(entry.target);
+          }
+        });
       },
       { threshold: 0.2 }
     );
-    obs.observe(node);
-    return () => obs.disconnect();
+
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
-  // === PFau Institut: usa BACKGROUND na seção (fixo) e NÃO renderiza mídia lateral
-  const isPfau = id === 'pfau-institut' && theme === 'light';
-  const sectionStyle = isPfau
-    ? {
-        backgroundImage: `url(${imageSrc})`,
-      }
-    : undefined;
-
-  // Mídia padrão (apenas se NÃO for Pfau)
+  // Mídia (somente para seções com mídia lateral)
   const mediaContent =
     theme === 'dark' ? (
       <video
@@ -95,14 +90,13 @@ const ModernSection = ({
       />
     );
 
-  // Services centralizado via classe .centered
+  // Services centralizado
   const centeredClass = id === 'services' ? styles.centered : '';
 
   return (
     <section
       id={id}
       ref={sectionRef}
-      style={sectionStyle}
       className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible ${centeredClass}`}
     >
       {/* Partículas */}
@@ -114,15 +108,13 @@ const ModernSection = ({
         )}
       </div>
 
-      {/* Mídia lateral: só aparece quando NÃO é Pfau (Pfau usa background) */}
-      {!isPfau && (
-        <div className={styles.imageContainer}>
-          <div className={styles.imageBackgroundSplit} />
-          <div className={styles.abstractImageWrapper}>{mediaContent}</div>
-        </div>
-      )}
+      {/* Mídia lateral (Pfau mantém a imagem à direita) */}
+      <div className={styles.imageContainer}>
+        <div className={styles.imageBackgroundSplit} />
+        <div className={styles.abstractImageWrapper}>{mediaContent}</div>
+      </div>
 
-      {/* Texto / Botões */}
+      {/* Texto */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
