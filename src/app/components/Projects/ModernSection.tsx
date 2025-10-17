@@ -42,7 +42,6 @@ const ModernSection = ({
 
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-  // Fade-in on view
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
@@ -58,14 +57,13 @@ const ModernSection = ({
           }
         });
       },
-      { root: null, rootMargin: '0px', threshold: 0.2 }
+      { threshold: 0.2 }
     );
 
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
 
-  // --- MÍDIA (vídeo no dark / imagem no light) ---
   const mediaContent =
     theme === 'dark' ? (
       <video
@@ -82,11 +80,11 @@ const ModernSection = ({
       <Image
         src={imageSrc}
         alt={imageAlt}
-        fill
+        width={1200}
+        height={800}
         quality={100}
-        sizes="(max-width: 1024px) 100vw, 50vw"
+        style={{ objectFit: imageObjectFit, borderRadius: '18px' }}
         priority={false}
-        style={{ objectFit: imageObjectFit }}
       />
     );
 
@@ -96,7 +94,7 @@ const ModernSection = ({
       ref={sectionRef}
       className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible`}
     >
-      {/* Partículas no fundo */}
+      {/* Partículas */}
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
           <ParticlesComponent
@@ -151,7 +149,7 @@ const ModernSection = ({
         </div>
       </div>
 
-      {/* Mídia à direita (vídeo ou imagem) */}
+      {/* Mídia (vídeo ou imagem) */}
       <div className={styles.imageContainer}>
         <div className={styles.imageBackgroundSplit} />
         <div className={styles.abstractImageWrapper}>{mediaContent}</div>
