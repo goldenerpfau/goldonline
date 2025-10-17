@@ -94,29 +94,22 @@ const ModernSection = ({
       ref={sectionRef}
       className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible`}
     >
+      {/* Partículas */}
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
-          <ParticlesComponent
-            id={`particles-${id}`}
-            particleColor="#FFFFFF"
-            linkColor="#f8bf00"
-          />
+          <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#f8bf00" />
         ) : (
-          <ParticlesComponent
-            id={`particles-${id}`}
-            particleColor="#FFFFFF"
-            linkColor="#FFFFFF"
-          />
+          <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#FFFFFF" />
         )}
       </div>
 
-      {/* Imagem ou vídeo agora à esquerda */}
+      {/* Mídia à ESQUERDA (desktop) */}
       <div className={styles.imageContainer}>
         <div className={styles.imageBackgroundSplit} />
         <div className={styles.abstractImageWrapper}>{mediaContent}</div>
       </div>
 
-      {/* Texto à direita */}
+      {/* Texto à DIREITA (desktop) */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
