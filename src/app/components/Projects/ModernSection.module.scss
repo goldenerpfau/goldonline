@@ -29,12 +29,11 @@ $color-dark-accent: #f8bf00;
   background: $color-dark-bg;
   color: $color-dark-text;
 
-  /* fundo sempre cobre a seção */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 
-  display: flex;                 /* mobile */
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -58,7 +57,7 @@ $color-dark-accent: #f8bf00;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  align-items: flex-start;   /* desktop padrão */
+  align-items: flex-start;
   text-align: left;
 }
 
@@ -72,7 +71,7 @@ $color-dark-accent: #f8bf00;
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
-  justify-content: flex-start; /* padrão */
+  justify-content: flex-start;
 }
 
 .luxuryButton {
@@ -97,13 +96,13 @@ $color-dark-accent: #f8bf00;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;        /* mobile central */
-  order: 1;                       /* mobile primeiro */
+  justify-content: center;
+  order: 1;
 }
 
 .abstractImageWrapper {
   position: relative;
-  width: 78vw;                    /* mobile */
+  width: 78vw;
   max-width: 540px;
   display: flex;
   align-items: center;
@@ -114,7 +113,7 @@ $color-dark-accent: #f8bf00;
 .videoContent {
   width: 100%;
   height: auto;
-  object-fit: contain;            /* SEM corte do vídeo */
+  object-fit: contain;
   border-radius: 18px;
   backface-visibility: hidden;
   box-shadow: 0 10px 40px rgba(0,0,0,.35);
@@ -126,7 +125,7 @@ $color-dark-accent: #f8bf00;
 // ==============================
 @media (min-width: 1024px) {
   .modernSection {
-    flex-direction: row-reverse;  /* mídia à esquerda, texto à direita */
+    flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
     gap: 60px;
@@ -145,13 +144,12 @@ $color-dark-accent: #f8bf00;
     justify-content: flex-start;
   }
 
-  /* tamanho do mock/iphone ~ 20% menor (máx. 720px) */
   .abstractImageWrapper { width: clamp(360px, 36vw, 720px); max-height: 80svh; }
   .videoContent { border-radius: 22px; }
 }
 
 /* ============================== */
-/* 7) VARIANTE CENTRALIZADA — aplica na seção com classe .centered */
+/* 7) VARIANTE CENTRALIZADA (SERVICES) */
 /* ============================== */
 .centered .textContainer {
   align-items: center !important;
@@ -165,31 +163,22 @@ $color-dark-accent: #f8bf00;
   align-items: center !important;
 }
 
-/* Mobile mantém central nas seções centradas */
-@media (max-width: 1023px) {
-  .centered .textContainer { align-items: center !important; text-align: center !important; }
-  .centered .actions,
-  .centered .buttonGroup { justify-content: center !important; }
-}
-
 /* ============================== */
-/* 8) PFAU INSTITUT — central + sem “scroll reveal” */
+/* 8) PFAU INSTITUT CENTRALIZADO */
 /* ============================== */
 #pfau-institut.modernSection {
   min-height: 100svh;
   padding: 12vh 6vw;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
-  text-align: center;
-  gap: 24px;
+  align-items: center;
+  gap: 60px;
 
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;    /* fundo estático */
+  background-attachment: fixed;
 
-  /* moldura dourada */
   &::before {
     content: "";
     position: absolute;
@@ -200,17 +189,30 @@ $color-dark-accent: #f8bf00;
     pointer-events: none;
   }
 }
-/* conteúdo do Instituto central */
+
 #pfau-institut .textContainer {
   width: min(90vw, 900px);
   align-items: center !important;
   text-align: center !important;
+  justify-content: center !important;
   z-index: 5;
+  margin: 0 auto !important;
 }
-#pfau-institut .actions,
-#pfau-institut .buttonGroup { justify-content: center !important; }
 
-/* iOS fallback para evitar “vazar” o fundo */
+#pfau-institut .actions,
+#pfau-institut .buttonGroup {
+  justify-content: center !important;
+  align-items: center !important;
+  margin-top: 24px !important;
+  gap: 16px !important;
+}
+
+#pfau-institut .imageContainer {
+  justify-content: flex-end !important;
+  order: 2 !important;
+}
+
+/* iOS fallback */
 @supports (-webkit-touch-callout: none) {
   #pfau-institut.modernSection { background-attachment: scroll; }
 }
