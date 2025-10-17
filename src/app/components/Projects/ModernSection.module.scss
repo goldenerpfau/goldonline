@@ -10,7 +10,7 @@ $color-dark-accent: #f8bf00;
 // ==============================
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 // ==============================
@@ -33,7 +33,7 @@ $color-dark-accent: #f8bf00;
   background-size: cover;
   background-repeat: no-repeat;
 
-  display: flex;
+  display: flex;                /* mobile */
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -45,6 +45,7 @@ $color-dark-accent: #f8bf00;
   &.isVisible { animation: fadeInUp 1s ease-out forwards; }
 }
 
+/* camadas/efeitos */
 .particlesBackground { position:absolute; inset:0; z-index:1; pointer-events:none; }
 .textContainer, .imageContainer { position:relative; z-index:5; }
 
@@ -71,7 +72,7 @@ $color-dark-accent: #f8bf00;
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: flex-start; /* padrão */
 }
 
 .luxuryButton {
@@ -102,7 +103,7 @@ $color-dark-accent: #f8bf00;
 
 .abstractImageWrapper {
   position: relative;
-  width: 78vw;
+  width: 78vw;             /* mobile */
   max-width: 540px;
   display: flex;
   align-items: center;
@@ -113,7 +114,7 @@ $color-dark-accent: #f8bf00;
 .videoContent {
   width: 100%;
   height: auto;
-  object-fit: contain;
+  object-fit: contain;      /* sem crop */
   border-radius: 18px;
   backface-visibility: hidden;
   box-shadow: 0 10px 40px rgba(0,0,0,.35);
@@ -125,7 +126,7 @@ $color-dark-accent: #f8bf00;
 // ==============================
 @media (min-width: 1024px) {
   .modernSection {
-    flex-direction: row-reverse;
+    flex-direction: row-reverse;  /* mídia à esquerda, texto à direita */
     justify-content: space-between;
     align-items: center;
     gap: 60px;
@@ -144,12 +145,13 @@ $color-dark-accent: #f8bf00;
     justify-content: flex-start;
   }
 
+  /* vídeo ~20% menor (máx. 720px) */
   .abstractImageWrapper { width: clamp(360px, 36vw, 720px); max-height: 80svh; }
   .videoContent { border-radius: 22px; }
 }
 
 /* ============================== */
-/* 7) VARIANTE CENTRALIZADA (SERVICES) */
+/* 7) VARIANTE CENTRALIZADA (Services) */
 /* ============================== */
 .centered .textContainer {
   align-items: center !important;
@@ -164,21 +166,24 @@ $color-dark-accent: #f8bf00;
 }
 
 /* ============================== */
-/* 8) PFAU INSTITUT CENTRALIZADO */
+/* 8) PFAU INSTITUT — fundo FIXO + conteúdo central */
 /* ============================== */
-#pfau-institut.modernSection {
+[id="pfau-institut"].modernSection {
+  /* fundo da seção vem do TSX via inline style */
   min-height: 100svh;
   padding: 12vh 6vw;
-  flex-direction: row;
+  flex-direction: column;           /* conteúdo EMPILHADO e central */
   justify-content: center;
   align-items: center;
-  gap: 60px;
+  text-align: center;
+  gap: 24px;
 
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: fixed;     /* fundo fixo no desktop */
 
+  /* moldura dourada */
   &::before {
     content: "";
     position: absolute;
@@ -190,31 +195,28 @@ $color-dark-accent: #f8bf00;
   }
 }
 
-#pfau-institut .textContainer {
+[id="pfau-institut"] .textContainer {
   width: min(90vw, 900px);
   align-items: center !important;
   text-align: center !important;
   justify-content: center !important;
-  z-index: 5;
   margin: 0 auto !important;
+  z-index: 5;
 }
-
-#pfau-institut .actions,
-#pfau-institut .buttonGroup {
+[id="pfau-institut"] .actions,
+[id="pfau-institut"] .buttonGroup {
   justify-content: center !important;
   align-items: center !important;
   margin-top: 24px !important;
   gap: 16px !important;
 }
 
-#pfau-institut .imageContainer {
-  justify-content: flex-end !important;
-  order: 2 !important;
-}
+/* Esconde a mídia lateral dentro do Pfau (usaremos BG da seção) */
+[id="pfau-institut"] .imageContainer { display: none !important; }
 
-/* iOS fallback */
+/* iOS fallback: desativa attachment fixed (Safari mobile não suporta bem) */
 @supports (-webkit-touch-callout: none) {
-  #pfau-institut.modernSection { background-attachment: scroll; }
+  [id="pfau-institut"].modernSection { background-attachment: scroll; }
 }
 
 /* ==============================
