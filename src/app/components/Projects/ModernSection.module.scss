@@ -153,28 +153,43 @@ $color-dark-accent: #f8bf00;
 /* ============================== */
 /* ============================== */
 /* 7) PERSONALIZED SERVICES — texto e botões centralizados */
-/* ============================== */
-#services .textContainer {
+/* === FIX: "Personalized Services" centralizado === */
+/* Garanta que a seção tenha id="services" no TSX */
+section#services .textContainer {
   align-items: center !important;
   text-align: center !important;
-  justify-content: center;
-  margin: 0 auto;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  width: 100%;
+  max-width: 820px;
 }
 
-#services .title,
-#services .subtitle,
-#services .description {
+section#services .title,
+section#services .subtitle,
+section#services .description {
+  margin-left: auto !important;
+  margin-right: auto !important;
   max-width: 720px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-#services .actions,
-#services .buttonGroup {
+section#services .actions,
+section#services .buttonGroup {
   justify-content: center !important;
   align-items: center !important;
-  margin-top: 24px;
+  gap: 16px !important;
+  margin-top: 24px !important;
 }
+
+/* Garante o mesmo no mobile */
+@media (max-width: 1023px) {
+  section#services .textContainer {
+    align-items: center !important;
+    text-align: center !important;
+  }
+  section#services .actions,
+  section#services .buttonGroup { justify-content: center !important; }
+}
+
 
 /* ============================== */
 /* 8) PFAU INSTITUT — central + sem “scroll reveal”   */
