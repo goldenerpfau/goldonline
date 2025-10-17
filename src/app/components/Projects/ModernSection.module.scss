@@ -10,7 +10,7 @@ $color-dark-accent: #f8bf00;
 // ==============================
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 // ==============================
@@ -25,13 +25,15 @@ $color-dark-accent: #f8bf00;
   box-sizing: border-box;
   margin: 0;
   padding: 6vh 5vw;
+
   background: $color-dark-bg;
   color: $color-dark-text;
+
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 
-  display: flex;
+  display: flex;              /* mobile */
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -43,11 +45,11 @@ $color-dark-accent: #f8bf00;
   &.isVisible { animation: fadeInUp 1s ease-out forwards; }
 }
 
-.particlesBackground { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.textContainer, .mediaRight, .imageContainer { position: relative; z-index: 5; }
+.particlesBackground { position:absolute; inset:0; z-index:1; pointer-events:none; }
+.textContainer, .imageContainer { position:relative; z-index:5; }
 
 // ==============================
-// 4) CONTEÚDO PADRÃO
+// 4) TEXTO/BOTÕES (padrão)
 // ==============================
 .textContainer {
   max-width: 820px;
@@ -55,71 +57,49 @@ $color-dark-accent: #f8bf00;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  align-items: flex-start;
+  align-items: flex-start;   /* padrão desktop (seção normal) */
   text-align: left;
 }
 
 .title {
-  margin: 0;
-  line-height: 1.15;
-  font-weight: 700;
-  color: $color-dark-accent;
-  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  margin:0; line-height:1.15; font-weight:700;
+  color:$color-dark-accent;
+  font-size:clamp(1.5rem,5vw,2.5rem);
 }
+.subtitle { margin:0; line-height:1.35; font-weight:500; opacity:.95; font-size:clamp(1.1rem,4vw,1.4rem); }
+.description { margin:0; max-width:70ch; opacity:.9; line-height:1.6; font-size:clamp(1rem,3.5vw,1.15rem); }
 
-.subtitle {
-  margin: 0;
-  line-height: 1.35;
-  font-weight: 500;
-  opacity: .95;
-  font-size: clamp(1.1rem, 4vw, 1.4rem);
-}
-
-.description {
-  margin: 0;
-  max-width: 70ch;
-  opacity: .92;
-  line-height: 1.6;
-  font-size: clamp(1rem, 3.5vw, 1.15rem);
-}
-
-.actions, .buttonGroup {
+.actions,
+.buttonGroup {
   margin-top: 16px;
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: flex-start; /* padrão */
 }
 
 .luxuryButton {
-  padding: .9rem 1.4rem;
-  border-radius: 10px;
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: .1rem;
-  min-height: 48px;
-  background: transparent;
-  border: 1px solid rgba(255,255,255,.25);
-  color: $color-dark-text;
-  transition: all .3s ease;
-  cursor: pointer;
+  padding:.9rem 1.4rem; border-radius:10px; text-transform:uppercase;
+  font-weight:600; letter-spacing:.1rem; min-height:48px;
+  background:transparent; border:1px solid rgba(255,255,255,.25);
+  color:#fff; cursor:pointer; transition:all .3s ease;
 }
-.luxuryButton:hover { background: rgba(255,255,255,.08); }
+.luxuryButton:hover { background:rgba(255,255,255,.08); }
 
 // ==============================
-// 5) MÍDIA (vídeo/imagem)
+// 5) MÍDIA
 // ==============================
 .imageContainer {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  order: 1;
+  order: 1; /* mobile primeiro */
 }
 
 .abstractImageWrapper {
   position: relative;
-  width: 78vw;
+  width: 78vw;     /* mobile */
   max-width: 540px;
   display: flex;
   align-items: center;
@@ -128,17 +108,17 @@ $color-dark-accent: #f8bf00;
 }
 
 .videoContent {
-  width: 100%;
-  height: auto;
-  object-fit: contain;   /* sem corte */
-  border-radius: 18px;
-  backface-visibility: hidden;
-  box-shadow: 0 10px 40px rgba(0,0,0,.35);
-  background: rgba(0,0,0,.25);
+  width:100%;
+  height:auto;
+  object-fit:contain;  /* sem crop do vídeo */
+  border-radius:18px;
+  backface-visibility:hidden;
+  box-shadow:0 10px 40px rgba(0,0,0,.35);
+  background:rgba(0,0,0,.25);
 }
 
 // ==============================
-// 6) DESKTOP
+// 6) DESKTOP (layout padrão: mídia à ESQUERDA)
 // ==============================
 @media (min-width: 1024px) {
   .modernSection {
@@ -147,27 +127,86 @@ $color-dark-accent: #f8bf00;
     align-items: center;
     gap: 60px;
   }
-
-  .textContainer {
-    width: 50%;
-    order: 2;
-    align-items: flex-end;
-    text-align: right;
-  }
-
-  .imageContainer {
-    width: 50%;
-    order: 1;
-    justify-content: flex-start;
-  }
-
+  .textContainer { width:50%; order:2; align-items:flex-end; text-align:right; }
+  .imageContainer { width:50%; order:1; justify-content:flex-start; }
   .abstractImageWrapper { width: clamp(360px, 36vw, 720px); max-height: 80svh; }
-  .videoContent { border-radius: 22px; }
+  .videoContent { border-radius:22px; }
+}
+
+/* ============================== */
+/* 7) VARIANTE: CENTRALIZADO (usada em Services) */
+/* ============================== */
+.centered .textContainer {
+  align-items:center !important;
+  text-align:center !important;
+  justify-content:center !important;
+  margin:0 auto !important;
+  width:100% !important;
+  max-width:900px !important;
+}
+.centered .actions,
+.centered .buttonGroup {
+  justify-content:center !important;
+  align-items:center !important;
+  gap:16px !important;
+  margin-top:24px !important;
 }
 
 // ==============================
-// 7) MOBILE
+// 8) **VARIANTE: PFAU CENTRALIZADO** (força real)
 // ==============================
+.pfauCentered {
+  /* mata qualquer efeito de “aparecer” que cria gap */
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+/* mobile já central: só garante */
+.pfauCentered .textContainer {
+  align-items:center !important;
+  text-align:center !important;
+  justify-content:center !important;
+  margin:0 auto !important;
+  max-width:900px !important;
+}
+.pfauCentered .actions,
+.pfauCentered .buttonGroup {
+  justify-content:center !important;
+  align-items:center !important;
+  gap:16px !important;
+  margin-top:24px !important;
+}
+
+/* desktop: duas colunas equilibradas, texto CENTRALIZADO à esquerda e imagem à direita */
+@media (min-width: 1024px) {
+  .pfauCentered.modernSection {
+    flex-direction: row !important;      /* texto coluna esquerda, mídia coluna direita */
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 56px !important;
+  }
+  .pfauCentered .textContainer {
+    order:1 !important;
+    width: min(46vw, 680px) !important;
+    align-items:center !important;
+    text-align:center !important;
+    margin: 0 auto !important;
+  }
+  .pfauCentered .imageContainer {
+    order:2 !important;
+    width: min(46vw, 680px) !important;
+    justify-content:flex-start !important;
+  }
+  .pfauCentered .abstractImageWrapper {
+    width: clamp(380px, 36vw, 720px) !important;
+    max-height: 80svh !important;
+  }
+}
+
+/* ==============================
+// 9) MOBILE ajustes
+// ==============================*/
 @media (max-width: 1023px) {
   .modernSection { flex-direction: column; gap: 28px; }
   .textContainer { order: 2; align-items: center; text-align: center; }
@@ -175,64 +214,9 @@ $color-dark-accent: #f8bf00;
   .abstractImageWrapper { width: 78vw; max-width: 540px; }
 }
 
-// ==============================
-// 8) ACESSIBILIDADE
-// ==============================
+/* ==============================
+// 10) ACESSIBILIDADE
+// ==============================*/
 @media (prefers-reduced-motion: reduce) {
   .modernSection { transition: none; }
-}
-
-/* ========================================================= */
-/* ==== OVERRIDES GLOBAIS (ID) — pegam em CSS Modules ====== */
-/* ======= CENTRALIZAÇÃO e REMOÇÃO DO GAP no PFAU ========== */
-/* ========================================================= */
-
-/* SERVICES — centraliza tudo */
-:global(#services) .textContainer {
-  align-items: center !important;
-  text-align: center !important;
-  justify-content: center !important;
-  margin: 0 auto !important;
-  max-width: 900px !important;
-}
-:global(#services) .actions,
-:global(#services) .buttonGroup {
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 16px !important;
-  margin-top: 24px !important;
-}
-
-/* PFAU — centraliza tudo e remove o efeito de scroll (gap) */
-:global(#pfau-institut).modernSection {
-  opacity: 1 !important;
-  transform: none !important;
-  animation: none !important;
-}
-
-:global(#pfau-institut) .textContainer {
-  align-items: center !important;
-  text-align: center !important;
-  justify-content: center !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  max-width: 900px !important;
-}
-:global(#pfau-institut) .actions,
-:global(#pfau-institut) .buttonGroup {
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 16px !important;
-  margin-top: 24px !important;
-}
-
-/* Desktop: mantém texto à esquerda visualmente (mídia à direita) mas centralizado internamente */
-@media (min-width: 1024px) {
-  :global(#pfau-institut).modernSection {
-    flex-direction: row !important;     /* texto à esquerda, imagem à direita */
-    justify-content: center !important;
-    gap: 60px !important;
-  }
-  :global(#pfau-institut) .textContainer { order: 1 !important; }
-  :global(#pfau-institut) .imageContainer { order: 2 !important; justify-content: flex-end !important; }
 }
