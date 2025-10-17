@@ -42,7 +42,6 @@ const ModernSection = ({
 
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-  // Fade-in (mantido), mas Pfau é neutralizado via CSS
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
@@ -65,7 +64,7 @@ const ModernSection = ({
     return () => observer.disconnect();
   }, []);
 
-  // Mídia (somente para seções com mídia lateral)
+  // Mídia (vídeo no dark / imagem no light)
   const mediaContent =
     theme === 'dark' ? (
       <video
@@ -90,15 +89,25 @@ const ModernSection = ({
       />
     );
 
-  // Services centralizado
-  const centeredClass = id === 'services' ? styles.centered : '';
+  // === ATIVAÇÃO AUTOMÁTICA DAS VARIANTES ===
+  // Centraliza quando id contiver "services" ou "pfau" (case-insensitive)
+  const shouldCenter = /services|pfau/i.test(id);
+  // Remove efeito de scroll (gap) quando for pfau
+  const noReveal = /pfau/i.test(id);
+
+  const classNames = [
+    styles.modernSection,
+    styles[theme],
+    bodyFontClass,
+    'isVisible',
+    shouldCenter ? styles.centerAll : '',
+    noReveal ? styles.noReveal : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <section
-      id={id}
-      ref={sectionRef}
-      className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible ${centeredClass}`}
-    >
+    <section id={id} ref={sectionRef} className={classNames}>
       {/* Partículas */}
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
@@ -108,13 +117,13 @@ const ModernSection = ({
         )}
       </div>
 
-      {/* Mídia lateral (Pfau mantém a imagem à direita) */}
+      {/* Mídia (fica à esquerda no desktop) */}
       <div className={styles.imageContainer}>
         <div className={styles.imageBackgroundSplit} />
         <div className={styles.abstractImageWrapper}>{mediaContent}</div>
       </div>
 
-      {/* Texto */}
+      {/* Texto (centralizado quando .centerAll) */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
