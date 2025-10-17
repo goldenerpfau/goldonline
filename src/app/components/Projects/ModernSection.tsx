@@ -94,7 +94,6 @@ const ModernSection = ({
       ref={sectionRef}
       className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible`}
     >
-      {/* Partículas */}
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
           <ParticlesComponent
@@ -111,7 +110,13 @@ const ModernSection = ({
         )}
       </div>
 
-      {/* Texto */}
+      {/* Imagem ou vídeo agora à esquerda */}
+      <div className={styles.imageContainer}>
+        <div className={styles.imageBackgroundSplit} />
+        <div className={styles.abstractImageWrapper}>{mediaContent}</div>
+      </div>
+
+      {/* Texto à direita */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
@@ -147,12 +152,6 @@ const ModernSection = ({
                 : child
             )}
         </div>
-      </div>
-
-      {/* Mídia (vídeo ou imagem) */}
-      <div className={styles.imageContainer}>
-        <div className={styles.imageBackgroundSplit} />
-        <div className={styles.abstractImageWrapper}>{mediaContent}</div>
       </div>
     </section>
   );
