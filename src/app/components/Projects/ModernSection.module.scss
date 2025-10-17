@@ -151,15 +151,30 @@ $color-dark-accent: #f8bf00;
 }
 
 /* ============================== */
-/* 7) PERSONALIZED SERVICES — centralizar texto/botões */
-/*     (adicione id="services" na seção)               */
+/* ============================== */
+/* 7) PERSONALIZED SERVICES — texto e botões centralizados */
 /* ============================== */
 #services .textContainer {
   align-items: center !important;
   text-align: center !important;
+  justify-content: center;
+  margin: 0 auto;
 }
+
+#services .title,
+#services .subtitle,
+#services .description {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #services .actions,
-#services .buttonGroup { justify-content: center !important; }
+#services .buttonGroup {
+  justify-content: center !important;
+  align-items: center !important;
+  margin-top: 24px;
+}
 
 /* ============================== */
 /* 8) PFAU INSTITUT — central + sem “scroll reveal”   */
