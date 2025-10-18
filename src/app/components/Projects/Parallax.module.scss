@@ -1,107 +1,158 @@
-/* === SEÇÃO PARALLAX === */
-.parallaxWrapper {
-  position: relative;
-  width: 100%;
-  height: 65vh;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  background-color: rgb(0, 0, 0); 
+'use client';
+
+import React, { useEffect, useRef } from 'react';
+import styles from './ModernSection.module.scss';
+import Image from 'next/image';
+import ParticlesComponent from '../ParticlesComponent';
+
+interface ModernSectionProps {
+  id: string;
+  theme: 'dark' | 'light';
+  title: string;
+  subtitle: string;
+  description: string;
+  buttonText: string;
+  buttonLink: string;
+  secondaryButtonText?: string;
+  secondaryButtonLink?: string;
+  imageSrc: string;
+  imageAlt: string;
+  children?: React.ReactNode;
+  titleFontClass: string;
+  bodyFontClass: string;
 }
 
-.parallaxSection {
-  width: 100%;
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  scroll-behavior: auto;
-  cursor: grab;
-  user-select: none;
+const ModernSection = ({
+  id,
+  theme,
+  title,
+  subtitle,
+  description,
+  buttonText,
+  buttonLink,
+  secondaryButtonText,
+  secondaryButtonLink,
+  imageSrc,
+  imageAlt,
+  children,
+  titleFontClass,
+  bodyFontClass,
+}: ModernSectionProps) => {
+  const sectionRef = useRef<HTMLElement>(null);
 
-  /* Oculta a barra de rolagem no Firefox */
-  scrollbar-width: none; 
+  const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-  &.dragging {
-    cursor: grabbing;
-  }
+  // Entrada suave (não mexe no layout)
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          node.classList.add('isVisible');
+          // @ts-ignore (fallback caso o CSS module gere hash)
+          if ((styles as any).isVisible) node.classList.add((styles as any).isVisible);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, []);
 
-  /* Oculta a barra de rolagem em Chrome, Safari e Edge (WebKit) */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
+  const mediaContent =
+    theme === 'dark' ? (
+      <video
+        src="/iosteste.mp4"
+        className={styles.videoContent}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        aria-label="Demonstração do App iOS Goldener Pfau"
+      />
+    ) : (
+      <Image
+        src={imageSrc}
+        alt={imageAlt}
+        width={1200}
+        height={800}
+        quality={100}
+        priority={false}
+        style={{ objectFit: imageObjectFit, borderRadius: '20px' }}
+      />
+    );
 
-.imageBlock {
-  flex: 0 0 auto;
-  width: 380px;
-  height: 580px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 16px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-  transition: transform 0.5s ease, box-shadow 0.4s ease;
-  will-change: transform;
+  const isServices = /services/i.test(id);
+  const isPfau = /pfau/i.test(id);
 
-  &:hover {
-    transform: scale(0.98); // leve zoom
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8); // sombra mais intensa
-  }
-}
+  const classNames = [
+    styles.modernSection,
+    styles[theme],          // só coloração de texto
+    bodyFontClass,
+    'isVisible',
+    isServices ? styles.centered : '',
+    isPfau ? styles.pfauCentered : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
-.navButton {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.4);
-  border: none;
-  color: #ffffff;
-  font-size: 2rem;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  
-  /* Centralização com Flexbox */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  return (
+    <section id={id} ref={sectionRef} className={classNames}>
+      <div className={styles.particlesBackground}>
+        {theme === 'light' ? (
+          <ParticlesComponent id={`particles-${id}`} particleColor="#b58900" linkColor="#b58900" />
+        ) : (
+          <ParticlesComponent id={`particles-${id}`} particleColor="#ffffff" linkColor="#f8bf00" />
+        )}
+      </div>
 
-  &:hover {
-    background: rgba(0, 0, 0, );
-  }
+      {/* Mídia (sem “imageBackgroundSplit”) */}
+      <div className={styles.imageContainer}>
+        <div className={styles.abstractImageWrapper}>{mediaContent}</div>
+      </div>
 
-  &.left {
-    left: 16px;
-  }
+      {/* Texto 100% centralizado */}
+      <div className={styles.textContainer}>
+        <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
+        <h2 className={styles.subtitle}>{subtitle}</h2>
+        <p className={styles.description}>{description}</p>
 
-  &.right {
-    right: 16px;
-  }
-}
+        <div className={styles.buttonGroup}>
+          <a
+            href={buttonLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.luxuryButton}
+          >
+            {buttonText}
+          </a>
 
-/* === AJUSTES PARA DISPOSITIVOS MÓVEIS (TELAS MENORES QUE 768px) === */
-@media (max-width: 768px) {
-  .parallaxWrapper {
-    height: 55vh; /* Altura menor para se ajustar melhor em telas verticais */
-  }
+          {secondaryButtonText && secondaryButtonLink && (
+            <a
+              href={secondaryButtonLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.luxuryButton}
+            >
+              {secondaryButtonText}
+            </a>
+          )}
 
-  .imageBlock {
-    width: 240px; /* Largura das imagens reduzida para caber na tela */
-    height: 360px; /* Altura das imagens reduzida para manter a proporção */
-  }
+          {children &&
+            React.Children.map(children, (child) =>
+              React.isValidElement(child)
+                ? React.cloneElement(child, {
+                    className: `${styles.luxuryButton} ${child.props?.className ?? ''}`.trim(),
+                  })
+                : child
+            )}
+        </div>
+      </div>
+    </section>
+  );
+};
 
-  .navButton {
-    width: 40px; /* Botões de navegação ligeiramente menores */
-    height: 40px;
-    font-size: 1.5rem; /* Ícone (fonte) menor */
-
-    &.left {
-      left: 8px; /* Mais próximos da borda */
-    }
-    &.right {
-      right: 8px; /* Mais próximos da borda */
-    }
-  }
-}
+export default ModernSection;
