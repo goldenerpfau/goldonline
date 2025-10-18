@@ -42,14 +42,16 @@ const ModernSection = ({
 
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-  // Efeito de entrada — o Pfau ignora (CSS neutraliza)
+  // Efeito de entrada — neutralizado pela classe pfauCentered
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
+
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           node.classList.add('isVisible');
+          // Garantia caso CSS Modules gere hash para isVisible (normalmente não)
           // @ts-ignore
           if ((styles as any).isVisible) node.classList.add((styles as any).isVisible);
           io.disconnect();
@@ -57,6 +59,7 @@ const ModernSection = ({
       },
       { threshold: 0.2 }
     );
+
     io.observe(node);
     return () => io.disconnect();
   }, []);
@@ -90,9 +93,9 @@ const ModernSection = ({
 
   const classNames = [
     styles.modernSection,
-    styles[theme],
+    styles[theme],          // .dark ou .light
     bodyFontClass,
-    'isVisible',
+    'isVisible',            // entra animado (exceto pfauCentered, que zera no CSS)
     isServices ? styles.centered : '',
     isPfau ? styles.pfauCentered : '',
   ]
@@ -103,9 +106,9 @@ const ModernSection = ({
     <section id={id} ref={sectionRef} className={classNames}>
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
-          <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#f8bf00" />
+          <ParticlesComponent id={`particles-${id}`} particleColor="#111317" linkColor="#b58900" />
         ) : (
-          <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#FFFFFF" />
+          <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#f8bf00" />
         )}
       </div>
 
