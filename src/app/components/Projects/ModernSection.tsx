@@ -42,24 +42,21 @@ const ModernSection = ({
 
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-  // Efeito de entrada — neutralizado pela classe pfauCentered
+  // Entrada suave (não mexe no layout)
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
-
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           node.classList.add('isVisible');
-          // Garantia caso CSS Modules gere hash para isVisible (normalmente não)
-          // @ts-ignore
+          // @ts-ignore (fallback caso o CSS module gere hash)
           if ((styles as any).isVisible) node.classList.add((styles as any).isVisible);
           io.disconnect();
         }
       },
       { threshold: 0.2 }
     );
-
     io.observe(node);
     return () => io.disconnect();
   }, []);
@@ -84,7 +81,7 @@ const ModernSection = ({
         height={800}
         quality={100}
         priority={false}
-        style={{ objectFit: imageObjectFit, borderRadius: '18px' }}
+        style={{ objectFit: imageObjectFit, borderRadius: '20px' }}
       />
     );
 
@@ -93,9 +90,9 @@ const ModernSection = ({
 
   const classNames = [
     styles.modernSection,
-    styles[theme],          // .dark ou .light
+    styles[theme],          // só coloração de texto
     bodyFontClass,
-    'isVisible',            // entra animado (exceto pfauCentered, que zera no CSS)
+    'isVisible',
     isServices ? styles.centered : '',
     isPfau ? styles.pfauCentered : '',
   ]
@@ -106,19 +103,18 @@ const ModernSection = ({
     <section id={id} ref={sectionRef} className={classNames}>
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
-          <ParticlesComponent id={`particles-${id}`} particleColor="#111317" linkColor="#b58900" />
+          <ParticlesComponent id={`particles-${id}`} particleColor="#b58900" linkColor="#b58900" />
         ) : (
-          <ParticlesComponent id={`particles-${id}`} particleColor="#FFFFFF" linkColor="#f8bf00" />
+          <ParticlesComponent id={`particles-${id}`} particleColor="#ffffff" linkColor="#f8bf00" />
         )}
       </div>
 
-      {/* Mídia */}
+      {/* Mídia (sem “imageBackgroundSplit”) */}
       <div className={styles.imageContainer}>
-        <div className={styles.imageBackgroundSplit} />
         <div className={styles.abstractImageWrapper}>{mediaContent}</div>
       </div>
 
-      {/* Texto */}
+      {/* Texto 100% centralizado */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
