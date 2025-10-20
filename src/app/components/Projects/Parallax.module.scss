@@ -1,189 +1,73 @@
-// ==============================
-// 1) CORES (sem mudar o fundo da página)
-// ==============================
-$color-dark-text: #ffffff;
-$color-dark-accent: #f8bf00;
-
-$color-light-text: #111317;
-$color-light-accent: #b58900;
-
-// ==============================
-// 2) ANIMAÇÃO SUAVE (opcional)
-// ==============================
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-// ==============================
-/* 3) BASE — NÃO define background; respeita o fundo do container pai */
-// ==============================
-.modernSection {
+.parallaxWrapper {
   position: relative;
-  isolation: isolate;
   width: 100%;
-  min-height: 86svh;
-
-  box-sizing: border-box;
-  margin: 0;
-  padding: 6vh 5vw;
-
+  height: 65vh;
   display: flex;
-  flex-direction: column;   /* mobile-first */
   align-items: center;
-  justify-content: center;
-  gap: 28px;
-
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity .4s ease-out, transform .4s ease-out;
-
-  &.isVisible { animation: fadeInUp .8s ease-out forwards; }
-}
-
-.particlesBackground { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.textContainer, .imageContainer { position: relative; z-index: 5; }
-
-// ==============================
-// 4) TEMAS — só cores do texto (sem fundo)
-// ==============================
-.dark {
-  color: $color-dark-text;
-}
-.light {
-  color: $color-light-text;
-}
-
-// ==============================
-// 5) TEXTO / BOTÕES
-// ==============================
-.textContainer {
-  width: 100%;
-  max-width: 900px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  align-items: center;      /* já centralizado */
-  text-align: center;       /* já centralizado */
-  margin: 0 auto;
-}
-
-.title {
-  margin: 0;
-  line-height: 1.15;
-  font-weight: 700;
-  font-size: clamp(1.6rem, 5vw, 2.6rem);
-  color: $color-dark-accent;
-}
-.light .title { color: $color-light-accent; }
-
-.subtitle {
-  margin: 0;
-  line-height: 1.35;
-  font-weight: 700;
-  letter-spacing: .02em;
-  font-size: clamp(1.05rem, 3.8vw, 1.3rem);
-}
-.description {
-  margin: 0;
-  max-width: 70ch;
-  line-height: 1.6;
-  font-size: clamp(1rem, 3.5vw, 1.15rem);
-  opacity: .95;
-}
-
-.buttonGroup {
-  margin-top: 20px;
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.luxuryButton {
-  padding: .9rem 1.4rem;
-  border-radius: 10px;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: .1rem;
-  min-height: 48px;
-  background: transparent;
-  border: 1px solid currentColor;
-  color: currentColor;
-  cursor: pointer;
-  transition: opacity .2s ease;
-}
-.luxuryButton:hover { opacity: .8; }
-
-// ==============================
-// 6) MÍDIA (sem sombra, sem “split” atrás, sem fundo extra)
-// ==============================
-.imageContainer {
-  width: 100%;
-  display: grid;
-  place-items: center;
-  order: 1;
-}
-
-.abstractImageWrapper {
-  position: relative;
-  width: min(78vw, 720px);
-  display: grid;
-  place-items: center;
   overflow: hidden;
 }
 
-.videoContent {
+.parallaxSection {
   width: 100%;
-  height: auto;
-  object-fit: contain;
-  border-radius: 20px;   /* cantos suaves ok */
-  background: transparent;
-  box-shadow: none;      /* SEM SOMBRA */
-}
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: auto;
+  cursor: grab;
+  user-select: none;
 
-// ==============================
-// 7) DESKTOP — side-by-side, porém tudo centralizado
-// ==============================
-@media (min-width: 1024px) {
-  .modernSection {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 60px;
+  &.dragging {
+    cursor: grabbing;
   }
-  .textContainer { width: 50%; max-width: 680px; }
-  .imageContainer { width: 50%; }
-  .abstractImageWrapper { width: clamp(420px, 36vw, 720px); }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-// ==============================
-// 8) VARIANTE “SERVICES” CENTRALIZADA (se você usar)
-// ==============================
-.centered .textContainer { max-width: 900px; }
-.centered .buttonGroup { justify-content: center; }
+.imageBlock {
+  flex: 0 0 auto;
+  width: 380px;
+  height: 580px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  will-change: transform;
 
-// ==============================
-// 9) VARIANTE PFAU — força centralização total (se o id conter “pfau”)
-// ==============================
-.pfauCentered {
-  opacity: 1 !important;
-  transform: none !important;
-  animation: none !important;
-}
-.pfauCentered .textContainer,
-.pfauCentered .buttonGroup {
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
+  &:hover {
+    transform: scale(0.98); // leve zoom
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8); // sombra mais intensa
+  }
 }
 
-// ==============================
-// 10) MOBILE
-// ==============================
-@media (max-width: 1023px) {
-  .modernSection { flex-direction: column; }
-  .textContainer { order: 2; }
-  .imageContainer { order: 1; }
+
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  &.left {
+    left: 16px;
+  }
+
+  &.right {
+    right: 16px;
+  }
 }
