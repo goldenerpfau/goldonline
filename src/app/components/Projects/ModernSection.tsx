@@ -20,7 +20,7 @@ interface ModernSectionProps {
   children?: React.ReactNode;
   titleFontClass: string;
   bodyFontClass: string;
-} 
+}
 
 const ModernSection = ({
   id,
@@ -39,10 +39,9 @@ const ModernSection = ({
   bodyFontClass,
 }: ModernSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
-
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-  // Entrada suave
+  // Fade-in animation
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
@@ -50,7 +49,7 @@ const ModernSection = ({
       ([entry]) => {
         if (entry.isIntersecting) {
           node.classList.add('isVisible');
-          // @ts-ignore — fallback caso CSS module gere hash
+          // @ts-ignore
           if ((styles as any).isVisible) node.classList.add((styles as any).isVisible);
           io.disconnect();
         }
@@ -90,7 +89,7 @@ const ModernSection = ({
 
   const classNames = [
     styles.modernSection,
-    styles[theme],          // apenas coloração do texto
+    styles[theme],
     bodyFontClass,
     'isVisible',
     isServices ? styles.centered : '',
@@ -101,19 +100,18 @@ const ModernSection = ({
 
   return (
     <section id={id} ref={sectionRef} className={classNames}>
-      {/* Partículas atrás de tudo; cores discretas */}
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
           <ParticlesComponent
             id={`particles-${id}`}
-            particleColor="#999999"   // pontos discretos no light
-            linkColor="#b58900"       // linhas douradas sutis
+            particleColor="#999999"
+            linkColor="#b58900"
           />
         ) : (
           <ParticlesComponent
             id={`particles-${id}`}
-            particleColor="#FFFFFF"   // pontos brancos
-            linkColor="#cda500"       // linhas douradas suaves (sem “amarelar”)
+            particleColor="#FFFFFF"
+            linkColor="#cda500"
           />
         )}
       </div>
