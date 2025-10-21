@@ -20,7 +20,7 @@ interface ModernSectionProps {
   children?: React.ReactNode;
   titleFontClass: string;
   bodyFontClass: string;
-}
+} 
 
 const ModernSection = ({
   id,
