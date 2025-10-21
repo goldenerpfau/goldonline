@@ -90,7 +90,7 @@ const ModernSection = ({
 
   const classNames = [
     styles.modernSection,
-    styles[theme],          // só coloração de texto
+    styles[theme],          // apenas coloração do texto
     bodyFontClass,
     'isVisible',
     isServices ? styles.centered : '',
@@ -103,18 +103,26 @@ const ModernSection = ({
     <section id={id} ref={sectionRef} className={classNames}>
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
-          <ParticlesComponent id={`particles-${id}`} particleColor="#b58900" linkColor="#b58900" />
+          <ParticlesComponent
+            id={`particles-${id}`}
+            particleColor="#999999"   // pontos discretos (cinza)
+            linkColor="#b58900"       // linhas douradas sutis
+          />
         ) : (
-          <ParticlesComponent id={`particles-${id}`} particleColor="#ffffff" linkColor="#f8bf00" />
+          <ParticlesComponent
+            id={`particles-${id}`}
+            particleColor="#FFFFFF"   // partículas brancas
+            linkColor="#cda500"       // linhas douradas suaves
+          />
         )}
       </div>
 
-      {/* Mídia (sem “imageBackgroundSplit”) */}
+      {/* Mídia */}
       <div className={styles.imageContainer}>
         <div className={styles.abstractImageWrapper}>{mediaContent}</div>
       </div>
 
-      {/* Texto 100% centralizado */}
+      {/* Texto centralizado */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
