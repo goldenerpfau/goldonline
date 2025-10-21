@@ -1,13 +1,16 @@
 // ==============================
-// 1) CORES (não alteramos o fundo da página)
+// 1) CORES (sem mudar o fundo da página)
 // ==============================
 $color-dark-text: #ffffff;
-$color-dark-accent: #f8bf00;  // ouro vivo
+$color-dark-accent: #f8bf00;   // dourado forte (título)
+$color-dark-link: #cda500;     // dourado suave (linhas partículas)
+
 $color-light-text: #111317;
-$color-light-accent: #b58900; // ouro sóbrio
+$color-light-accent: #b58900;  // dourado para título no tema claro
+$color-light-link: #b58900;    // linhas partículas no tema claro
 
 // ==============================
-// 2) ANIMAÇÃO SUAVE
+// 2) ANIMAÇÃO SUAVE (opcional)
 // ==============================
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }
@@ -15,7 +18,7 @@ $color-light-accent: #b58900; // ouro sóbrio
 }
 
 // ==============================
-// 3) BASE — respeita o fundo do container pai
+// 3) BASE — NÃO define background; respeita o fundo do container pai
 // ==============================
 .modernSection {
   position: relative;
@@ -40,24 +43,29 @@ $color-light-accent: #b58900; // ouro sóbrio
   &.isVisible { animation: fadeInUp .8s ease-out forwards; }
 }
 
+/* partículas sempre atrás e discretas */
 .particlesBackground {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: .5; /* não ofusca o texto */
+  opacity: .45; /* reduz para não competir com o texto */
 }
 
-.textContainer, .imageContainer { position: relative; z-index: 5; }
+.textContainer,
+.imageContainer {
+  position: relative;
+  z-index: 5; /* acima das partículas */
+}
 
 // ==============================
-// 4) TEMAS — só cores do texto
+// 4) TEMAS — só cores do texto (sem fundo)
 // ==============================
 .dark  { color: $color-dark-text; }
 .light { color: $color-light-text; }
 
 // ==============================
-/* 5) TEXTO / BOTÕES */
+// 5) TEXTO / BOTÕES
 // ==============================
 .textContainer {
   width: 100%;
@@ -75,7 +83,7 @@ $color-light-accent: #b58900; // ouro sóbrio
   line-height: 1.15;
   font-weight: 700;
   font-size: clamp(1.6rem, 5vw, 2.6rem);
-  color: $color-dark-accent;     /* ouro forte no dark */
+  color: $color-dark-accent;   /* padrão: dourado forte */
 }
 .light .title { color: $color-light-accent; }
 
@@ -85,8 +93,9 @@ $color-light-accent: #b58900; // ouro sóbrio
   font-weight: 700;
   letter-spacing: .02em;
   font-size: clamp(1.05rem, 3.8vw, 1.3rem);
-  color: #fff;                     /* garante contraste no dark */
+  /* contraste explícito por tema */
 }
+.dark  .subtitle { color: rgba(255,255,255,.98); }
 .light .subtitle { color: $color-light-text; }
 
 .description {
@@ -95,9 +104,9 @@ $color-light-accent: #b58900; // ouro sóbrio
   line-height: 1.6;
   font-size: clamp(1rem, 3.5vw, 1.15rem);
   opacity: .95;
-  color: rgba(255,255,255,.92);
 }
-.light .description { color: rgba(17,19,23,.9); }
+.dark  .description { color: rgba(255,255,255,.92); }
+.light .description { color: rgba(17,19,23,.92); }
 
 .buttonGroup {
   margin-top: 20px;
@@ -121,10 +130,10 @@ $color-light-accent: #b58900; // ouro sóbrio
   cursor: pointer;
   transition: opacity .2s ease;
 }
-.luxuryButton:hover { opacity: .82; }
+.luxuryButton:hover { opacity: .8; }
 
 // ==============================
-// 6) MÍDIA (sem sombra, sem split)
+// 6) MÍDIA (sem sombra, sem “split”, sem fundo extra)
 // ==============================
 .imageContainer {
   width: 100%;
@@ -151,7 +160,7 @@ $color-light-accent: #b58900; // ouro sóbrio
 }
 
 // ==============================
-// 7) DESKTOP — side-by-side com tudo centralizado
+// 7) DESKTOP — side-by-side, porém tudo centralizado
 // ==============================
 @media (min-width: 1024px) {
   .modernSection {
@@ -166,10 +175,31 @@ $color-light-accent: #b58900; // ouro sóbrio
 }
 
 // ==============================
-// 8) VARIANTE “SERVICES” (se usar)
+// 8) VARIANTE “SERVICES” CENTRALIZADA (se você usar)
 // ==============================
 .centered .textContainer { max-width: 900px; }
-.centered .buttonGroup  { justify-content: center; }
+.centered .buttonGroup { justify-content: center; }
 
 // ==============================
-// 9) VARIANTE PFAU — força centralização
+// 9) VARIANTE PFAU — força centralização total (se o id conter “pfau”)
+// ==============================
+.pfauCentered {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+.pfauCentered .textContainer,
+.pfauCentered .buttonGroup {
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+// ==============================
+// 10) MOBILE
+// ==============================
+@media (max-width: 1023px) {
+  .modernSection { flex-direction: column; }
+  .textContainer { order: 2; }
+  .imageContainer { order: 1; }
+}
