@@ -1,156 +1,171 @@
+// ModernSection.tsx
+
 'use client';
 
-import { useEffect, useRef } from 'react';
-import styles from './Parallax.module.scss';
+import React, { useEffect, useRef } from 'react';
+import styles from './ModernSection.module.scss';
+import Image from 'next/image';
+import ParticlesComponent from '../ParticlesComponent';
 
-const IMAGE_COUNT = 19;
-const TOTAL_IMAGES = IMAGE_COUNT * 3;
+interface ModernSectionProps {
+  id: string;
+  theme: 'dark' | 'light';
+  title: string;
+  subtitle: string;
+  description: string;
+  buttonText: string;
+  buttonLink: string;
+  // NOVO: segundo botão com o MESMO estilo
+  secondaryButtonText?: string;
+  secondaryButtonLink?: string;
+  imageSrc: string;
+  imageAlt: string;
+  children?: React.ReactNode; // mantido para compatibilidade (opcional)
+  titleFontClass: string;
+  bodyFontClass: string;
+}
 
-export default function Parallax() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
-  const scrollSpeed = useRef(1.2);
-  const dragInfluence = useRef(0);
-  const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
+const ModernSection = ({
+  id,
+  theme,
+  title,
+  subtitle,
+  description,
+  buttonText,
+  buttonLink,
+  secondaryButtonText,
+  secondaryButtonLink,
+  imageSrc,
+  imageAlt,
+  children,
+  titleFontClass,
+  bodyFontClass,
+}: ModernSectionProps) => {
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const getMiddleScroll = () => {
-    const container = containerRef.current;
-    return container
-      ? (container.scrollWidth - container.clientWidth) / 2
-      : 0;
-  };
+  // 'cover' p/ mapas/fotos amplas (tema light); 'contain' p/ mock/app (tema dark)
+  const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-  // Autoscroll contínuo para a esquerda
+  // IntersectionObserver — mantém, mas não dependemos dele para visibilidade
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    const node = sectionRef.current;
+    if (!node) return;
 
-    const middleScroll = getMiddleScroll();
-    container.scrollLeft = middleScroll;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Adiciona tanto a classe global quanto (se existir) a classe do módulo
+            entry.target.classList.add('isVisible');
+            // @ts-ignore - alguns setups exportam styles.isVisible, outros não
+            if ((styles as any).isVisible) entry.target.classList.add((styles as any).isVisible);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { root: null, rootMargin: '0px', threshold: 0.2 }
+    );
 
-    autoScrollRef.current = setInterval(() => {
-      const totalScroll = container.scrollWidth;
-      const maxScrollLeft = totalScroll - container.clientWidth;
-
-      container.scrollLeft += (scrollSpeed.current + dragInfluence.current);
-
-      // Se chegar próximo ao fim, volta ao meio
-      if (container.scrollLeft <= 10 || container.scrollLeft >= maxScrollLeft - 10) {
-        container.scrollLeft = getMiddleScroll();
-      }
-
-      // Suaviza a influência do arraste
-      if (!isDragging.current && dragInfluence.current !== 0) {
-        dragInfluence.current *= 0.9;
-        if (Math.abs(dragInfluence.current) < 0.05) dragInfluence.current = 0;
-      }
-    }, 30);
-
-    return () => {
-      if (autoScrollRef.current) clearInterval(autoScrollRef.current);
-    };
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
-  // Arraste com influência dinâmica
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const onMouseDown = (e: MouseEvent) => {
-      isDragging.current = true;
-      container.classList.add(styles.dragging);
-      startX.current = e.clientX;
-      scrollLeft.current = container.scrollLeft;
-    };
-
-    const onMouseMove = (e: MouseEvent) => {
-      if (!isDragging.current) return;
-      e.preventDefault();
-      const x = e.clientX;
-      const walk = (x - startX.current) * 1.5;
-      container.scrollLeft = scrollLeft.current - walk;
-
-      dragInfluence.current = (walk / 40) * -1;
-    };
-
-    const onMouseUp = () => {
-      isDragging.current = false;
-      container.classList.remove(styles.dragging);
-    };
-
-    container.addEventListener('mousedown', onMouseDown);
-    container.addEventListener('mousemove', onMouseMove);
-    container.addEventListener('mouseup', onMouseUp);
-    container.addEventListener('mouseleave', onMouseUp);
-
-    return () => {
-      container.removeEventListener('mousedown', onMouseDown);
-      container.removeEventListener('mousemove', onMouseMove);
-      container.removeEventListener('mouseup', onMouseUp);
-      container.removeEventListener('mouseleave', onMouseUp);
-    };
-  }, []);
-
-  // Scroll por botões com limite central
-  const scrollByAmount = (amount: number) => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    let target = container.scrollLeft + amount;
-
-    // Evita ir para os extremos
-    const minScroll = 100;
-    const maxScroll = container.scrollWidth - container.clientWidth - 100;
-    const middleScroll = getMiddleScroll();
-
-    if (target <= minScroll || target >= maxScroll) {
-      target = middleScroll;
-    }
-
-    const step = (target - container.scrollLeft) / 20;
-    let current = 0;
-
-    const smoothScroll = () => {
-      if (current < 20) {
-        container.scrollLeft += step;
-        current++;
-        requestAnimationFrame(smoothScroll);
-      }
-    };
-
-    requestAnimationFrame(smoothScroll);
-  };
+  // --- MÍDIA (vídeo no dark / imagem no light) ---
+  const mediaContent =
+    theme === 'dark' ? (
+      <video
+    src="/iosteste.mp4" // seu arquivo dentro da pasta public
+    className={styles.videoContent}
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="Demonstração do App iOS Goldener Pfau"
+      />
+    ) : (
+      <Image
+        src={imageSrc}
+        alt={imageAlt}
+        fill
+        quality={100}
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        priority={false}
+        style={{ objectFit: imageObjectFit }}
+      />
+    );
 
   return (
-    <div className={styles.parallaxWrapper}>
-      <button
-        className={`${styles.navButton} ${styles.left}`}
-        onClick={() => scrollByAmount(-400)}
-      >
-        ‹
-      </button>
+    <section
+      id={id}
+      ref={sectionRef}
+      // FORÇA visível por padrão: adiciona 'isVisible' desde o início
+      className={`${styles.modernSection} ${styles[theme]} ${bodyFontClass} isVisible`}
+    >
+      {/* Partículas no fundo — se suspeitar que é isso que está quebrando, comente este bloco temporariamente */}
+      <div className={styles.particlesBackground}>
+        {theme === 'light' ? (
+          <ParticlesComponent
+            id={`particles-${id}`}
+            particleColor="#FFFFFF"
+            linkColor="#f8bf00" // links dourados no tema light
+          />
+        ) : (
+          <ParticlesComponent
+            id={`particles-${id}`}
+            particleColor="#FFFFFF"
+            linkColor="#FFFFFF"
+          />
+        )}
+      </div>
 
-      <section className={styles.parallaxSection} ref={containerRef}>
-        {Array.from({ length: TOTAL_IMAGES }).map((_, i) => {
-          const index = i % IMAGE_COUNT;
-          return (
-            <div
-              key={i}
-              className={styles.imageBlock}
-              style={{ backgroundImage: `url(/images/img${index + 1}.jpg)` }}
-            />
-          );
-        })}
-      </section>
+      {/* Texto */}
+      <div className={styles.textContainer}>
+        <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
+        <h2 className={styles.subtitle}>{subtitle}</h2>
+        <p className={styles.description}>{description}</p>
 
-      <button
-        className={`${styles.navButton} ${styles.right}`}
-        onClick={() => scrollByAmount(400)}
-      >
-        ›
-      </button>
-    </div>
+        <div className={styles.buttonGroup}>
+          <a
+            href={buttonLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.luxuryButton}
+          >
+            {buttonText}
+          </a>
+
+          {/* SEGUNDO BOTÃO — mesmo estilo */}
+          {secondaryButtonText && secondaryButtonLink && (
+            <a
+              href={secondaryButtonLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.luxuryButton}
+            >
+              {secondaryButtonText}
+            </a>
+          )}
+
+          {/* Slot opcional (mantido para compatibilidade); se quiser que tudo no slot herde o mesmo estilo: */}
+          {children &&
+            React.Children.map(children, (child) =>
+              React.isValidElement(child)
+                ? React.cloneElement(child, {
+                    className: `${styles.luxuryButton} ${child.props?.className ?? ''}`.trim(),
+                  })
+                : child
+            )}
+        </div>
+      </div>
+
+      {/* Mídia com divisão de fundo */}
+      <div className={styles.imageContainer}>
+        <div className={styles.imageBackgroundSplit} />
+        <div className={styles.abstractImageWrapper}>{mediaContent}</div>
+      </div>
+    </section>
   );
-}
+};
+
+export default ModernSection;
