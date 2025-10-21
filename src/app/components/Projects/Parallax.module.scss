@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
+  background: #000; /* 🔥 fundo preto puro */
 }
 
 .parallaxSection {
@@ -41,8 +42,6 @@
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8); // sombra mais intensa
   }
 }
-
-
 
 .navButton {
   position: absolute;
