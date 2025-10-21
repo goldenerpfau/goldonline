@@ -14,8 +14,8 @@ $color-light-link: #b58900;
 // 2) ANIMAÇÃO
 // ==============================
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(36px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 10; transform: translateY(36px); }
+  to   { opacity: 15; transform: translateY(0); }
 }
 
 // ==============================
@@ -45,7 +45,7 @@ $color-light-link: #b58900;
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: .45;
+  opacity: 100%;
   mix-blend-mode: normal;
   pointer-events: none;
 }
