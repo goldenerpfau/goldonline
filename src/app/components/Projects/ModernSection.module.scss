@@ -1,11 +1,12 @@
 // ==============================
 // 1) CORES
 // ==============================
+$color-dark-bg: #000;        // fundo preto absoluto
 $color-dark-text: #ffffff;
 $color-dark-accent: #f8bf00; // dourado forte p/ título
 $color-dark-link: #cda500;   // dourado suave p/ linhas partículas
 
-$color-light-text: #111317;
+$color-light-text: rgb(0, 0, 0);
 $color-light-accent: #b58900;
 $color-light-link: #b58900;
 
@@ -14,7 +15,7 @@ $color-light-link: #b58900;
 // ==============================
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(36px); }
-  to   { opacity: 10; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 // ==============================
@@ -35,6 +36,7 @@ $color-light-link: #b58900;
   opacity: 0;
   transform: translateY(24px);
   transition: opacity .4s ease-out, transform .4s ease-out;
+  background: $color-dark-bg;   /* 🔥 fundo preto sólido em toda a seção */
 
   &.isVisible { animation: fadeInUp .8s ease-out forwards; }
 }
@@ -43,7 +45,7 @@ $color-light-link: #b58900;
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 100%;
+  opacity: .45;
   mix-blend-mode: normal;
   pointer-events: none;
 }
@@ -96,7 +98,7 @@ $color-light-link: #b58900;
   max-width: 70ch;
   line-height: 1.6;
   font-size: clamp(1rem, 3.5vw, 1.15rem);
-  color: rgba(255,255,255,0.9);
+  color: rgba(255,255,255,0.92);
 }
 
 .buttonGroup {
@@ -116,8 +118,8 @@ $color-light-link: #b58900;
   letter-spacing: .1rem;
   min-height: 48px;
   background: transparent;
-  border: 1px solid #ffffff;   /* borda branca visível */
-  color: #ffffff;              /* texto branco */
+  border: 1.2px solid #ffffff;
+  color: #ffffff;
   cursor: pointer;
   transition: all .25s ease;
 }
@@ -176,27 +178,23 @@ $color-light-link: #b58900;
 .centered .buttonGroup { justify-content: center; }
 
 // ==============================
-// 9) VARIANTE PFAU — TUDO BRANCO VISÍVEL
+// 9) VARIANTE PFAU — texto visível, partículas ajustadas
 // ==============================
 .pfauCentered {
   opacity: 1 !important;
   transform: none !important;
   animation: none !important;
+  background: $color-dark-bg !important; /* fundo preto também nesta variante */
 }
-.pfauCentered .title {
-  color: $color-dark-accent !important;
-}
+.pfauCentered .title { color: $color-dark-accent !important; }
 .pfauCentered .subtitle,
-.pfauCentered .description {
-  color: #ffffff !important;
-}
+.pfauCentered .description { color: #ffffff !important; }
 .pfauCentered .luxuryButton {
   color: #ffffff !important;
   border-color: #ffffff !important;
-  &:hover {
-    background: rgba(255,255,255,0.15);
-  }
+  &:hover { background: rgba(255,255,255,0.15); }
 }
+.pfauCentered .particlesBackground { opacity: .5 !important; }
 
 // ==============================
 // 10) MOBILE
