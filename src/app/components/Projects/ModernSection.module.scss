@@ -2,15 +2,15 @@
 // 1) CORES (sem mudar o fundo da página)
 // ==============================
 $color-dark-text: #ffffff;
-$color-dark-accent: #f8bf00;   // dourado forte (título)
-$color-dark-link: #cda500;     // dourado suave (linhas partículas)
+$color-dark-accent: #f8bf00;   // dourado forte p/ título
+$color-dark-link: #cda500;     // dourado suave p/ linhas das partículas
 
 $color-light-text: #111317;
-$color-light-accent: #b58900;  // dourado para título no tema claro
-$color-light-link: #b58900;    // linhas partículas no tema claro
+$color-light-accent: #b58900;
+$color-light-link: #b58900;
 
 // ==============================
-// 2) ANIMAÇÃO SUAVE (opcional)
+// 2) ANIMAÇÃO SUAVE
 // ==============================
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }
@@ -43,19 +43,20 @@ $color-light-link: #b58900;    // linhas partículas no tema claro
   &.isVisible { animation: fadeInUp .8s ease-out forwards; }
 }
 
-/* partículas sempre atrás e discretas */
+/* partículas sempre ATRÁS e discretas */
 .particlesBackground {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 0;                /* atrás de tudo */
   pointer-events: none;
-  opacity: .45; /* reduz para não competir com o texto */
+  opacity: .22;              /* bem leve */
+  mix-blend-mode: normal;    /* sem mistura que altere as cores do fundo */
 }
 
 .textContainer,
 .imageContainer {
   position: relative;
-  z-index: 5; /* acima das partículas */
+  z-index: 1; /* conteúdo acima das partículas */
 }
 
 // ==============================
@@ -73,8 +74,8 @@ $color-light-link: #b58900;    // linhas partículas no tema claro
   display: flex;
   flex-direction: column;
   gap: 14px;
-  align-items: center;      /* centralizado */
-  text-align: center;       /* centralizado */
+  align-items: center;
+  text-align: center;
   margin: 0 auto;
 }
 
@@ -83,7 +84,7 @@ $color-light-link: #b58900;    // linhas partículas no tema claro
   line-height: 1.15;
   font-weight: 700;
   font-size: clamp(1.6rem, 5vw, 2.6rem);
-  color: $color-dark-accent;   /* padrão: dourado forte */
+  color: $color-dark-accent;
 }
 .light .title { color: $color-light-accent; }
 
@@ -93,11 +94,7 @@ $color-light-link: #b58900;    // linhas partículas no tema claro
   font-weight: 700;
   letter-spacing: .02em;
   font-size: clamp(1.05rem, 3.8vw, 1.3rem);
-  /* contraste explícito por tema */
 }
-.dark  .subtitle { color: rgba(255,255,255,.98); }
-.light .subtitle { color: $color-light-text; }
-
 .description {
   margin: 0;
   max-width: 70ch;
@@ -105,8 +102,6 @@ $color-light-link: #b58900;    // linhas partículas no tema claro
   font-size: clamp(1rem, 3.5vw, 1.15rem);
   opacity: .95;
 }
-.dark  .description { color: rgba(255,255,255,.92); }
-.light .description { color: rgba(17,19,23,.92); }
 
 .buttonGroup {
   margin-top: 20px;
@@ -154,9 +149,9 @@ $color-light-link: #b58900;    // linhas partículas no tema claro
   width: 100%;
   height: auto;
   object-fit: contain;
-  border-radius: 20px;   /* cantos suaves */
+  border-radius: 20px;
   background: transparent;
-  box-shadow: none;      /* SEM SOMBRA */
+  box-shadow: none;
 }
 
 // ==============================
@@ -181,13 +176,19 @@ $color-light-link: #b58900;    // linhas partículas no tema claro
 .centered .buttonGroup { justify-content: center; }
 
 // ==============================
-// 9) VARIANTE PFAU — força centralização total (se o id conter “pfau”)
+// 9) VARIANTE PFAU — força centralização + contraste explícito
 // ==============================
 .pfauCentered {
   opacity: 1 !important;
   transform: none !important;
   animation: none !important;
 }
+
+/* CONTRASTE EXPLÍCITO para Pfau (independe do tema) */
+.pfauCentered .title       { color: $color-dark-accent !important; }
+.pfauCentered .subtitle,
+.pfauCentered .description { color: #ffffff !important; }
+
 .pfauCentered .textContainer,
 .pfauCentered .buttonGroup {
   align-items: center !important;
