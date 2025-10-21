@@ -1,16 +1,16 @@
 // ==============================
-// 1) CORES (sem mudar o fundo da página)
+// 1) CORES
 // ==============================
 $color-dark-text: #ffffff;
-$color-dark-accent: #f8bf00;   // dourado forte p/ título
-$color-dark-link: #cda500;     // dourado suave p/ linhas das partículas
+$color-dark-accent: #f8bf00; // dourado forte p/ título
+$color-dark-link: #cda500;   // dourado suave p/ linhas partículas
 
 $color-light-text: #111317;
 $color-light-accent: #b58900;
 $color-light-link: #b58900;
 
 // ==============================
-// 2) ANIMAÇÃO SUAVE
+// 2) ANIMAÇÃO
 // ==============================
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }
@@ -18,24 +18,20 @@ $color-light-link: #b58900;
 }
 
 // ==============================
-// 3) BASE — NÃO define background; respeita o fundo do container pai
+// 3) BASE
 // ==============================
 .modernSection {
   position: relative;
   isolation: isolate;
   width: 100%;
   min-height: 86svh;
-
-  box-sizing: border-box;
   margin: 0;
   padding: 6vh 5vw;
-
   display: flex;
-  flex-direction: column;   /* mobile-first */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 28px;
-
   opacity: 0;
   transform: translateY(24px);
   transition: opacity .4s ease-out, transform .4s ease-out;
@@ -43,24 +39,23 @@ $color-light-link: #b58900;
   &.isVisible { animation: fadeInUp .8s ease-out forwards; }
 }
 
-/* partículas sempre ATRÁS e discretas */
 .particlesBackground {
   position: absolute;
   inset: 0;
-  z-index: 0;                /* atrás de tudo */
+  z-index: 0;
+  opacity: .22;
+  mix-blend-mode: normal;
   pointer-events: none;
-  opacity: .22;              /* bem leve */
-  mix-blend-mode: normal;    /* sem mistura que altere as cores do fundo */
 }
 
 .textContainer,
 .imageContainer {
   position: relative;
-  z-index: 1; /* conteúdo acima das partículas */
+  z-index: 1;
 }
 
 // ==============================
-// 4) TEMAS — só cores do texto (sem fundo)
+// 4) TEMAS
 // ==============================
 .dark  { color: $color-dark-text; }
 .light { color: $color-light-text; }
@@ -92,15 +87,16 @@ $color-light-link: #b58900;
   margin: 0;
   line-height: 1.35;
   font-weight: 700;
-  letter-spacing: .02em;
   font-size: clamp(1.05rem, 3.8vw, 1.3rem);
+  color: #ffffff;
 }
+
 .description {
   margin: 0;
   max-width: 70ch;
   line-height: 1.6;
   font-size: clamp(1rem, 3.5vw, 1.15rem);
-  opacity: .95;
+  color: rgba(255,255,255,0.9);
 }
 
 .buttonGroup {
@@ -120,15 +116,19 @@ $color-light-link: #b58900;
   letter-spacing: .1rem;
   min-height: 48px;
   background: transparent;
-  border: 1px solid currentColor;
-  color: currentColor;
+  border: 1px solid #ffffff;   /* borda branca visível */
+  color: #ffffff;              /* texto branco */
   cursor: pointer;
-  transition: opacity .2s ease;
+  transition: all .25s ease;
 }
-.luxuryButton:hover { opacity: .8; }
+.luxuryButton:hover {
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+  border-color: #ffffff;
+}
 
 // ==============================
-// 6) MÍDIA (sem sombra, sem “split”, sem fundo extra)
+// 6) MÍDIA
 // ==============================
 .imageContainer {
   width: 100%;
@@ -155,7 +155,7 @@ $color-light-link: #b58900;
 }
 
 // ==============================
-// 7) DESKTOP — side-by-side, porém tudo centralizado
+// 7) DESKTOP
 // ==============================
 @media (min-width: 1024px) {
   .modernSection {
@@ -170,30 +170,32 @@ $color-light-link: #b58900;
 }
 
 // ==============================
-// 8) VARIANTE “SERVICES” CENTRALIZADA (se você usar)
+// 8) VARIANTE “SERVICES”
 // ==============================
 .centered .textContainer { max-width: 900px; }
 .centered .buttonGroup { justify-content: center; }
 
 // ==============================
-// 9) VARIANTE PFAU — força centralização + contraste explícito
+// 9) VARIANTE PFAU — TUDO BRANCO VISÍVEL
 // ==============================
 .pfauCentered {
   opacity: 1 !important;
   transform: none !important;
   animation: none !important;
 }
-
-/* CONTRASTE EXPLÍCITO para Pfau (independe do tema) */
-.pfauCentered .title       { color: $color-dark-accent !important; }
+.pfauCentered .title {
+  color: $color-dark-accent !important;
+}
 .pfauCentered .subtitle,
-.pfauCentered .description { color: #ffffff !important; }
-
-.pfauCentered .textContainer,
-.pfauCentered .buttonGroup {
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
+.pfauCentered .description {
+  color: #ffffff !important;
+}
+.pfauCentered .luxuryButton {
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+  &:hover {
+    background: rgba(255,255,255,0.15);
+  }
 }
 
 // ==============================
