@@ -42,7 +42,7 @@ const ModernSection = ({
 
   const imageObjectFit: 'cover' | 'contain' = theme === 'light' ? 'cover' : 'contain';
 
-  // Entrada suave (não mexe no layout)
+  // Entrada suave
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
@@ -50,7 +50,7 @@ const ModernSection = ({
       ([entry]) => {
         if (entry.isIntersecting) {
           node.classList.add('isVisible');
-          // @ts-ignore (fallback caso o CSS module gere hash)
+          // @ts-ignore — fallback caso CSS module gere hash
           if ((styles as any).isVisible) node.classList.add((styles as any).isVisible);
           io.disconnect();
         }
@@ -101,18 +101,19 @@ const ModernSection = ({
 
   return (
     <section id={id} ref={sectionRef} className={classNames}>
+      {/* Partículas atrás de tudo; cores discretas */}
       <div className={styles.particlesBackground}>
         {theme === 'light' ? (
           <ParticlesComponent
             id={`particles-${id}`}
-            particleColor="#999999"   // pontos discretos (cinza)
+            particleColor="#999999"   // pontos discretos no light
             linkColor="#b58900"       // linhas douradas sutis
           />
         ) : (
           <ParticlesComponent
             id={`particles-${id}`}
-            particleColor="#FFFFFF"   // partículas brancas
-            linkColor="#cda500"       // linhas douradas suaves
+            particleColor="#FFFFFF"   // pontos brancos
+            linkColor="#cda500"       // linhas douradas suaves (sem “amarelar”)
           />
         )}
       </div>
@@ -122,7 +123,7 @@ const ModernSection = ({
         <div className={styles.abstractImageWrapper}>{mediaContent}</div>
       </div>
 
-      {/* Texto centralizado */}
+      {/* Texto */}
       <div className={styles.textContainer}>
         <h1 className={`${styles.title} ${titleFontClass}`}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
