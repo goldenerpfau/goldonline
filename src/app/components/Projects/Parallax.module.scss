@@ -1,0 +1,107 @@
+/* === SEÇÃO PARALLAX === */
+.parallaxWrapper {
+  position: relative;
+  width: 100%;
+  height: 65vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: rgb(0, 0, 0); 
+}
+
+.parallaxSection {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: auto;
+  cursor: grab;
+  user-select: none;
+
+  /* Oculta a barra de rolagem no Firefox */
+  scrollbar-width: none; 
+
+  &.dragging {
+    cursor: grabbing;
+  }
+
+  /* Oculta a barra de rolagem em Chrome, Safari e Edge (WebKit) */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.imageBlock {
+  flex: 0 0 auto;
+  width: 380px;
+  height: 580px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  transition: transform 0.5s ease, box-shadow 0.4s ease;
+  will-change: transform;
+
+  &:hover {
+    transform: scale(0.98); // leve zoom
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8); // sombra mais intensa
+  }
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  color: #ffffff;
+  font-size: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  
+  /* Centralização com Flexbox */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background: rgba(0, 0, 0, );
+  }
+
+  &.left {
+    left: 16px;
+  }
+
+  &.right {
+    right: 16px;
+  }
+}
+
+/* === AJUSTES PARA DISPOSITIVOS MÓVEIS (TELAS MENORES QUE 768px) === */
+@media (max-width: 768px) {
+  .parallaxWrapper {
+    height: 55vh; /* Altura menor para se ajustar melhor em telas verticais */
+  }
+
+  .imageBlock {
+    width: 240px; /* Largura das imagens reduzida para caber na tela */
+    height: 360px; /* Altura das imagens reduzida para manter a proporção */
+  }
+
+  .navButton {
+    width: 40px; /* Botões de navegação ligeiramente menores */
+    height: 40px;
+    font-size: 1.5rem; /* Ícone (fonte) menor */
+
+    &.left {
+      left: 8px; /* Mais próximos da borda */
+    }
+    &.right {
+      right: 8px; /* Mais próximos da borda */
+    }
+  }
+}

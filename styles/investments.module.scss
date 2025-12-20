@@ -1,0 +1,149 @@
+.investmentsSection {
+  width: 100%;
+  min-height: 100vh; // Garante que a seção tenha pelo menos a altura da tela
+  height: auto; // Permite que a seção cresça se o conteúdo for maior
+  padding: 4rem 1rem; // Adiciona padding para telas pequenas
+  background: url("/fundoinvest2.jpg") top center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.investmentsContainer {
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  max-width: 800px;
+  width: 100%;
+}
+
+.investmentsTitle {
+  font-size: 2.5rem;
+  font-family: "Cinzel", serif;
+  color: #f8bf00;
+  margin-bottom: 10px;
+}
+
+.investmentsSubtitle {
+  font-size: 1.2rem;
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+.btcContainer {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; // Permite quebrar a linha em telas pequenas
+  gap: 10px;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.btcLabel {
+  color: #f8bf00;
+  font-weight: bold;
+}
+
+.btcValue {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.updateInfo {
+  font-size: 0.9rem;
+  color: #ccc;
+  width: 100%; // Ocupa a linha toda quando quebra
+  flex-basis: 100%;
+}
+
+.investmentOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.option {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  h3 {
+    font-size: 1.2rem;
+    color: #f8bf00;
+  }
+  p {
+    font-size: 1rem;
+    color: white;
+  }
+}
+
+.globalExpansion {
+  margin-top: 40px;
+  text-align: center;
+  h3 {
+    font-size: 1.5rem;
+    color: white;
+  }
+  .countriesText {
+    font-size: 1rem;
+    color: #ddd;
+    margin-top: 5px;
+  }
+}
+
+.countriesNumber {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #f8bf00;
+  display: inline-block;
+  opacity: 0; // Começa invisível
+  transform: translateY(30px); // Começa um pouco abaixo
+  animation: fadeInUp 1.5s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === AJUSTES PARA MOBILE === */
+@media (max-width: 768px) {
+  .investmentsContainer {
+    padding: 1.5rem;
+  }
+
+  .investmentsTitle {
+    font-size: 2rem;
+  }
+
+  .investmentsSubtitle {
+    font-size: 1rem;
+  }
+
+  .investmentOptions {
+    grid-template-columns: 1fr; // Uma coluna no mobile
+  }
+
+  .btcValue {
+    font-size: 1.5rem;
+  }
+
+  .globalExpansion h3 {
+    font-size: 1.2rem;
+  }
+
+  .countriesNumber {
+    font-size: 2.5rem;
+  }
+}

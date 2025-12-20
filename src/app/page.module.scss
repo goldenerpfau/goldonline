@@ -1,0 +1,426 @@
+/* === ESTRUTURA DO HEADER === */
+/* Space between logo and title */
+.header {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  right: 2rem;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoMenuContainer {
+  display: flex;
+  align-items: center;
+}
+
+/* === LOGO === */
+.logoWrapper {
+  position: relative;
+  width: 280px;
+  height: 120px;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+/* === MENU INTERATIVO === */
+.navMenu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-left: 6px;
+}
+
+.navMenu button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-family: 'Montserrat', Arial, sans-serif;
+  letter-spacing: 0.15rem;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease, width 0.3s ease;
+}
+
+.navMenu button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.navMenu button:hover {
+  color: #ddd;
+}
+
+.navMenu button:hover::after {
+  width: 100%;
+}
+
+/* === CONTEÚDO CENTRAL === */
+.main {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;            /* ⬅ fundo preto */
+  z-index: 2;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  background-attachment: scroll;
+}
+
+/* === TÍTULO === */
+.contents h1 {
+  color: white;
+  letter-spacing: 1.6rem;
+  font-weight: 500;
+  padding: 1rem 0;
+  font-size: 2rem;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* === BOTÕES === */
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.buttons button {
+  padding: 1.5rem 2rem;
+  margin: 0 1rem;
+  background-color: transparent;
+  border: solid white 1px;
+  font-size: 12px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  transition: 0.25s background-color;
+}
+
+.buttons button:hover {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+/* === VÍDEO DE FUNDO === */
+.videoSection {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+  margin-top: 0;
+  margin-bottom: 0;
+  background-attachment: scroll;
+}
+
+.videoSection video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* === CORREÇÃO DE FUNDO E OVERFLOW NO CONTAINER PRINCIPAL === */
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000;            /* ⬅ fundo preto */
+  overflow-x: hidden;
+  background-attachment: scroll;
+}
+
+/* ========================================= */
+/* === AJUSTES PARA DISPOSITIVOS MÓVEIS === */
+/* ========================================= */
+@media (max-width: 768px) {
+  .header {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .logoWrapper {
+    width: 200px;
+    height: auto;
+    margin-bottom: 0;
+  }
+
+  .navMenu {
+    display: none;
+  }
+
+  .main {
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+
+  .contents h1 {
+    font-size: 1.2rem;
+    letter-spacing: 0.8rem;
+    padding-left: 0.8rem;
+  }
+
+  .buttons button {
+    padding: 1.2rem 1.5rem;
+    font-size: 10px;
+    letter-spacing: 0.3rem;
+  }
+}
+
+/* === GLOBO DE FUNDO PARA SERVICES (Não usado diretamente, mas mantido) === */
+.servicesHalf canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.globeWrapper {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  margin-top: 0;
+  z-index: 1;
+}
+
+/* === NOVA SEÇÃO DO GLOBO === */
+.globeSection {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #000;            /* ⬅ fundo preto */
+  overflow: hidden;
+  z-index: 1;
+  margin-top: 0;
+  margin-bottom: 0;
+  background-attachment: scroll;
+}
+
+.projectTitlesWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.counterWrapper {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  color: white;
+  z-index: 3;
+}
+
+.cylinderSection {
+  width: 100%;
+  height: 100vh;
+  background-color: #000;            /* ⬅ fundo preto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-top: 0;
+  margin-bottom: 0;
+  background-attachment: scroll;
+}
+
+/* === SEÇÃO INVESTMENTS === */
+.investmentsSection {
+  width: 100%;
+  height: 100vh;
+  background-color: #000000;         /* já preto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 0;
+  overflow: hidden;
+  background-attachment: scroll;
+}
+
+.investmentsContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 780px;
+  padding: 0 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1.2s ease-out forwards;
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+
+.investmentBadge {
+  margin-top: 10rem;
+  padding: 1.4rem 2.4rem;
+  color: #155e0b;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  animation: fadeInUp 1.5s ease-out forwards 1s;
+  opacity: 0;
+  transform: translateY(10px);
+  box-shadow: inset 0 0 30px rgba(248, 191, 0, 0.03), 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.investmentsContent h2 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+  letter-spacing: 0.25rem;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 1.5s ease-out forwards 0.3s;
+}
+
+.btcPrice {
+  font-size: 1.8rem;
+  font-weight: 600;
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 1.5s ease-out forwards 0.5s;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.btcLabel { color: #ffffff; font-weight: 700; }
+.btcValue { color: #ffffff; font-weight: 500; }
+
+.updateInfo {
+  font-size: 0.95rem;
+  color: #bbbbbb;
+  margin: 0.5rem 0 1.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 1.5s ease-out forwards 0.6s;
+  font-style: italic;
+}
+
+.investmentText {
+  font-size: 1.05rem;
+  color: #e6e6e6;
+  max-width: 640px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 1.5s ease-out forwards 0.7s;
+  line-height: 1.6;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tradingViewWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.tradingViewIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  filter: grayscale(20%) brightness(0.6) contrast(1.2);
+}
+
+.footer {
+  width: 100%;
+  padding: 3rem 1rem 2rem;
+  background-color: #000000;         /* já preto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+  margin-top: 0;
+  background-attachment: scroll;
+
+  .footerContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footerLogo {
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+    transition: transform 0.3s ease;
+
+    &:hover { transform: scale(1.05); }
+  }
+
+  .footerText {
+    font-size: 0.875rem;
+    color: #aaa;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.03rem;
+  }
+}
