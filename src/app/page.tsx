@@ -66,10 +66,10 @@ export default function Home() {
           <ModernSection
             id="services"
             slides={[
-              { image: '/images/carousel/1.jpg', title: '' },
-              { image: '/images/carousel/2.jpg', title: '' },
-              { image: '/images/carousel/3.jpg', title: '' },
-              { image: '/images/carousel/4.jpg', title: '' },
+              { image: '/carousel/1.jpg', title: '' },
+              { image: '/carousel/2.jpg', title: '' },
+              { image: '/carousel/3.jpg', title: '' },
+              
             ]}
           />
 
