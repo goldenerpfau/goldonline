@@ -1,4 +1,5 @@
 'use client';
+
 import styles from './page.module.scss';
 import Image from 'next/image';
 import { Cinzel, Montserrat } from 'next/font/google';
@@ -52,9 +53,8 @@ export default function Home() {
           <div className={styles.buttons}>
             <button
               className={`${styles.heroButton} ${montserrat.className}`}
-              onClick={() =>
-                document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })
-              }
+              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+              type="button"
             >
               BY ALEXANDRE A. A.
             </button>
@@ -63,20 +63,30 @@ export default function Home() {
       </main>
 
       {/* SERVICES */}
-          <ModernSection
-            id="services"
-            slides={[
-              { image: '/carousel/1.jpg', title: '' },
-              { image: '/carousel/2.jpg', title: '' },
-              { image: '/carousel/3.jpg', title: '' },
-              
-            ]}
-          />
-
+      <ModernSection
+        id="services"
+        slides={[
+          {
+            image: '/highlights/1.png?v=20251220-12',
+            title: 'Crafted as a statement. Engineered for effortless prestige.',
+            description: 'A seamless experience — refined down to every detail.',
+          },
+          {
+            image: '/highlights/2.png?v=20251220-12',
+            title: 'Impact, engineered.',
+            description: 'Transparent governance. Real outcomes. Zero noise.',
+          },
+          {
+            image: '/highlights/3.png?v=20251220-12',
+            title: 'Membership is the gateway.',
+            description: 'Time, clarity, and a structured path from entry to exit.',
+          },
+        ]}
+      />
 
       {/* VIDEO */}
       <section id="video" className={styles.videoSection}>
-        <video src="/indoindo.mp4" autoPlay muted loop className={styles.video} />
+        <video src="/indoindo.mp4" autoPlay muted loop playsInline className={styles.video} />
       </section>
 
       {/* GLOBE + PROJECTS */}
@@ -84,9 +94,11 @@ export default function Home() {
         <div className={styles.globeWrapper}>
           <Globe />
         </div>
+
         <div className={styles.projectTitlesWrapper}>
           <Titles data={projectData} setSelectedProject={() => {}} />
         </div>
+
         <div className={styles.counterWrapper}>
           <AnimatedCounter />
         </div>
@@ -105,6 +117,7 @@ export default function Home() {
         <button
           onClick={() => document.getElementById('video')?.scrollIntoView({ behavior: 'smooth' })}
           aria-label="Scroll to top"
+          type="button"
         >
           <Image src="/logopfau.png" alt="Goldener Pfau Logo" width={90} height={90} />
         </button>

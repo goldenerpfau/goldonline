@@ -7,7 +7,7 @@
   isolation: isolate;
 }
 
-/* ===== FUNDO ESTRELADO GLOBAL — MAIS VISÍVEL, SEM NEBULOSA ===== */
+/* ===== FUNDO ESTRELADO GLOBAL (visível) ===== */
 .stars {
   position: absolute;
   inset: 0;
@@ -60,26 +60,60 @@
   50% { opacity: 1; }
 }
 
+/* ===== VIGNETTE ===== */
 .vignette {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(1400px 900px at 50% 45%, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.78) 72%, rgba(0,0,0,0.94) 100%);
+    radial-gradient(1400px 900px at 50% 45%,
+      rgba(0,0,0,0.08) 0%,
+      rgba(0,0,0,0.62) 68%,
+      rgba(0,0,0,0.90) 100%);
+}
+
+/* ===== GRIDLINES (high-tech, super sutil) ===== */
+.gridlines {
+  position: absolute;
+  inset: -30%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .22;
+  background:
+    linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 110px 110px;
+  transform: rotate(-12deg);
+  mask-image: radial-gradient(700px 420px at 50% 30%, #000 25%, transparent 72%);
+}
+
+/* ===== NOISE (Apple-ish glass feel) ===== */
+.noise {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: .10;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,.10) 1px, transparent 0);
+  background-size: 3px 3px;
+  mix-blend-mode: overlay;
 }
 
 /* ===== TOP BAR ===== */
 .topBar {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: min(1220px, 92vw);
-  margin: 0 auto clamp(20px, 3vh, 28px);
+  margin: 0 auto clamp(18px, 3vh, 26px);
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
 }
+
+.topLeft { display: grid; gap: 10px; }
 
 .topTitle {
   margin: 0;
@@ -90,27 +124,51 @@
   line-height: 1.05;
 }
 
+.topSubtitle {
+  margin: 0;
+  color: rgba(255,255,255,.62);
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.55;
+  max-width: 52ch;
+}
+
 .topLink {
   color: rgba(120,190,255,.95);
   text-decoration: none;
   font-size: 14px;
   white-space: nowrap;
-  transition: opacity .2s ease, transform .2s ease;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(120,190,255,.22);
+  background: rgba(255,255,255,0.02);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: opacity .2s ease, transform .2s ease, border-color .2s ease, background .2s ease;
 }
-.topLink:hover { opacity: 1; transform: translateY(-1px); }
+.topLink:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+  border-color: rgba(120,190,255,.35);
+  background: rgba(255,255,255,0.04);
+}
 .arrow { margin-left: 6px; font-size: 18px; opacity: .9; }
 
 /* ===== CAROUSEL ===== */
 .carousel {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: min(1220px, 92vw);
   margin: 0 auto;
   overflow: hidden;
   touch-action: pan-y;
   cursor: grab;
+  outline: none;
 }
 .carousel:active { cursor: grabbing; }
+.carousel:focus-visible {
+  box-shadow: 0 0 0 2px rgba(120,190,255,.35);
+  border-radius: 28px;
+}
 
 .track {
   display: flex;
@@ -123,13 +181,21 @@
   border-radius: 28px;
   overflow: hidden;
 
-  background: rgba(255,255,255,0.016);
+  /* ✅ MAIS TRANSPARENTE (pra estrelas aparecerem mais) */
+  background:
+    radial-gradient(900px 560px at 20% 22%, rgba(255,255,255,0.035) 0%, transparent 62%),
+    radial-gradient(900px 560px at 80% 78%, rgba(120,190,255,0.028) 0%, transparent 60%),
+    rgba(255,255,255,0.008);
+
+  border: 1px solid rgba(255,255,255,0.055);
+
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
   box-shadow:
-    0 70px 140px rgba(0,0,0,.78),
-    0 20px 52px rgba(0,0,0,.52);
+    0 70px 140px rgba(0,0,0,.70),
+    0 20px 52px rgba(0,0,0,.46),
+    inset 0 0 0 1px rgba(255,255,255,0.018);
 
   min-height: clamp(460px, 60vh, 740px);
   display: grid;
@@ -149,6 +215,7 @@
   font-weight: 650;
   letter-spacing: -0.01em;
   line-height: 1.18;
+  text-shadow: 0 10px 40px rgba(0,0,0,.55);
 }
 
 .slideDesc {
@@ -158,7 +225,7 @@
   line-height: 1.55;
 }
 
-/* ===== MEDIA (container do conteúdo) ===== */
+/* ===== MEDIA ===== */
 .media {
   position: relative;
   display: grid;
@@ -168,7 +235,7 @@
   background: transparent;
 }
 
-/* ✅ estrelas internas visíveis no slide 2 */
+/* ✅ estrelas internas mais fortes no slide 2 */
 .mediaShowStars .mediaStars {
   opacity: 1;
   filter:
@@ -182,7 +249,6 @@
   inset: -10%;
   z-index: 0;
   pointer-events: none;
-
   background:
     radial-gradient(2px 2px at 12% 22%, rgba(255,255,255,.55) 60%, transparent 62%),
     radial-gradient(1.6px 1.6px at 18% 68%, rgba(255,255,255,.40) 60%, transparent 62%),
@@ -192,7 +258,6 @@
     radial-gradient(1.8px 1.8px at 70% 28%, rgba(255,255,255,.44) 60%, transparent 62%),
     radial-gradient(1.6px 1.6px at 84% 66%, rgba(255,255,255,.34) 60%, transparent 62%),
     radial-gradient(2px 2px at 92% 22%, rgba(255,255,255,.42) 60%, transparent 62%);
-
   opacity: .78;
   filter:
     drop-shadow(0 0 14px rgba(255,255,255,0.10))
@@ -205,12 +270,32 @@
   50% { transform: translate3d(10px,-8px,0) scale(1.01); opacity: .92; }
 }
 
-/* =========================
-   ✅ SLIDE 1 — alinhar os 3 iPhones no centro (corrige “caiu pro rodapé”)
-   ========================= */
+/* ===== HUD corner marks ===== */
+.hud {
+  position: absolute;
+  inset: 18px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .55;
+
+  span {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba(120,190,255,.22);
+    border-radius: 10px;
+    filter: drop-shadow(0 0 16px rgba(120,190,255,.10));
+  }
+
+  span:nth-child(1) { top: 0; left: 0; border-right: none; border-bottom: none; }
+  span:nth-child(2) { top: 0; right: 0; border-left: none; border-bottom: none; }
+  span:nth-child(3) { bottom: 0; right: 0; border-left: none; border-top: none; }
+}
+
+/* ===== SLIDE 1 ===== */
 .simpleWrap {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   height: 100%;
   display: grid;
@@ -227,12 +312,10 @@
   filter: drop-shadow(0 44px 110px rgba(0,0,0,.70));
 }
 
-/* =========================
-   ✅ SLIDE 2 — INSTITUT GRID (texto + imagem centralizados)
-   ========================= */
+/* ===== SLIDE 2 ===== */
 .mediaGrid {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   max-width: 1120px;
   display: grid;
@@ -244,9 +327,9 @@
 
 .philanthropy {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   padding: clamp(8px, 1vw, 14px);
-  max-width: 580px;
+  max-width: 600px;
 }
 
 .pill {
@@ -255,10 +338,11 @@
   margin: 0 0 14px;
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  color: rgba(255,255,255,.85);
+  color: rgba(255,255,255,.86);
   font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -275,20 +359,52 @@
 
 .phText {
   margin: 0 0 12px;
-  color: rgba(255,255,255,.70);
+  color: rgba(255,255,255,.72);
   font-size: clamp(13px, 1.05vw, 16px);
   line-height: 1.6;
 }
-.phText strong { color: rgba(255,255,255,.92); font-weight: 650; }
+.phText strong { color: rgba(255,255,255,.94); font-weight: 650; }
 
 .phList {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   padding-left: 18px;
   color: rgba(255,255,255,.70);
   font-size: clamp(13px, 1.05vw, 16px);
   line-height: 1.65;
 }
 .phList strong { color: rgba(255,255,255,.92); font-weight: 650; }
+
+.metaRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0 12px;
+}
+
+.metaCard {
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.022);
+  border: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 18px 40px rgba(0,0,0,.26);
+}
+
+.metaKicker {
+  margin: 0 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+}
+
+.metaValue {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 650;
+  color: rgba(255,255,255,.92);
+}
 
 .phNote {
   margin: 0;
@@ -299,21 +415,28 @@
 
 .deviceWrap {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: grid;
   place-items: center;
   justify-self: center;
   width: 100%;
   max-width: 520px;
-  background: transparent;
 }
 
-/* =========================
-   ✅ SLIDE 3 — MEMBERS GRID (imagem maior + card alinhado)
-   ========================= */
+.deviceGlow {
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(420px 320px at 55% 55%, rgba(120,190,255,.14), transparent 70%);
+  filter: blur(10px);
+  opacity: .9;
+}
+
+/* ===== SLIDE 3 ===== */
 .membersGrid {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   max-width: 1120px;
   display: grid;
@@ -325,7 +448,7 @@
 
 .membersVisual {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: grid;
   place-items: center;
   justify-self: start;
@@ -335,21 +458,21 @@
 
 .membersCopy {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   justify-self: end;
   width: 100%;
-  max-width: 520px;
+  max-width: 540px;
   padding: clamp(18px, 1.5vw, 22px);
   border-radius: 24px;
 
-  background: rgba(255,255,255,0.035);
-  border: 1px solid rgba(255,255,255,0.07);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,255,255,0.024);
+  border: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 
   box-shadow:
-    0 28px 64px rgba(0,0,0,.50),
-    inset 0 0 0 1px rgba(255,255,255,0.03);
+    0 28px 64px rgba(0,0,0,.46),
+    inset 0 0 0 1px rgba(255,255,255,0.02);
 }
 
 .membersTitle {
@@ -363,11 +486,10 @@
 
 .membersText {
   margin: 0 0 12px;
-  color: rgba(255,255,255,.70);
+  color: rgba(255,255,255,.72);
   font-size: clamp(14px, 1.1vw, 16px);
   line-height: 1.65;
 }
-.membersText strong { color: rgba(255,255,255,.92); font-weight: 650; }
 
 .membersList {
   margin: 0 0 12px;
@@ -395,24 +517,41 @@
   text-decoration: none;
 
   color: rgba(255,255,255,.96);
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(120,190,255,0.10);
+  border: 1px solid rgba(120,190,255,0.22);
 
   box-shadow: 0 18px 36px rgba(0,0,0,.35);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 
-  transition: transform .18s ease, background .18s ease, border-color .18s ease, opacity .18s ease;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
 }
 .primaryCta:hover {
   transform: translateY(-1px);
-  background: rgba(255,255,255,0.10);
-  border-color: rgba(255,255,255,0.18);
+  background: rgba(120,190,255,0.14);
+  border-color: rgba(120,190,255,0.32);
 }
 
 .secondaryHint {
   color: rgba(255,255,255,.55);
   font-size: 13px;
+}
+
+.membersFooter {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badgeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(120,190,255,.95);
+  box-shadow:
+    0 0 18px rgba(120,190,255,.35),
+    0 0 44px rgba(120,190,255,.18);
 }
 
 .membersNote {
@@ -425,7 +564,7 @@
 /* ===== IMG base ===== */
 .img {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   height: auto;
   object-fit: contain;
@@ -441,7 +580,7 @@
   50% { transform: translateY(-10px); }
 }
 
-/* tablet PNG (transparente) */
+/* tablet PNG */
 .imgTabletPortrait {
   width: min(520px, 100%);
   height: min(640px, 58vh);
@@ -453,7 +592,7 @@
   filter: drop-shadow(0 34px 86px rgba(0,0,0,.62));
 }
 
-/* membership PNG (maior +10% real) */
+/* membership PNG */
 .imgMembership {
   width: min(980px, 114%);
   height: auto;
@@ -467,7 +606,7 @@
 /* ===== CONTROLS ===== */
 .controls {
   position: relative;
-  z-index: 3;
+  z-index: 4;
   width: min(1220px, 92vw);
   margin: 18px auto 0;
   display: flex;
@@ -480,10 +619,11 @@
   align-items: center;
   padding: 12px 16px;
   border-radius: 999px;
-  background: rgba(255,255,255,.06);
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.06);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 18px 40px rgba(0,0,0,.45);
+  box-shadow: 0 18px 40px rgba(0,0,0,.42);
 }
 
 .dot {
@@ -505,56 +645,25 @@
 
 /* ===== RESPONSIVO ===== */
 @media (max-width: 980px) {
-  .mediaGrid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-    max-width: 980px;
-  }
+  .mediaGrid { grid-template-columns: 1fr; gap: 18px; }
+  .membersGrid { grid-template-columns: 1fr; gap: 18px; }
 
-  .membersGrid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-    max-width: 980px;
-  }
+  .philanthropy { max-width: 100%; text-align: left; }
+  .metaRow { grid-template-columns: 1fr 1fr; }
 
-  .philanthropy {
-    max-width: 100%;
-    text-align: left;
-  }
+  .membersCopy { text-align: left; justify-self: stretch; max-width: 100%; }
+  .membersVisual { justify-self: center; min-height: clamp(280px, 44vh, 620px); }
 
-  .membersCopy {
-    text-align: left;
-    justify-self: stretch;
-    max-width: 100%;
-  }
+  .deviceWrap { justify-self: center; max-width: 560px; }
+  .imgTabletPortrait { height: min(66vh, 740px); max-width: 560px; }
 
-  .membersVisual {
-    justify-self: center;
-    min-height: clamp(280px, 44vh, 620px);
-  }
-
-  .deviceWrap {
-    justify-self: center;
-    max-width: 560px;
-  }
-
-  .imgTabletPortrait {
-    height: min(66vh, 740px);
-    max-width: 560px;
-  }
-
-  .imgMembership {
-    width: min(1120px, 122%);
-  }
-
-  .imgHero {
-    width: min(980px, 118%);
-    height: min(520px, 54vh);
-  }
+  .imgMembership { width: min(1120px, 122%); }
+  .imgHero { width: min(980px, 118%); height: min(520px, 54vh); }
 }
 
 @media (max-width: 768px) {
-  .topBar { flex-direction: column; align-items: flex-start; }
+  .topBar { flex-direction: column; }
   .topLink { align-self: flex-end; }
   .slide { border-radius: 22px; }
+  .hud { inset: 14px; opacity: .45; }
 }
