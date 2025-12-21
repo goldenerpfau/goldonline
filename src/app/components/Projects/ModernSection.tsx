@@ -79,8 +79,11 @@ export default function ModernSection({ id, slides }: Props) {
 
   const dragging = useRef(false);
   const startX = useRef(0);
+  const startY = useRef(0);
   const delta = useRef(0);
+  const deltaY = useRef(0);
   const moved = useRef(false);
+  const captured = useRef(false);
 
   const goPrev = () => setIndex((i) => (i === 0 ? maxIndex : i - 1));
   const goNext = () => setIndex((i) => (i === maxIndex ? 0 : i + 1));
@@ -88,25 +91,57 @@ export default function ModernSection({ id, slides }: Props) {
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     dragging.current = true;
     moved.current = false;
+    captured.current = false;
     startX.current = e.clientX;
+    startY.current = e.clientY;
     delta.current = 0;
-    e.currentTarget.setPointerCapture?.(e.pointerId);
+    deltaY.current = 0;
+
+    // Mouse: always capture (desktop drag).
+    if (e.pointerType === 'mouse') {
+      e.currentTarget.setPointerCapture?.(e.pointerId);
+      captured.current = true;
+    }
   };
 
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!dragging.current) return;
     delta.current = e.clientX - startX.current;
+    deltaY.current = e.clientY - startY.current;
+
     if (Math.abs(delta.current) > 8) moved.current = true;
+
+    // Touch: only capture + prevent scroll once we detect an intentional horizontal swipe.
+    if (
+      e.pointerType !== 'mouse' &&
+      !captured.current &&
+      Math.abs(delta.current) > 10 &&
+      Math.abs(delta.current) > Math.abs(deltaY.current)
+    ) {
+      e.preventDefault();
+      e.currentTarget.setPointerCapture?.(e.pointerId);
+      captured.current = true;
+    }
   };
 
   const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!dragging.current) return;
     dragging.current = false;
-    e.currentTarget.releasePointerCapture?.(e.pointerId);
 
-    const threshold = 70;
+    if (captured.current) {
+      e.currentTarget.releasePointerCapture?.(e.pointerId);
+      captured.current = false;
+    }
+
+    const w = e.currentTarget.clientWidth || 360;
+    const threshold = Math.max(44, Math.min(86, w * 0.14));
     if (delta.current > threshold) goPrev();
     else if (delta.current < -threshold) goNext();
+  };
+
+  const onPointerCancel = () => {
+    dragging.current = false;
+    captured.current = false;
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -151,6 +186,7 @@ export default function ModernSection({ id, slides }: Props) {
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
+        onPointerCancel={onPointerCancel}
         onPointerLeave={onPointerUp}
       >
         <div className={styles.track} style={{ transform: `translateX(-${safeIndex * 100}%)` }}>

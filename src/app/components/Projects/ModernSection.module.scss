@@ -1,3 +1,4 @@
+/* (arquivo inteiro abaixo) */
 .section {
   position: relative;
   min-height: 100svh;
@@ -664,8 +665,76 @@
 }
 
 @media (max-width: 768px) {
-  .topBar { flex-direction: column; }
+  .section { padding: 56px 0 64px; }
+
+  .topBar { flex-direction: column; align-items: stretch; gap: 12px; width: min(980px, 92vw); }
   .topLink { align-self: flex-end; }
-  .slide { border-radius: 22px; }
+
+  .copyTitle { font-size: clamp(28px, 7.6vw, 40px); letter-spacing: -0.02em; }
+  .copyLead { font-size: 14px; }
+
+  .slide { border-radius: 22px; min-height: clamp(520px, 78svh, 760px); }
+  .slideHeader { padding: 18px 16px 0; text-align: center; }
+
+  .media { padding: 16px; }
   .hud { inset: 14px; opacity: .45; }
+
+  .mediaGrid,
+  .membersGrid { max-width: 560px; }
+
+  .metaRow { grid-template-columns: 1fr 1fr; }
+
+  .deviceWrap { max-width: 360px; }
+  .imgTabletPortrait { width: min(360px, 100%); height: auto; max-height: 62svh; }
+
+  .membersVisual { justify-self: center; min-height: clamp(260px, 36svh, 520px); }
+  .membersCopy { justify-self: center; max-width: 560px; text-align: center; }
+  .membersList { margin-left: 0; padding-left: 0; list-style: none; }
+  .membersList li { padding-left: 0; }
+  .membersActions { justify-content: center; flex-direction: column; align-items: stretch; }
+  .primaryCta { width: 100%; justify-content: center; }
+
+  .imgMembership { width: min(440px, 100%); }
+  .imgHero { width: min(520px, 100%); height: auto; max-height: 52svh; }
+}
+
+@media (max-width: 520px) {
+  .section { padding: 44px 0 56px; }
+
+  .topTitle { font-size: clamp(28px, 8.2vw, 38px); }
+  .topSubtitle { font-size: 13px; }
+  .topLink { align-self: stretch; text-align: center; }
+
+  .slide { border-radius: 18px; min-height: clamp(480px, 78svh, 720px); }
+  .slideTitle { font-size: clamp(17px, 4.6vw, 22px); }
+  .slideDesc { font-size: 13px; }
+
+  .media { padding: 14px; }
+  .hud { inset: 12px; }
+
+  .metaRow { grid-template-columns: 1fr; }
+  .metaCard { border-radius: 14px; }
+
+  .membersCopy { padding: 16px; border-radius: 18px; }
+  .membersTitle { font-size: clamp(20px, 6vw, 26px); }
+
+  .membersActions { gap: 10px; }
+  .primaryCta { padding: 12px 14px; }
+
+  .imgTabletPortrait { max-height: 56svh; }
+  .imgHero { max-height: 46svh; }
+
+  .dotsPill { gap: 8px; padding: 10px 12px; }
+  .dotActive { width: 16px; }
+}
+
+@media (max-width: 420px) {
+  .dotsPill { gap: 7px; padding: 10px 10px; }
+  .dot { width: 5px; height: 5px; }
+  .dotActive { width: 14px; }
+}
+
+@media (hover: none) {
+  .carousel { cursor: default; }
+  .carousel:active { cursor: default; }
 }
