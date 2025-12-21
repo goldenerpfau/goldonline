@@ -18,17 +18,17 @@ export default function ModernSection({ id, slides }: Props) {
   const defaultSlides: Slide[] = useMemo(
     () => [
       {
-        image: '/highlights/1.png?v=20251220-11',
+        image: 'public//highlights/1.png?v=20251220-11',
         title: 'Crafted as a statement. Engineered for effortless prestige.',
         description: 'A seamless experience — refined down to every detail.',
       },
       {
-        image: '/highlights/2.png?v=20251220-11',
+        image: 'public//highlights/2.png?v=20251220-11',
         title: 'Impact, engineered.',
         description: 'Transparent governance. Real outcomes. Zero noise.',
       },
       {
-        image: '/highlights/3.png?v=20251220-11',
+        image: 'public//highlights/3.png?v=20251220-11',
         title: 'Membership is the gateway.',
         description: 'Time, clarity, and a structured path from entry to exit.',
       },
