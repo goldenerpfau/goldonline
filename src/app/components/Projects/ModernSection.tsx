@@ -18,28 +18,25 @@ export default function ModernSection({ id, slides }: Props) {
   const defaultSlides: Slide[] = useMemo(
     () => [
       {
-        image: '/highlights/1.png',
+        image: '/highlights/1.png?v=20251220-11',
         title: 'Crafted as a statement. Engineered for effortless prestige.',
         description: 'A seamless experience — refined down to every detail.',
       },
       {
-        image: '/highlights/2.png?v=20251220-3',
-        title: 'Impact, made transparent.',
-        description: 'Philanthropy with receipts — and scale.',
+        image: '/highlights/2.png?v=20251220-11',
+        title: 'Impact, engineered.',
+        description: 'Transparent governance. Real outcomes. Zero noise.',
       },
       {
-        image: '/highlights/3.png',
-        title: 'Presence, perfectly framed.',
-        description: 'Every moment, captured with intention and clarity.',
+        image: '/highlights/3.png?v=20251220-11',
+        title: 'Membership is the gateway.',
+        description: 'Time, clarity, and a structured path from entry to exit.',
       },
     ],
     []
   );
 
-  const data = useMemo(
-    () => (slides && slides.length ? slides : defaultSlides),
-    [slides, defaultSlides]
-  );
+  const data = useMemo(() => (slides && slides.length ? slides : defaultSlides), [slides, defaultSlides]);
 
   const [index, setIndex] = useState(0);
   const safeIndex = Math.min(index, Math.max(0, data.length - 1));
@@ -66,14 +63,12 @@ export default function ModernSection({ id, slides }: Props) {
     e.currentTarget.releasePointerCapture?.(e.pointerId);
 
     const threshold = 70;
-    if (delta.current > threshold) {
-      setIndex((i) => (i === 0 ? data.length - 1 : i - 1));
-    } else if (delta.current < -threshold) {
-      setIndex((i) => (i === data.length - 1 ? 0 : i + 1));
-    }
+    if (delta.current > threshold) setIndex((i) => (i === 0 ? data.length - 1 : i - 1));
+    else if (delta.current < -threshold) setIndex((i) => (i === data.length - 1 ? 0 : i + 1));
   };
 
-  const isPhilanthropySlide = (img: string) => img.startsWith('/highlights/2.png');
+  const isImpactSlide = (img: string) => img.includes('/highlights/2.png');
+  const isMembershipSlide = (img: string) => img.includes('/highlights/3.png');
 
   return (
     <section id={id} className={styles.section}>
@@ -85,11 +80,11 @@ export default function ModernSection({ id, slides }: Props) {
 
         <a
           className={styles.topLink}
-          href="https://wa.me/48571517218?text=Hello%20Goldener%20Pfau%20%E2%80%94%20I%20want%20to%20talk%20about%20the%20services."
+          href="https://wa.me/48571517218?text=Hello%20Goldener%20Pfau%20%E2%80%94%20I%20want%20to%20learn%20more."
           target="_blank"
           rel="noopener noreferrer"
         >
-          Contact via WhatsApp <span className={styles.arrow} aria-hidden="true">›</span>
+          Contact WhatsApp <span className={styles.arrow} aria-hidden="true">›</span>
         </a>
       </div>
 
@@ -102,38 +97,35 @@ export default function ModernSection({ id, slides }: Props) {
       >
         <div className={styles.track} style={{ transform: `translateX(-${safeIndex * 100}%)` }}>
           {data.map((s, i) => (
-            <article key={`${id}-slide-${i}`} className={styles.slide}>
+            <article key={`${id}-slide-${i}-${s.image}`} className={styles.slide}>
               <header className={styles.slideHeader}>
                 <p className={styles.slideTitle}>{s.title}</p>
                 {s.description && <p className={styles.slideDesc}>{s.description}</p>}
               </header>
 
-              {/* ✅ só o slide 2 recebe “modo estrelas fortes por trás do PNG” */}
-              <div className={`${styles.media} ${isPhilanthropySlide(s.image) ? styles.mediaShowStars : ''}`}>
+              <div className={`${styles.media} ${isImpactSlide(s.image) ? styles.mediaShowStars : ''}`}>
                 <div className={styles.mediaStars} aria-hidden="true" />
 
-                {isPhilanthropySlide(s.image) ? (
+                {isImpactSlide(s.image) ? (
                   <div className={styles.mediaGrid}>
                     <div className={styles.philanthropy}>
                       <p className={styles.pill}>Pfau Institut</p>
 
-                      <h3 className={styles.phTitle}>Private access. Public good.</h3>
+                      <h3 className={styles.phTitle}>Impact with receipts.</h3>
 
                       <p className={styles.phText}>
-                        Our philanthropic arm turns resources into measurable outcomes — focusing on
-                        <strong> health</strong>, <strong>housing</strong>, <strong>water</strong>, and{' '}
-                        <strong>education</strong>. We fund pilots with local partners, publish receipts,
-                        and scale what proves effective.
+                        This is our built-in impact layer: structured initiatives, clear reporting,
+                        and accountability by default — designed to scale without losing integrity.
                       </p>
 
                       <ul className={styles.phList}>
-                        <li>Transparent reporting, quarterly.</li>
-                        <li>Direct impact routes — no noise.</li>
-                        <li>Built to expand responsibly, globally.</li>
+                        <li><strong>Governance:</strong> defined rules, audit-ready processes.</li>
+                        <li><strong>Traceability:</strong> decisions and outcomes you can verify.</li>
+                        <li><strong>Execution:</strong> partner-led delivery with measurable checkpoints.</li>
                       </ul>
 
                       <p className={styles.phNote}>
-                        A luxury brand should do more than serve — it should leave a footprint worth keeping.
+                        Premium should mean more than access — it should mean responsibility.
                       </p>
                     </div>
 
@@ -146,8 +138,52 @@ export default function ModernSection({ id, slides }: Props) {
                       />
                     </div>
                   </div>
+                ) : isMembershipSlide(s.image) ? (
+                  <div className={styles.membersGrid}>
+                    <div className={styles.membersVisual}>
+                      <img
+                        className={`${styles.img} ${styles.imgMembership}`}
+                        src={s.image}
+                        alt=""
+                        draggable={false}
+                      />
+                    </div>
+
+                    <div className={styles.membersCopy}>
+                      <p className={styles.pill}>Members Club</p>
+
+                      <h3 className={styles.membersTitle}>Access, upgraded.</h3>
+
+                      <p className={styles.membersText}>
+                        Membership built to reduce friction and increase leverage — with
+                        <strong> clarity</strong>, <strong>control</strong>, and <strong>execution</strong>.
+                      </p>
+
+                      <ul className={styles.membersList}>
+                        <li><strong>Time leverage:</strong> less friction, faster decisions.</li>
+                        <li><strong>Operator layer:</strong> learn inside real frameworks.</li>
+                        <li><strong>Lifecycle:</strong> entry → performance → exit, aligned.</li>
+                        <li><strong>Oversight:</strong> rules, documentation, governance.</li>
+                      </ul>
+
+                      <div className={styles.membersActions}>
+                        <a
+                          className={styles.primaryCta}
+                          href="https://wa.me/48571517218?text=Hello%20Goldener%20Pfau%20%E2%80%94%20I%20want%20membership%20access."
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Request membership access
+                        </a>
+
+                        <span className={styles.secondaryHint}>Fast route via WhatsApp.</span>
+                      </div>
+                    </div>
+                  </div>
                 ) : (
-                  <img className={styles.img} src={s.image} alt="" draggable={false} />
+                  <div className={styles.simpleWrap}>
+                    <img className={`${styles.img} ${styles.imgHero}`} src={s.image} alt="" draggable={false} />
+                  </div>
                 )}
               </div>
             </article>

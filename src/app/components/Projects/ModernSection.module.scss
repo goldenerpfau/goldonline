@@ -56,7 +56,7 @@
 }
 
 @keyframes twinkleStrong {
-  0%,100% { opacity: .85; }
+  0%, 100% { opacity: .85; }
   50% { opacity: 1; }
 }
 
@@ -158,7 +158,7 @@
   line-height: 1.55;
 }
 
-/* ===== MEDIA ===== */
+/* ===== MEDIA (container do conteúdo) ===== */
 .media {
   position: relative;
   display: grid;
@@ -168,7 +168,7 @@
   background: transparent;
 }
 
-/* ✅ NOVO: “modo slide 2” — deixa estrelas iguais ao slide 1 aparecerem por trás do PNG */
+/* ✅ estrelas internas visíveis no slide 2 */
 .mediaShowStars .mediaStars {
   opacity: 1;
   filter:
@@ -183,7 +183,6 @@
   z-index: 0;
   pointer-events: none;
 
-  /* mais denso (pra “ler” igual ao slide 1) */
   background:
     radial-gradient(2px 2px at 12% 22%, rgba(255,255,255,.55) 60%, transparent 62%),
     radial-gradient(1.6px 1.6px at 18% 68%, rgba(255,255,255,.40) 60%, transparent 62%),
@@ -202,18 +201,42 @@
 }
 
 @keyframes mediaDrift {
-  0%,100% { transform: translate3d(0,0,0) scale(1); opacity: .78; }
+  0%, 100% { transform: translate3d(0,0,0) scale(1); opacity: .78; }
   50% { transform: translate3d(10px,-8px,0) scale(1.01); opacity: .92; }
 }
 
-/* ===== SLIDE 2 GRID ===== */
+/* =========================
+   ✅ SLIDE 1 — alinhar os 3 iPhones no centro (corrige “caiu pro rodapé”)
+   ========================= */
+.simpleWrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: clamp(18px, 2.2vw, 30px);
+}
+
+.imgHero {
+  width: min(980px, 112%);
+  height: min(520px, 52vh);
+  max-height: 560px;
+  object-fit: contain;
+  transform: translateY(6px);
+  filter: drop-shadow(0 44px 110px rgba(0,0,0,.70));
+}
+
+/* =========================
+   ✅ SLIDE 2 — INSTITUT GRID (texto + imagem centralizados)
+   ========================= */
 .mediaGrid {
   position: relative;
   z-index: 1;
   width: 100%;
   max-width: 1120px;
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: 1.06fr 0.94fr;
   align-items: center;
   gap: clamp(14px, 2.1vw, 26px);
   margin: 0 auto;
@@ -265,6 +288,7 @@
   font-size: clamp(13px, 1.05vw, 16px);
   line-height: 1.65;
 }
+.phList strong { color: rgba(255,255,255,.92); font-weight: 650; }
 
 .phNote {
   margin: 0;
@@ -281,12 +305,124 @@
   justify-self: center;
   width: 100%;
   max-width: 520px;
-
-  /* ✅ garante que não exista “fundo chapado” atrás do PNG */
   background: transparent;
 }
 
-/* ===== IMG ===== */
+/* =========================
+   ✅ SLIDE 3 — MEMBERS GRID (imagem maior + card alinhado)
+   ========================= */
+.membersGrid {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1120px;
+  display: grid;
+  grid-template-columns: 1.18fr 0.82fr;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 32px);
+  margin: 0 auto;
+}
+
+.membersVisual {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  justify-self: start;
+  width: 100%;
+  min-height: clamp(300px, 44vh, 640px);
+}
+
+.membersCopy {
+  position: relative;
+  z-index: 1;
+  justify-self: end;
+  width: 100%;
+  max-width: 520px;
+  padding: clamp(18px, 1.5vw, 22px);
+  border-radius: 24px;
+
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.07);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 28px 64px rgba(0,0,0,.50),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+.membersTitle {
+  margin: 0 0 10px;
+  color: rgba(255,255,255,.96);
+  font-size: clamp(20px, 2.25vw, 32px);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+}
+
+.membersText {
+  margin: 0 0 12px;
+  color: rgba(255,255,255,.70);
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.65;
+}
+.membersText strong { color: rgba(255,255,255,.92); font-weight: 650; }
+
+.membersList {
+  margin: 0 0 12px;
+  padding-left: 18px;
+  color: rgba(255,255,255,.70);
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.65;
+}
+.membersList strong { color: rgba(255,255,255,.92); font-weight: 650; }
+
+.membersActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+
+  color: rgba(255,255,255,.96);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+
+  box-shadow: 0 18px 36px rgba(0,0,0,.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  transition: transform .18s ease, background .18s ease, border-color .18s ease, opacity .18s ease;
+}
+.primaryCta:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.18);
+}
+
+.secondaryHint {
+  color: rgba(255,255,255,.55);
+  font-size: 13px;
+}
+
+.membersNote {
+  margin: 0;
+  color: rgba(255,255,255,.58);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* ===== IMG base ===== */
 .img {
   position: relative;
   z-index: 1;
@@ -300,6 +436,11 @@
   animation: floatY 7.8s ease-in-out infinite;
 }
 
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
 /* tablet PNG (transparente) */
 .imgTabletPortrait {
   width: min(520px, 100%);
@@ -307,18 +448,20 @@
   max-width: 540px;
   max-height: 700px;
   object-fit: contain;
-  transform: translateY(0);
-
-  /* ✅ reforça recorte/alpha do PNG (e evita “cinza” em alguns exports) */
   background: transparent;
   mix-blend-mode: normal;
-
   filter: drop-shadow(0 34px 86px rgba(0,0,0,.62));
 }
 
-@keyframes floatY {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+/* membership PNG (maior +10% real) */
+.imgMembership {
+  width: min(980px, 114%);
+  height: auto;
+  object-fit: contain;
+  background: transparent;
+  mix-blend-mode: normal;
+  transform: translateY(6px);
+  filter: drop-shadow(0 52px 125px rgba(0,0,0,.76));
 }
 
 /* ===== CONTROLS ===== */
@@ -360,8 +503,15 @@
   border-radius: 999px;
 }
 
+/* ===== RESPONSIVO ===== */
 @media (max-width: 980px) {
   .mediaGrid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    max-width: 980px;
+  }
+
+  .membersGrid {
     grid-template-columns: 1fr;
     gap: 18px;
     max-width: 980px;
@@ -372,6 +522,17 @@
     text-align: left;
   }
 
+  .membersCopy {
+    text-align: left;
+    justify-self: stretch;
+    max-width: 100%;
+  }
+
+  .membersVisual {
+    justify-self: center;
+    min-height: clamp(280px, 44vh, 620px);
+  }
+
   .deviceWrap {
     justify-self: center;
     max-width: 560px;
@@ -380,6 +541,15 @@
   .imgTabletPortrait {
     height: min(66vh, 740px);
     max-width: 560px;
+  }
+
+  .imgMembership {
+    width: min(1120px, 122%);
+  }
+
+  .imgHero {
+    width: min(980px, 118%);
+    height: min(520px, 54vh);
   }
 }
 

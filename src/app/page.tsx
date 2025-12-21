@@ -63,16 +63,16 @@ export default function Home() {
       </main>
 
       {/* SERVICES */}
-      <ModernSection
-        id="services"
-        carouselImages={[
-          { src: '/images/carousel/1.jpg' },
-          { src: '/images/carousel/2.jpg' },
-          { src: '/images/carousel/3.jpg' },
-          { src: '/images/carousel/4.jpg' },
-          { src: '/images/carousel/5.jpg' },
-        ]}
-      />
+          <ModernSection
+            id="services"
+            slides={[
+              { image: '/images/carousel/1.jpg', title: '' },
+              { image: '/images/carousel/2.jpg', title: '' },
+              { image: '/images/carousel/3.jpg', title: '' },
+              { image: '/images/carousel/4.jpg', title: '' },
+            ]}
+          />
+
 
       {/* VIDEO */}
       <section id="video" className={styles.videoSection}>
