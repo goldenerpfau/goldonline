@@ -31,29 +31,27 @@ function normalizePublicPath(input: string) {
 }
 
 export default function ModernSection({ id, slides }: Props) {
-  // ✅ Default slides ALWAYS exist (safe baseline)
   const defaultSlides: Slide[] = useMemo(
     () => [
       {
         image: '/highlights/1.png?v=20251220-13',
-        title: 'Designed to feel inevitable.',
-        description: 'Luxury, simplified — precision in every interaction.',
+        title: 'Built to feel effortless.',
+        description: 'One experience. One language. Zero friction.',
       },
       {
         image: '/highlights/2.png?v=20251220-13',
-        title: 'Impact, engineered — not advertised.',
-        description: 'Governance first. Proof always. Outcomes that scale.',
+        title: 'Proof over promise.',
+        description: 'Impact with governance — tracked, verified, delivered.',
       },
       {
         image: '/highlights/3.png?v=20251220-13',
-        title: 'Membership is the operating system.',
-        description: 'A clean path from access → execution → exit.',
+        title: 'Membership, refined.',
+        description: 'Access with structure. Clarity from entry to exit.',
       },
     ],
     []
   );
 
-  // ✅ Final data (merges incoming slides but preserves modern copy + fallback)
   const data: Slide[] = useMemo(() => {
     const incoming = Array.isArray(slides) ? slides : [];
 
@@ -75,12 +73,10 @@ export default function ModernSection({ id, slides }: Props) {
     });
   }, [slides, defaultSlides]);
 
-  // Carousel state
   const [index, setIndex] = useState(0);
   const maxIndex = Math.max(0, data.length - 1);
   const safeIndex = Math.min(index, maxIndex);
 
-  // Pointer drag
   const dragging = useRef(false);
   const startX = useRef(0);
   const delta = useRef(0);
@@ -118,7 +114,6 @@ export default function ModernSection({ id, slides }: Props) {
     if (e.key === 'ArrowRight') goNext();
   };
 
-  // Helpers
   const isImpactSlide = (img: string) => img.includes('/highlights/2.png');
   const isMembershipSlide = (img: string) => img.includes('/highlights/3.png');
 
@@ -133,7 +128,7 @@ export default function ModernSection({ id, slides }: Props) {
         <div className={styles.topLeft}>
           <h2 className={styles.topTitle}>Get the highlights.</h2>
           <p className={styles.topSubtitle}>
-            Quiet design. Serious execution. Everything is built to be verifiable.
+            Premium execution — minimal noise, maximum control.
           </p>
         </div>
 
@@ -179,19 +174,19 @@ export default function ModernSection({ id, slides }: Props) {
                     <div className={styles.philanthropy}>
                       <p className={styles.pill}>Pfau Institut</p>
 
-                      <h3 className={styles.phTitle}>Impact, with proof.</h3>
+                      <h3 className={styles.phTitle}>Impact you can verify.</h3>
 
                       <p className={styles.phText}>
-                        Our impact layer is not marketing — it’s infrastructure.
-                        Built on <strong>rules</strong>, <strong>auditability</strong>, and <strong>measurable delivery</strong>.
+                        No slogans. Just a system built on <strong>governance</strong>, <strong>traceability</strong>,
+                        and <strong>measured delivery</strong>.
                       </p>
 
                       <ul className={styles.phList}>
                         <li>
-                          <strong>Governance:</strong> clear criteria, logged decisions, compliance-first flows.
+                          <strong>Governance:</strong> clear rules, documented decisions, audit-ready structure.
                         </li>
                         <li>
-                          <strong>Traceability:</strong> actions tied to evidence — outcomes you can validate.
+                          <strong>Traceability:</strong> actions linked to evidence — outcomes you can validate.
                         </li>
                         <li>
                           <strong>Execution:</strong> partner delivery with checkpoints and accountability.
@@ -205,16 +200,16 @@ export default function ModernSection({ id, slides }: Props) {
                         </div>
                         <div className={styles.metaCard}>
                           <p className={styles.metaKicker}>Reporting</p>
-                          <p className={styles.metaValue}>Evidence-led</p>
+                          <p className={styles.metaValue}>Evidence-first</p>
                         </div>
                         <div className={styles.metaCard}>
-                          <p className={styles.metaKicker}>Intent</p>
+                          <p className={styles.metaKicker}>Focus</p>
                           <p className={styles.metaValue}>Long-term</p>
                         </div>
                       </div>
 
                       <p className={styles.phNote}>
-                        Premium should be accountable — by design, not by promise.
+                        Responsibility isn’t a statement — it’s a standard.
                       </p>
                     </div>
 
@@ -242,18 +237,18 @@ export default function ModernSection({ id, slides }: Props) {
                     <div className={styles.membersCopy}>
                       <p className={styles.pill}>Members Club</p>
 
-                      <h3 className={styles.membersTitle}>Access, but with structure.</h3>
+                      <h3 className={styles.membersTitle}>Access, curated.</h3>
 
                       <p className={styles.membersText}>
-                        Membership is built for decision-quality.
-                        Less friction, more control, and an execution layer that stays documented.
+                        Built for speed with control.
+                        A membership layer that keeps everything <strong>clear</strong>, <strong>documented</strong> and <strong>repeatable</strong>.
                       </p>
 
                       <ul className={styles.membersList}>
-                        <li><strong>Frictionless ops:</strong> faster approvals, fewer steps.</li>
-                        <li><strong>Operator frameworks:</strong> real rules, not vibes.</li>
-                        <li><strong>Lifecycle clarity:</strong> access → execution → exit.</li>
-                        <li><strong>Governance layer:</strong> logs, rules, and proof by default.</li>
+                        <li><strong>Faster execution:</strong> fewer steps, cleaner approvals.</li>
+                        <li><strong>Operator rules:</strong> process-first, not improvisation.</li>
+                        <li><strong>Lifecycle clarity:</strong> entry → execution → exit.</li>
+                        <li><strong>Governance by default:</strong> logs, rules, traceability.</li>
                       </ul>
 
                       <div className={styles.membersActions}>
@@ -263,20 +258,19 @@ export default function ModernSection({ id, slides }: Props) {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => {
-                            // avoid accidental clicks during drag
                             if (moved.current) e.preventDefault();
                           }}
                         >
                           Request membership access
                         </a>
 
-                        <span className={styles.secondaryHint}>Direct line via WhatsApp.</span>
+                        <span className={styles.secondaryHint}>Direct WhatsApp line.</span>
                       </div>
 
                       <div className={styles.membersFooter}>
                         <span className={styles.badgeDot} aria-hidden="true" />
                         <p className={styles.membersNote}>
-                          Apple-standard feel: minimal UI, maximum confidence.
+                          Minimal interface. Maximum certainty.
                         </p>
                       </div>
                     </div>
