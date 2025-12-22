@@ -39,20 +39,24 @@ export default function ModernSection({ id, slides }: Props) {
   const baseSlides = (slides?.length ? slides : defaultSlides).slice(0, 3);
   const N = baseSlides.length;
 
+  // loop com clones: [último, 1,2,3, primeiro]
   const loopedSlides = useMemo(() => {
     if (N <= 1) return baseSlides;
     return [baseSlides[N - 1], ...baseSlides, baseSlides[0]];
   }, [baseSlides, N]);
 
+  // posição interna no track (com clones)
   const [pos, setPos] = useState<number>(() => (N > 1 ? 1 : 0));
   const active = N > 1 ? ((pos - 1 + N) % N) : 0;
 
   const trackRef = useRef<HTMLDivElement | null>(null);
 
+  // drag/swipe
   const isDown = useRef(false);
   const startX = useRef(0);
   const lastX = useRef(0);
 
+  // snap sem animação (quando cai no clone)
   const snapNoAnim = useRef(false);
   const snappingGuard = useRef(false);
 
@@ -86,6 +90,7 @@ export default function ModernSection({ id, slides }: Props) {
     if (noAnim) {
       snapNoAnim.current = false;
 
+      // 2 frames (Safari)
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           const t = trackRef.current;
@@ -103,8 +108,8 @@ export default function ModernSection({ id, slides }: Props) {
     if (N <= 1) return;
     if (snappingGuard.current) return;
 
-    if (pos === 0) snapTo(N);
-    if (pos === N + 1) snapTo(1);
+    if (pos === 0) snapTo(N);       // caiu no clone do começo -> vai pro último real
+    if (pos === N + 1) snapTo(1);   // caiu no clone do final -> volta pro primeiro real
   };
 
   const beginDrag = (clientX: number) => {
@@ -145,6 +150,7 @@ export default function ModernSection({ id, slides }: Props) {
     else goTo(pos);
   };
 
+  // Pointer
   const onPointerDown = (e: React.PointerEvent) => {
     if (N <= 1) return;
     beginDrag(e.clientX);
@@ -160,6 +166,7 @@ export default function ModernSection({ id, slides }: Props) {
     } catch {}
   };
 
+  // Touch fallback (iOS 100%)
   const onTouchStart = (e: React.TouchEvent) => {
     if (N <= 1) return;
     const t = e.touches[0];
@@ -190,7 +197,12 @@ export default function ModernSection({ id, slides }: Props) {
           <p className={styles.topSubtitle}>Premium execution — minimal noise, maximum control.</p>
         </div>
 
-        <a className={styles.topLink} href="https://wa.me/48571517218" target="_blank" rel="noreferrer">
+        <a
+          className={styles.topLink}
+          href="https://wa.me/48571517218"
+          target="_blank"
+          rel="noreferrer"
+        >
           Contact WhatsApp <span className={styles.arrow}>›</span>
         </a>
       </div>
@@ -271,13 +283,23 @@ export default function ModernSection({ id, slides }: Props) {
 
                       <div className={styles.deviceWrap}>
                         <div className={styles.deviceGlow} />
-                        <img className={`${styles.img} ${styles.imgTabletPortrait}`} src={s.image} alt="" draggable={false} />
+                        <img
+                          className={`${styles.img} ${styles.imgTabletPortrait}`}
+                          src={s.image}
+                          alt=""
+                          draggable={false}
+                        />
                       </div>
                     </div>
                   ) : realIndex === 2 ? (
                     <div className={styles.membersGrid}>
                       <div className={styles.membersVisual}>
-                        <img className={`${styles.img} ${styles.imgMembership}`} src={s.image} alt="" draggable={false} />
+                        <img
+                          className={`${styles.img} ${styles.imgMembership}`}
+                          src={s.image}
+                          alt=""
+                          draggable={false}
+                        />
                       </div>
 
                       <div className={styles.membersCopy}>
@@ -297,7 +319,12 @@ export default function ModernSection({ id, slides }: Props) {
                         </ul>
 
                         <div className={styles.membersActions}>
-                          <a className={styles.primaryCta} href="https://wa.me/48571517218" target="_blank" rel="noreferrer">
+                          <a
+                            className={styles.primaryCta}
+                            href="https://wa.me/48571517218"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
                             Request membership access
                           </a>
                           <span className={styles.secondaryHint}>Direct WhatsApp line.</span>
@@ -312,9 +339,28 @@ export default function ModernSection({ id, slides }: Props) {
                   ) : (
                     <div className={styles.simpleWrap}>
                       <div className={styles.introStack}>
-                        {/* ✅ wrapper que “cropa” o PNG no mobile */}
-                        <div className={styles.heroCrop}>
-                          <img className={`${styles.img} ${styles.imgHero}`} src={s.image} alt="" draggable={false} />
+                        {/* Desktop: imagem completa */}
+                        <img
+                          className={`${styles.img} ${styles.imgHero} ${styles.heroDesktop}`}
+                          src={s.image}
+                          alt=""
+                          draggable={false}
+                        />
+
+                        {/* Mobile: triptych recortado (3 cards) */}
+                        <div className={styles.heroTriptych} aria-hidden="true">
+                          <div
+                            className={`${styles.heroPanel} ${styles.heroLeft}`}
+                            style={{ backgroundImage: `url(${s.image})` }}
+                          />
+                          <div
+                            className={`${styles.heroPanel} ${styles.heroCenter}`}
+                            style={{ backgroundImage: `url(${s.image})` }}
+                          />
+                          <div
+                            className={`${styles.heroPanel} ${styles.heroRight}`}
+                            style={{ backgroundImage: `url(${s.image})` }}
+                          />
                         </div>
 
                         <p className={styles.introNote}>

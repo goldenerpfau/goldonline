@@ -1,35 +1,32 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-// If you don't have a CSS module type definition, add this file:
-// a:\cancun\goldmenu\src\app\components\Projects\animatedCounter.module.scss.d.ts
-// declare const styles: { [key: string]: string }; export default styles;
-import styles from './AnimatedCounter.module.scss'; // ✅ Nome corrigido
-
-
-
+import styles from './AnimatedCounter.module.scss';
 
 export default function AnimatedCounter() {
   const [countryCount, setCountryCount] = useState(0);
   const [continentCount, setContinentCount] = useState(0);
   const [hourCount, setHourCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const ref = useRef<HTMLSpanElement>(null);
+
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-        }
+        if (entry.isIntersecting && !hasAnimated) setHasAnimated(true);
       },
-      { threshold: 0.5 }
+      {
+        threshold: 0.25,
+        rootMargin: '0px 0px -10% 0px',
+      }
     );
 
-    if (ref.current) observer.observe(ref.current);
-    return () => {
-      if (ref.current) observer.unobserve(ref.current);
-    };
+    observer.observe(node);
+    return () => observer.disconnect();
   }, [hasAnimated]);
 
   useEffect(() => {
@@ -42,7 +39,6 @@ export default function AnimatedCounter() {
     const targetCountries = 31;
     const targetContinents = 3;
     const targetHours = 24;
-
 
     const intervalCountries = setInterval(() => {
       currentCountries += 1;
@@ -79,9 +75,22 @@ export default function AnimatedCounter() {
   }, [hasAnimated]);
 
   return (
-    <span ref={ref} className={styles.counter}>
+    <div ref={ref} className={styles.counter} aria-label="Global availability metrics">
+      <span className={styles.metric}>
+        <span className={styles.value}>{countryCount}</span>&nbsp;<span className={styles.label}>Countries</span>
+      </span>
 
-      {countryCount} Countries | Available on {continentCount} Continents | {hourCount}/7 Global Support 
-    </span>
+      <span className={styles.sep}>·</span>
+
+      <span className={styles.metric}>
+        <span className={styles.label}>Available on</span>&nbsp;<span className={styles.value}>{continentCount}</span>&nbsp;<span className={styles.label}>Continents</span>
+      </span>
+
+      <span className={styles.sep}>·</span>
+
+      <span className={styles.metric}>
+        <span className={styles.value}>{hourCount}/7</span>&nbsp;<span className={styles.label}>Global Support</span>
+      </span>
+    </div>
   );
 }
