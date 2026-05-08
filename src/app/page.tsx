@@ -129,14 +129,14 @@ const reachCapabilities = [
 ];
 
 const gallery = [
-  '/images/img15.jpg',
-  '/images/img12.jpg',
-  '/images/img14.jpg',
-  '/images/img19.jpg',
-  '/images/img9.jpg',
-  '/images/img6.jpg',
-  '/images/img7.jpg',
-  '/images/img11.jpg',
+  { src: '/images/img15.jpg', title: 'Private mobility', tag: 'Mobility', alt: 'Goldener Pfau private mobility visual' },
+  { src: '/images/img12.jpg', title: 'Architectural living', tag: 'Architecture', alt: 'Goldener Pfau architectural lifestyle visual' },
+  { src: '/images/img14.jpg', title: 'Nautical horizon', tag: 'Yachts', alt: 'Goldener Pfau nautical lifestyle visual' },
+  { src: '/images/img19.jpg', title: 'Aviation access', tag: 'Aviation', alt: 'Goldener Pfau private aviation visual' },
+  { src: '/images/img9.jpg', title: 'Quiet hospitality', tag: 'Stays', alt: 'Goldener Pfau hospitality lifestyle visual' },
+  { src: '/images/img6.jpg', title: 'Curated arrivals', tag: 'Lifestyle', alt: 'Goldener Pfau curated lifestyle visual' },
+  { src: '/images/img7.jpg', title: 'Private perspective', tag: 'Residences', alt: 'Goldener Pfau residential lifestyle visual' },
+  { src: '/images/img11.jpg', title: 'Coastal expression', tag: 'Concierge', alt: 'Goldener Pfau coastal lifestyle visual' },
 ];
 
 const trustItems = [
@@ -186,7 +186,7 @@ export default function Home() {
 
         <a
           className={styles.headerCta}
-          href="mailto:contact@goldenerpfau.com?subject=Private%20request%20-%20Goldener%20Pfau"
+          href="mailto:contact@goldenerpfau.com?subject=Private%20access%20request%20-%20Goldener%20Pfau"
         >
           Private Access
         </a>
@@ -203,7 +203,7 @@ export default function Home() {
             A discreet international desk for residences, mobility, yachts, aviation, premium stays, concierge requests and private allocation strategy.
           </p>
           <div className={styles.heroActions}>
-            <a className={styles.primaryButton} href="mailto:contact@goldenerpfau.com?subject=Private%20request%20-%20Goldener%20Pfau">
+            <a className={styles.primaryButton} href="mailto:contact@goldenerpfau.com?subject=Private%20access%20request%20-%20Goldener%20Pfau">
               Start a private request
             </a>
             <a className={styles.secondaryButton} href="#services">Explore the universe</a>
@@ -328,34 +328,24 @@ export default function Home() {
       </section>
 
       <section className={styles.processSection}>
-        <div className={styles.processIntro} data-reveal>
+        <div className={styles.processHeader} data-reveal>
           <p className={styles.eyebrow}>Private access</p>
-          <h2>From private request to refined execution.</h2>
+          <h2>Private protocol for exceptional arrangements.</h2>
           <p>
-            A discreet editorial-style process for clients who expect clarity, privacy and premium coordination from the first message.
+            A controlled path for residences, mobility, aviation, stays, assets and concierge requests — handled with discretion from first brief to final confirmation.
           </p>
-
-          <div className={styles.processMeta}>
-            <span>Private brief</span>
-            <span>Curated access</span>
-            <span>Controlled execution</span>
-          </div>
         </div>
 
-        <div className={styles.processFlow}>
+        <div className={styles.protocolGrid}>
           {privateAccess.map((item, index) => (
             <article
               key={item.title}
-              className={`${styles.flowCard} ${index === 0 ? styles.flowCardFeatured : ''}`}
+              className={styles.protocolCard}
               data-reveal
               style={{ transitionDelay: `${index * 70}ms` }}
             >
-              <div className={styles.flowCardTop}>
-                <span className={styles.flowNumber}>{item.number}</span>
-                <span className={styles.flowLine} aria-hidden="true" />
-              </div>
-
-              <div className={styles.flowCardBody}>
+              <span className={styles.protocolNumber}>{item.number}</span>
+              <div>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </div>
@@ -375,20 +365,83 @@ export default function Home() {
             Investment information is presented for informational purposes only and does not constitute financial advice, guarantee of return or public offering.
           </p>
         </div>
-        <div className={styles.fundExperience} data-reveal>
-          <div className={styles.fundPhone}>
-            <div className={styles.fundPhoneScreen}>
-              <div className={styles.fundUiTop}>
-                <span>Pfau Fund</span>
-                <strong>Private allocation</strong>
-              </div>
-              <div className={styles.allocationRing} aria-hidden="true" />
-              <div className={styles.assetList}>
-                {fundAssets.map((asset) => <span key={asset}>{asset}</span>)}
-              </div>
+
+        <div className={styles.fundScene} data-reveal>
+          <div className={styles.fundSceneTop}>
+            <div className={styles.fundSceneHeading}>
+              <span>Pfau Fund</span>
+              <strong>Private allocation</strong>
             </div>
+            <p>Access-oriented concept · Asset-backed view · Cross-market logic</p>
           </div>
-          <div className={styles.fundCards}>
+
+          <div className={styles.fundGraphStage}>
+            <svg className={styles.fundGraph} viewBox="0 0 800 430" aria-hidden="true">
+              <defs>
+                <linearGradient id="pfauLineLuxury" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="rgba(215, 180, 106, 0.22)" />
+                  <stop offset="24%" stopColor="rgba(215, 180, 106, 0.74)" />
+                  <stop offset="68%" stopColor="rgba(255, 236, 168, 1)" />
+                  <stop offset="100%" stopColor="rgba(255, 236, 168, 0.55)" />
+                </linearGradient>
+                <linearGradient id="pfauAreaLuxury" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="rgba(215, 180, 106, 0.14)" />
+                  <stop offset="100%" stopColor="rgba(215, 180, 106, 0.00)" />
+                </linearGradient>
+                <filter id="pfauLineGlowLuxury">
+                  <feGaussianBlur stdDeviation="5.6" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <path className={styles.fundGridLine} d="M74 344 H734" />
+              <path className={styles.fundGridLine} d="M74 276 H734" />
+              <path className={styles.fundGridLine} d="M74 208 H734" />
+              <path className={styles.fundGridLine} d="M74 140 H734" />
+              <path className={styles.fundGridLine} d="M74 72 H734" />
+
+              <path className={styles.fundAxisLine} d="M74 38 V364" />
+              <path className={styles.fundAxisLine} d="M74 364 H734" />
+
+              <path className={styles.fundAreaFill} d="M96 330 C132 326 164 312 204 286 C244 260 276 248 320 224 C362 202 398 180 444 154 C488 128 528 106 572 88 C618 70 658 58 706 48 L706 364 L96 364 Z" />
+              <path className={styles.fundTrendGlow} d="M96 330 C132 326 164 312 204 286 C244 260 276 248 320 224 C362 202 398 180 444 154 C488 128 528 106 572 88 C618 70 658 58 706 48" filter="url(#pfauLineGlowLuxury)" />
+              <path className={styles.fundTrendLine} d="M96 330 C132 326 164 312 204 286 C244 260 276 248 320 224 C362 202 398 180 444 154 C488 128 528 106 572 88 C618 70 658 58 706 48" />
+
+              <circle className={styles.fundGraphPoint} cx="96" cy="330" r="6" />
+              <circle className={styles.fundGraphPoint} cx="204" cy="286" r="6" />
+              <circle className={styles.fundGraphPoint} cx="320" cy="224" r="6" />
+              <circle className={styles.fundGraphPoint} cx="444" cy="154" r="6" />
+              <circle className={styles.fundGraphPoint} cx="572" cy="88" r="6" />
+              <circle className={styles.fundGraphPoint} cx="706" cy="48" r="7" />
+
+              <circle className={styles.fundTravelGlow} r="9">
+                <animateMotion dur="3.8s" begin=".2s" fill="freeze" path="M96 330 C132 326 164 312 204 286 C244 260 276 248 320 224 C362 202 398 180 444 154 C488 128 528 106 572 88 C618 70 658 58 706 48" />
+              </circle>
+              <circle className={styles.fundTravelDot} r="5">
+                <animateMotion dur="3.8s" begin=".2s" fill="freeze" path="M96 330 C132 326 164 312 204 286 C244 260 276 248 320 224 C362 202 398 180 444 154 C488 128 528 106 572 88 C618 70 658 58 706 48" />
+              </circle>
+            </svg>
+
+            <div className={styles.fundSignalChip + ' ' + styles.fundChipGold}>Gold</div>
+            <div className={styles.fundSignalChip + ' ' + styles.fundChipRealEstate}>Real Estate</div>
+            <div className={styles.fundSignalChip + ' ' + styles.fundChipVehicles}>Vehicles</div>
+            <div className={styles.fundSignalChip + ' ' + styles.fundChipBTC}>BTC</div>
+            <div className={styles.fundSignalChip + ' ' + styles.fundChipETH}>ETH</div>
+            <div className={styles.fundSignalChip + ' ' + styles.fundChipUSD}>USD</div>
+          </div>
+
+          <div className={styles.fundSummaryStrip}>
+            <div>
+              <small>Pfau Fund</small>
+              <strong>Disciplined private allocation</strong>
+            </div>
+            <p>Long-term logic · Real-world and digital exposure</p>
+          </div>
+
+          <div className={styles.fundNotes}>
             {fundPrinciples.map(([title, text]) => (
               <article key={title}>
                 <h3>{title}</h3>
@@ -401,13 +454,35 @@ export default function Home() {
 
       <section className={styles.gallerySection}>
         <div className={styles.galleryHeader} data-reveal>
-          <p className={styles.eyebrow}>Visual story</p>
-          <h2>A quieter expression of mobility, architecture and private lifestyle.</h2>
+          <div className={styles.galleryCopy}>
+            <p className={styles.eyebrow}>Visual story</p>
+            <h2>A quieter expression of mobility, architecture and private lifestyle.</h2>
+            <p>
+              A more editorial visual rhythm: selected frames that express atmosphere, movement, presence and private access without visual excess.
+            </p>
+          </div>
+          <div className={styles.galleryMeta}>
+            <span>Goldener Pfau</span>
+            <p>Mobility · Architecture · Lifestyle · Concierge</p>
+          </div>
         </div>
-        <div className={styles.galleryGrid} data-reveal>
-          {gallery.map((src, index) => (
-            <figure key={`${src}-${index}`}>
-              <Image src={src} alt="Goldener Pfau lifestyle visual" fill sizes="(max-width: 768px) 50vw, 25vw" />
+
+        <div className={styles.galleryMosaic} data-reveal>
+          {gallery.map((item, index) => (
+            <figure
+              key={`${item.src}-${index}`}
+              className={`${styles.galleryCard} ${styles[`galleryCard${index + 1}`]}`}
+            >
+              <Image
+                src={item.src}
+                alt={item.alt}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+              <figcaption>
+                <span>{item.tag}</span>
+                <strong>{item.title}</strong>
+              </figcaption>
             </figure>
           ))}
         </div>
@@ -435,15 +510,15 @@ export default function Home() {
       <section id="contact" className={styles.ctaSection} data-reveal>
         <div>
           <p className={styles.eyebrow}>Direct contact</p>
-          <h2>Private requests, discreetly handled.</h2>
+          <h2>Private access, discreetly arranged.</h2>
           <p>
-            Share your request with Goldener Pfau directly. We respond privately with the next steps for tailored access, coordination or partnership discussions.
+            Send your request directly to Goldener Pfau. We handle each inquiry privately, with clear next steps for tailored access, refined coordination or selected partnership opportunities.
           </p>
         </div>
         <div className={styles.ctaActions}>
           {/* WHATSAPP: replace 0000000000000 with the official Goldener Pfau WhatsApp number, including country code. */}
-          <a className={styles.primaryButton} href="https://wa.me/0000000000000" target="_blank" rel="noreferrer">WhatsApp request</a>
-          <a className={styles.secondaryButton} href="mailto:contact@goldenerpfau.com?subject=Private%20request%20-%20Goldener%20Pfau">Email Goldener Pfau</a>
+          <a className={styles.primaryButton} href="https://wa.me/0000000000000" target="_blank" rel="noreferrer">Request via WhatsApp</a>
+          <a className={styles.secondaryButton} href="mailto:contact@goldenerpfau.com?subject=Private%20access%20request%20-%20Goldener%20Pfau">Contact by email</a>
         </div>
       </section>
 
