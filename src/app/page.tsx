@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, type MouseEvent } from 'react';
 import styles from './page.module.scss';
 
 type Service = {
@@ -129,14 +129,14 @@ const reachCapabilities = [
 ];
 
 const gallery = [
-  { src: '/images/img15.jpg', title: 'Private mobility', tag: 'Mobility', alt: 'Goldener Pfau private mobility visual' },
-  { src: '/images/img12.jpg', title: 'Architectural living', tag: 'Architecture', alt: 'Goldener Pfau architectural lifestyle visual' },
-  { src: '/images/img14.jpg', title: 'Nautical horizon', tag: 'Yachts', alt: 'Goldener Pfau nautical lifestyle visual' },
-  { src: '/images/img19.jpg', title: 'Aviation access', tag: 'Aviation', alt: 'Goldener Pfau private aviation visual' },
+  { src: '/images/img26.jpg', title: 'Private mobility', tag: 'Mobility', alt: 'Goldener Pfau private mobility visual' },
+  { src: '/images/img23.jpg', title: 'Architectural living', tag: 'Architecture', alt: 'Goldener Pfau architectural lifestyle visual' },
+  { src: '/images/img22.jpg', title: 'Nautical horizon', tag: 'Yachts', alt: 'Goldener Pfau nautical lifestyle visual' },
+  { src: '/images/img25.jpg', title: 'Aviation access', tag: 'Aviation', alt: 'Goldener Pfau private aviation visual' },
   { src: '/images/img9.jpg', title: 'Quiet hospitality', tag: 'Stays', alt: 'Goldener Pfau hospitality lifestyle visual' },
-  { src: '/images/img6.jpg', title: 'Curated arrivals', tag: 'Lifestyle', alt: 'Goldener Pfau curated lifestyle visual' },
-  { src: '/images/img7.jpg', title: 'Private perspective', tag: 'Residences', alt: 'Goldener Pfau residential lifestyle visual' },
-  { src: '/images/img11.jpg', title: 'Coastal expression', tag: 'Concierge', alt: 'Goldener Pfau coastal lifestyle visual' },
+  { src: '/images/img28.jpg', title: 'Curated arrivals', tag: 'Lifestyle', alt: 'Goldener Pfau curated lifestyle visual' },
+  { src: '/images/img24.jpg', title: 'Private perspective', tag: 'Residences', alt: 'Goldener Pfau residential lifestyle visual' },
+  { src: '/images/img27.jpg', title: 'Coastal expression', tag: 'Concierge', alt: 'Goldener Pfau coastal lifestyle visual' },
 ];
 
 const trustItems = [
@@ -167,10 +167,16 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
+  const scrollToTop = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.history.replaceState(null, '', window.location.pathname);
+  };
+
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        <a className={styles.brand} href="#top" aria-label="Goldener Pfau home">
+        <a className={styles.brand} href="/" onClick={scrollToTop} aria-label="Goldener Pfau home">
           <span className={styles.brandMark}>
             <Image src="/logopfau.png" alt="Goldener Pfau symbol" width={34} height={34} priority />
           </span>
@@ -523,7 +529,9 @@ export default function Home() {
       </section>
 
       <footer className={styles.footer}>
-        <Image src="/logopfau.png" alt="Goldener Pfau symbol" width={44} height={44} />
+        <a href="/" onClick={scrollToTop} aria-label="Back to top">
+          <Image src="/logopfau.png" alt="Goldener Pfau symbol" width={44} height={44} />
+        </a>
         <strong>Goldener Pfau</strong>
         <p>Goldener Pfau Qualität auf Goldbasis · Private luxury concierge, assets, travel and investment-oriented access.</p>
       </footer>
