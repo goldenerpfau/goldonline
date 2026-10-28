@@ -31,7 +31,7 @@ const services: Service[] = [
 
 const platformShowcaseImages = ['/images/img29.jpg', '/images/img30.jpg', '/images/img31.jpg', '/images/img32.jpg', '/images/img33.jpg', '/images/img34.jpg', '/images/img35.jpg'];
 
-const membershipPeekImages = ['/images/img53.jpg', '/images/img51.jpg', '/images/img52.jpg'];
+const membershipImage = '/images/img53.jpg';
 
 const galleryImages = [
   { src: '/images/img26.jpg' },
@@ -401,24 +401,14 @@ export default function Home() {
         </div>
 
         <div className={styles.fundVisual} data-reveal style={{ transitionDelay: '100ms' }}>
-          <div className={styles.fundVisualMosaic}>
-            <div className={`${styles.fundVisualTile} ${styles.fundVisualTileMain}`}>
-              <Image
-                src={membershipPeekImages[0]}
-                alt="Goldener Pfau Membership"
-                fill
-                sizes="(max-width: 1240px) 56vw, 28vw"
-              />
-              <div className={styles.fundVisualOverlay} />
-            </div>
-            <div className={styles.fundVisualTile}>
-              <Image src={membershipPeekImages[1]} alt="" fill sizes="(max-width: 1240px) 36vw, 18vw" />
-              <div className={styles.fundVisualOverlay} />
-            </div>
-            <div className={styles.fundVisualTile}>
-              <Image src={membershipPeekImages[2]} alt="" fill sizes="(max-width: 1240px) 36vw, 18vw" />
-              <div className={styles.fundVisualOverlay} />
-            </div>
+          <div className={styles.fundVisualImage}>
+            <Image
+              src={membershipImage}
+              alt="Goldener Pfau Membership — private lounge and community"
+              width={1122}
+              height={1402}
+              sizes="(max-width: 600px) calc(100vw - 48px), (max-width: 1100px) 680px, 50vw"
+            />
           </div>
           <div className={styles.fundVisualCaption}>
             <strong>{dict.membership.sceneStrong}</strong>

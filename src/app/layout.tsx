@@ -1,18 +1,38 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
+export const viewport: Viewport = { themeColor: '#000000', colorScheme: 'dark' };
+
+const siteTitle = 'Goldener Pfau — Qualität auf Goldbasis';
+const siteDescription = 'Every detail, personally arranged. Private concierge, residences, travel and membership.';
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.goldenerpfau.com"),
-  title: 'Goldener Pfau — Global luxury, privately arranged',
-  description: 'Private concierge, exceptional residences, mobility and travel by Goldener Pfau.',
+  metadataBase: new URL('https://www.goldenerpfau.com'),
+  title: siteTitle,
+  description: siteDescription,
+  applicationName: 'Goldener Pfau',
+  icons: {
+    icon: [
+      { url: '/icon-gold-v2.svg', type: 'image/svg+xml' },
+      { url: '/icon-gold-v2.png', type: 'image/png', sizes: '512x512' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: [{ url: '/apple-touch-icon-v2.png', sizes: '180x180', type: 'image/png' }],
+  },
   openGraph: {
-    title: 'Goldener Pfau — Global luxury, privately arranged',
-    description: 'Private Concierge · Residences · Travel · Membership',
+    title: siteTitle,
+    description: siteDescription,
     url: 'https://www.goldenerpfau.com',
     siteName: 'Goldener Pfau',
-    images: [{ url: '/images/img53.jpg', width: 1122, height: 1402, alt: 'Goldener Pfau' }],
+    images: [{ url: '/share-goldener-pfau-v2.jpg', width: 1200, height: 630, alt: 'Goldener Pfau — Qualität auf Goldbasis. Every detail, personally arranged.' }],
     locale: 'en_US',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteTitle,
+    description: siteDescription,
+    images: ['/share-goldener-pfau-v2.jpg'],
   },
 };
 
