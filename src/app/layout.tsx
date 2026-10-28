@@ -13,18 +13,17 @@ export const metadata: Metadata = {
   applicationName: 'Goldener Pfau',
   icons: {
     icon: [
-      { url: '/icon-gold-v2.svg', type: 'image/svg+xml' },
-      { url: '/icon-gold-v2.png', type: 'image/png', sizes: '512x512' },
+      { url: '/icon-gold-v3.png', type: 'image/png', sizes: '512x512' },
     ],
     shortcut: '/favicon.ico',
-    apple: [{ url: '/apple-touch-icon-v2.png', sizes: '180x180', type: 'image/png' }],
+    apple: [{ url: '/apple-touch-icon-v3.png', sizes: '180x180', type: 'image/png' }],
   },
   openGraph: {
     title: siteTitle,
     description: siteDescription,
     url: 'https://www.goldenerpfau.com',
     siteName: 'Goldener Pfau',
-    images: [{ url: '/share-goldener-pfau-v2.jpg', width: 1200, height: 630, alt: 'Goldener Pfau — Qualität auf Goldbasis. Every detail, personally arranged.' }],
+    images: [{ url: '/share-goldener-pfau-v3.jpg', width: 1200, height: 630, alt: 'Goldener Pfau — Qualität auf Goldbasis. Every detail, personally arranged.' }],
     locale: 'en_US',
     type: 'website',
   },
@@ -32,7 +31,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteTitle,
     description: siteDescription,
-    images: ['/share-goldener-pfau-v2.jpg'],
+    images: ['/share-goldener-pfau-v3.jpg'],
   },
 };
 

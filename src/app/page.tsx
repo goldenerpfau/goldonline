@@ -49,6 +49,16 @@ const LOCALE_STORAGE_KEY = 'gp-locale';
 export default function Home() {
   const [locale, setLocale] = useState<Locale>('en');
   const dict = getDictionary(locale);
+  const [languageOpen, setLanguageOpen] = useState(false);
+  const languageRef = useRef<HTMLDivElement>(null);
+  const languageTriggerRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const dismiss = (event: PointerEvent) => {
+      if (!languageRef.current?.contains(event.target as Node)) setLanguageOpen(false);
+    };
+    document.addEventListener('pointerdown', dismiss);
+    return () => document.removeEventListener('pointerdown', dismiss);
+  }, []);
   const [activeScreen, setActiveScreen] = useState(0);
   const [revealsEnabled, setRevealsEnabled] = useState(false);
   const heroVideoRef = useRef<HTMLVideoElement>(null);
@@ -225,12 +235,27 @@ export default function Home() {
       <section id="top" className={styles.hero}>
         <video ref={heroVideoRef} className={styles.heroVideo} src="/indoindo.mp4" poster="/hero-poster.jpg" autoPlay muted loop playsInline aria-hidden="true" />
         <div className={styles.heroVeil} />
-        <label className={styles.heroLanguage}>
-          <span className={styles.srOnly}>{dict.languageSwitcher.ariaLabel}</span>
-          <select aria-label={dict.languageSwitcher.ariaLabel} value={locale} onChange={(event) => changeLocale(event.target.value as Locale)}>
-            {LOCALES.map((item) => <option key={item.code} value={item.code}>{item.label}</option>)}
-          </select>
-        </label>
+        <div className={styles.heroLanguage} ref={languageRef}
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') { setLanguageOpen(false); languageTriggerRef.current?.focus(); }
+          }}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setLanguageOpen(false);
+          }}>
+          <button type="button" className={styles.languageTrigger} ref={languageTriggerRef}
+            aria-label={dict.languageSwitcher.ariaLabel} aria-expanded={languageOpen} aria-controls="language-options"
+            onClick={() => setLanguageOpen((open) => !open)}>
+            {locale.toUpperCase()} <span aria-hidden="true">⌄</span>
+          </button>
+          {languageOpen && <div id="language-options" className={styles.languageOptions}>
+            {LOCALES.map((item) => <button type="button" key={item.code} lang={item.code}
+              aria-pressed={locale === item.code} onClick={() => {
+                changeLocale(item.code); setLanguageOpen(false); languageTriggerRef.current?.focus();
+              }}>
+              <span>{item.name}</span><span aria-hidden="true">{locale === item.code ? '✓' : ''}</span>
+            </button>)}
+          </div>}
+        </div>
         
         <div className={styles.heroInner}>
           <h1 className={styles.heroSignature}><span>Goldener Pfau</span><span>Qualität auf Goldbasis</span></h1>
@@ -407,7 +432,7 @@ export default function Home() {
               alt="Goldener Pfau Membership — private lounge and community"
               width={1122}
               height={1402}
-              sizes="(max-width: 600px) calc(100vw - 48px), (max-width: 1100px) 680px, 50vw"
+              sizes="(max-width: 600px) 256px, 360px"
             />
           </div>
           <div className={styles.fundVisualCaption}>
