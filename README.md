@@ -1,48 +1,41 @@
-# Goldener Pfau — Cinema Edition
+# Goldener Pfau — Mobile Final · 28/10/2026
 
-## Instalar o projeto completo
-Extraia Goldener_Pfau_Cinema_20261025.zip em uma pasta nova. Abra essa pasta no VS Code. No terminal:
+## Atualizar o repositório existente
+Use o PATCH e copie o conteúdo dele para a pasta goldonline-publicar já conectada ao GitHub. Substitua os quatro arquivos de src e README.md. Preserve .git, configurações da hospedagem e arquivos .env. Não é necessário usar o projeto completo para atualizar.
+
+No terminal da pasta goldonline-publicar:
 
 ```bash
 npm ci
+npm run build
 npm run dev
 ```
 
-Abra http://localhost:3000. Para compilar: npm run build.
-Não há dependências novas. Nenhuma publicação foi realizada; a configuração de hospedagem original foi preservada.
+Confira a prévia em http://localhost:3000. Encerre com Ctrl+C e publique pelo fluxo já conectado:
 
-## Atualizar sua pasta atual
-Faça backup. Extraia Goldener_Pfau_Cinema_PATCH_20261025.zip e mescle as pastas src e public com as atuais. Substitua apenas os dez arquivos incluídos. O patch é cumulativo e contém as alterações anteriores: não exige aplicar os outros patches primeiro.
-Pare o servidor com Ctrl+C e execute npm run dev. Recarregue a página sem cache.
-Não apague as demais pastas. Para desfazer, restaure os dez arquivos do backup.
+```bash
+git add src/app/page.tsx src/app/page.module.scss src/app/globals.css src/app/legal-shared.module.scss README.md
+git commit -m "Fix responsive layouts across Goldener Pfau website"
+git push origin main
+```
 
-## Design
-- Barra superior removida da home.
-- Vídeo ocupando a primeira tela, com marca e slogan no alto, frase independente e botão no centro inferior.
-- Every detail, personally arranged. preservado e traduzido nos cinco idiomas existentes.
-- Uma única família tipográfica: Avenir Next, Helvetica Neue, Helvetica, Arial, sans-serif, usando fontes locais disponíveis.
-- Botões com contorno discreto; alinhamentos, títulos, espaçamentos e tratamento de cartões unificados entre as seções.
-- Navegação e seletor de idioma no rodapé.
-- Vídeo com pausa/reprodução acessível, poster e preferência de movimento reduzido para a abertura.
-- iPhone mantém os sete prints completos, sem status bar ou câmera simulados, com navegação e pausa.
-- Serviços, imagens, membership, galeria, processos, confiança e contato preservados.
+O push atualiza a hospedagem somente se a integração de deploy continuar ativa. Esta entrega não publicou alterações.
 
-## Performance
-O vídeo original de 48.999.012 bytes foi recodificado em H.264 para 9.548.889 bytes: redução de 80,5%. Resolução 1920 x 1080 e duração 20,466667 s mantidas. Compressão com perdas; a faixa de áudio foi removida porque o uso no site é decorativo e sem som. O início do arquivo foi preparado para reprodução progressiva. O material original permanece no ZIP original que você enviou.
+## Projeto completo
+Contém código e assets, sem node_modules, .next, .git ou arquivos de ambiente. Para abrir em uma pasta nova: npm ci e npm run dev. Mantenha as configurações de deploy do repositório existente; não substitua sua pasta .git.
 
-## Validação
-- Build de produção aprovado, incluindo compilação, checagem de tipos e geração das páginas.
-- Prévia visual em Chrome: desktop e layouts de 375 x 812 e 768 x 1024 em iframes.
-- Tipografia dos elementos h1/h2/h3/p/a/button/select da home conferida: uma única família.
-- Um h1; nenhuma barra/header na home.
-- Marca e botão dentro do viewport nos cinco idiomas em largura de celular.
-- Botão centralizado na base da abertura; assinatura e frase não se sobrepõem.
-- Navegação para serviços e plataforma e controle de pausa do vídeo verificados.
-- Vídeo otimizado carregado e reproduzido no navegador sem erro, em 1920 x 1080.
-- Sem teste em Safari ou iPhone físico. Backend, pagamentos e reservas não foram revalidados.
+## Correções
+- CSS da home consolidado, eliminando regras antigas sobrepostas.
+- Membership muda tanto as colunas quanto as áreas da grade no mobile.
+- Alinhamento e margens consistentes entre as seções.
+- Títulos e etiquetas adaptáveis aos cinco idiomas, sem nowrap forçado.
+- Cartões de serviço com conteúdo no fluxo, permitindo crescer sem cortar texto.
+- Prints completos do app, centralizados na moldura, com troca automática e sem controles visíveis.
+- Abertura cinematográfica preservada; idioma no topo direito, marca e frase separadas e botão inferior central.
+- Galeria em uma coluna no celular; tablet e desktop com grades próprias.
+- Números de confiança substituídos por linhas discretas.
+- Links de suporte e navegação legal adaptados a telas estreitas.
+- Ajuste de tamanho de texto do navegador móvel para manter a escala ao girar o aparelho.
 
-## Oferta
-Categorias e condições operacionais existentes preservadas. A comunicação mantém concierge, acesso e coordenação por parceiros; não foram adicionadas novas promessas financeiras ou novas áreas de atuação.
-
-## Arquivos
-MANIFEST.json contém os hashes dos arquivos e a lista de alterações. SHA256SUMS.txt permite verificar integridade. O pacote completo não inclui node_modules, .next ou arquivos de teste da prévia.
+## Limites da revisão
+Revisão do código-fonte, traduções, estilos, assets referenciados e configurações incluídas. Backend, pagamentos, reservas e infraestrutura não foram alterados nem testados de ponta a ponta. Conteúdo jurídico e áreas de atuação preservados, sem validação jurídica. Sem teste em Safari ou iPhone físico. Consulte VALIDACAO.txt para os testes executados nesta entrega.

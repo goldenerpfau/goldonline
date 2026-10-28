@@ -489,7 +489,7 @@ export default function Home() {
         <div className={styles.trustGrid}>
           {dict.trust.items.map((item, index) => (
             <article key={index} data-reveal style={{ transitionDelay: `${index * 55}ms` }}>
-              <span>{String(index + 1).padStart(2, '0')}</span>
+              <span aria-hidden="true" />
               <h3>{item.title}</h3>
               <p>{item.text}</p>
             </article>

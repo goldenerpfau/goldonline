@@ -282,3 +282,17 @@ $gold2: #C99736;
     font-size: clamp(1.7rem, 8vw, 2.3rem);
   }
 }
+
+/* Keep support and legal navigation usable on narrow screens. */
+.page { overflow-wrap: anywhere; }
+.contactCard, .contactLink { min-width: 0; max-width: 100%; }
+.contactLink { overflow-wrap: anywhere; border-radius: 18px; }
+.footerLinks { flex-wrap: wrap; justify-content: center; }
+.backLink, .footerLinks a { display: inline-flex; align-items: center; min-height: 44px; }
+@media (max-width: 480px) {
+  .header { flex-wrap: wrap; gap: 4px 12px; }
+  .brand { min-width: 0; gap: 8px; }
+  .brandName { font-size: .7rem; letter-spacing: .1em; }
+  .backLink { font-size: .6rem; letter-spacing: .06em; }
+  .contactLink { padding: 12px 14px; font-size: .78rem; }
+}
